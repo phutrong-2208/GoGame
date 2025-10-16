@@ -1,6 +1,5 @@
 #include <Board.h>
 
-//abcxyz
 bool GoBoard :: ended(void){
     for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
           GoBoard :: grid[i][j] = Empty;
