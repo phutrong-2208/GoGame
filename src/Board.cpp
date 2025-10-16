@@ -15,4 +15,5 @@ bool GoBoard :: newStep(int x, int y, Piece color){
 
     grid[x][y] = color;
     return true;
-}       
+}     
+// testt
