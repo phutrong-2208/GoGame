@@ -5,12 +5,12 @@
 int main(){
     sf :: RenderWindow window(sf::VideoMode({800, 600}), "Go Game");
     
-    sf :: Texture texture;
+    sf :: Texture board;
     
-    if(!texture.loadFromFile("Texture/9x9_Board.png")){
+    if(!board.loadFromFile("Texture/9x9_Board.png")){
         return EXIT_FAILURE;
     }   
-    sf :: Sprite sprite(texture);
+    sf :: Sprite boardImage(board);
 
     while(window.isOpen()){
         sf :: Event event; 
@@ -21,10 +21,10 @@ int main(){
             }
         }
         window.clear();
-        window.draw(sprite);
-        // window.draw(sprite);
-        sprite.setScale({2, 2});
-        sprite.setPosition({10, 10});
+        window.draw(boardImage);
+        boardImage.setScale({4, 4});
+        boardImage.setPosition({10, 10});
+        
         window.display();
     }
 }
