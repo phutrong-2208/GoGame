@@ -1,7 +1,7 @@
 
 #define BOARD_H
 
-const int  BOARD_SIZE = 9;
+const int BOARD_SIZE = 9;
 
 enum Piece {Black, White, Empty};
 

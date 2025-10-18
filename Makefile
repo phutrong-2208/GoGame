@@ -22,4 +22,7 @@ main: $(OBJS)
 	$(CXX)	$(OBJS) -o $@	$(LDFLAGS)
 
 clean:
-	rm -rf obj main *.o
+	if exist obj rmdir /s /q obj
+	if exist main.exe del /q main.exe
+	if exist main del /q main
+	del /q *.o 2>nul
