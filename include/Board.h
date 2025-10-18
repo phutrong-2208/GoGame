@@ -9,6 +9,6 @@ class GoBoard{
     public:
         Piece grid[BOARD_SIZE][BOARD_SIZE];
     private:
-        bool ended(void);
+        bool reset(void);
         bool newStep(int x, int y, Piece color);
 };
