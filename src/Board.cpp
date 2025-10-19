@@ -1,3 +1,4 @@
+/*
 #include <Board.h>
 bool GoBoard :: reset(void){
     for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
@@ -16,3 +17,4 @@ bool GoBoard :: newStep(int x, int y, Piece color){
     grid[x][y] = color;
     return true;
 }
+*/
