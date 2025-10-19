@@ -3,6 +3,7 @@
 #include <Board.h>
 #include <assert.h>
 #include <cmath>
+#include <vector>
 
 const int WINDOW_SIZE = 800;
 const int SHIFT_CONST = 50;
@@ -33,10 +34,46 @@ void drawBoard(sf :: RenderWindow &window){
     }
 
     //Drawing hoshi point
-    /*
-        Updating....
-    */
-}
+    std :: vector<sf :: Vector2f> hoshiPosition;
+    
+    double CeilSize = (1.0 * WINDOW_SIZE / (BOARD_SIZE - 1));
+
+    if(BOARD_SIZE == 9){
+        std :: vector<std :: pair<int, int>> point = {
+            {2, 2}, {2, 6}, {6, 2}, {6, 6}, {4, 4}
+        };
+
+        for (std :: pair<int, int> x : point){
+            hoshiPosition.emplace_back(sf :: Vector2f(CeilSize * x.first, CeilSize * x.second));
+        }
+    }
+    if(BOARD_SIZE == 13){
+        std :: vector<std :: pair<int, int>> point = {
+            {3, 3}, {3, 9}, {9, 3}, {9, 9}, {6, 6} 
+        };
+        
+        for (std :: pair<int, int> x : point){
+            hoshiPosition.emplace_back(sf :: Vector2f(CeilSize * x.first, CeilSize * x.second));
+        }
+    }
+    if(BOARD_SIZE == 19){
+        std :: vector<std :: pair<int, int>> point = {
+            {3, 3}, {3, 9}, {3, 15}, {9, 3}, {9, 9}, {9, 15}, {15, 3}, {15, 9}, {15, 15}  
+        };
+
+        for (std :: pair<int, int> x : point){
+            hoshiPosition.emplace_back(sf :: Vector2f(CeilSize * x.first, CeilSize * x.second));
+        }
+    }
+
+
+    sf :: CircleShape hoshi(5.0f);
+    hoshi.setFillColor(sf :: Color :: Black);
+    for (sf :: Vector2f x : hoshiPosition){
+        hoshi.setPosition(SHIFT_CONST + x.x - hoshi.getRadius(), SHIFT_CONST + x.y - hoshi.getRadius());
+        window.draw(hoshi);
+    }
+}   
 int main(){
     sf :: RenderWindow window(sf::VideoMode({LENGTH, LENGTH}), "GoGame");
 
