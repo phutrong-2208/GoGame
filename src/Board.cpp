@@ -34,18 +34,22 @@ bool eatable(int x, int y){
     q.emplace(x, y);
     st.emplace(x, y);    
     vis[x][y] = 1;
+    int air_flag = 0;
     while(q.size()){
         auto [rx, ry] = q.front(); q.pop();
         for (int dir = 0; dir < 4; ++dir){
             int nx = rx + dx[dir];
             int ny = ry + dy[dir];
-            if(temp.grid[nx][ny] == Empty) return false;
-            if(!inside(nx, ny) or vis[nx][ny] == 1) continue;
+            if(!inside(nx, ny) or vis[nx][ny]) continue;
+            if(temp.grid[nx][ny] == Empty) air_flag = 1;
+            if(temp.grid[nx][ny] != color) continue;
             q.emplace(nx, ny);
-            vis[nx][ny] = 1;
             st.emplace(nx, ny);
+            vis[nx][ny] = 1;
         }
     }
+    if (air_flag) return false;
+    
     while(st.size()){
         auto[x, y] = st.top(); st.pop();
         temp.grid[x][y] = Empty;
@@ -84,6 +88,14 @@ bool GoBoard :: newStep(int x, int y, Piece turn){
 
     newState(x, y);
     
+    for (int i = 0; i < BOARD_SIZE; ++i) {
+        for (int j = 0; j < BOARD_SIZE; ++j) {
+            std :: cout << vis[i][j] << " ";
+        }
+        std :: cout << "\n";
+    }
+    std :: cout << "\n";
+
     return true;
 }       
 
