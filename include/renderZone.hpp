@@ -1,9 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Board.h"
-#include <assert.h>
-#include <cmath>
-#include <vector>
+#include <Board.hpp>
+
 
 namespace RenderZone{
     unsigned int ZONE_SIZE = 800;

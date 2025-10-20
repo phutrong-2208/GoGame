@@ -1,9 +1,13 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
-#include <mouseInput.hpp>
 #include <assert.h>
 #include <cmath>
 #include <vector>
+
+#include "SFML/Graphics.hpp"
+#include "mathFunctions.hpp"
+#include "mouseInput.hpp"
+#include "Board.hpp"
+#include "renderZone.hpp"
 
 GoBoard goBoard;
 
