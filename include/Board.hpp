@@ -1,6 +1,10 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
 
+#include <vector>
+#include <tuple>
+#include <queue>
+
 const int BOARD_SIZE = 9;
 
 enum Piece {Empty, Black, White};
@@ -8,24 +12,14 @@ enum Piece {Empty, Black, White};
 class GoBoard{
     private: 
     public:
-        Piece grid[BOARD_SIZE][BOARD_SIZE];
-        int static turn;
-        bool reset(void){
-            for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
-                GoBoard :: grid[i][j] = Empty;
-            }
-            return true;
+        Piece turn;
+        std :: vector<std :: vector<Piece>> grid;
+        GoBoard(){
+            grid.resize(BOARD_SIZE, std :: vector<Piece>(BOARD_SIZE));
         }
-
-        bool inside(int x, int y){
-            return x >= 0 and x < BOARD_SIZE and y >= 0 and y < BOARD_SIZE;
-        }
-
-        bool newStep(int x, int y, Piece color){
-            if(!inside(x,  y)) return false;
-
-            grid[x][y] = color;
-            return true;
-        }
+        bool newGame(void);
+        bool newStep(int x, int y, Piece color);
+        void newState(int x, int y);
+        bool eatable(int x, int y, Piece color);
 };
 #endif BOARD_HPP
