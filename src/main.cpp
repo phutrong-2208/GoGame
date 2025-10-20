@@ -27,11 +27,12 @@ int main(){
             if(event.type == sf :: Event :: Resized){ // normalize window size
                 RenderZone :: normalizeSize(window);
             }
-            if(event.type == sf :: Event :: MouseButtonPressed){ // place random piece
+            if(event.type == sf :: Event :: MouseButtonPressed){
                 auto [snatchX, snatchY] = MouseInput :: checkBoard(window);
                 goBoard.newStep(snatchX, snatchY, Piece(goBoard.turn == Black ? Black : White));
             }
         }
+        window.clear();
         RenderZone :: drawMain(window, goBoard);
         window.display();
     }

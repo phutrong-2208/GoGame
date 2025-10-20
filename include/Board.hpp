@@ -20,6 +20,5 @@ class GoBoard{
         bool newGame(void);
         bool newStep(int x, int y, Piece color);
         void newState(int x, int y);
-        bool eatable(int x, int y, Piece color);
 };
 #endif BOARD_HPP
