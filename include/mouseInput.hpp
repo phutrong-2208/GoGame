@@ -1,10 +1,5 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "mathFunctions.hpp"
-#include "renderZone.hpp"
-#include <assert.h>
-#include <cmath>
-#include <vector>
+#ifndef MOUSE_INPUT_HPP
+#define MOUSE_INPUT_HPP
 
 namespace MouseInput{
     std :: pair<int, int> checkBoard(sf :: RenderWindow &window){
@@ -30,3 +25,4 @@ namespace MouseInput{
         return std :: pair<int, int>(snatchX, snatchY);
     }
 }
+#endif MOUSE_INPUT_HPP
