@@ -7,9 +7,9 @@ enum Piece {Empty, Black, White};
 
 class GoBoard{
     private: 
+    public:
         Piece grid[BOARD_SIZE][BOARD_SIZE];
         int static turn;
-    public:
         bool reset(void){
             for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
                 GoBoard :: grid[i][j] = Empty;
