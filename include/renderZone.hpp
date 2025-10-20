@@ -7,16 +7,15 @@
 
 namespace RenderZone{
     unsigned int ZONE_SIZE = 800;
+    unsigned int CONTROL_SIZE = 400;
+    double ASPECT_RATIO = 1.0L * (ZONE_SIZE + CONTROL_SIZE) / ZONE_SIZE;
     double SHIFT_CONST = 50;
     unsigned int LENGTH = ZONE_SIZE + 2 * SHIFT_CONST;
     unsigned int WINDOW_SIZE = sf :: VideoMode :: getDesktopMode().height / 2;
 
     void drawBoard(sf :: RenderWindow &window){
-        window.clear(sf :: Color(222, 184, 35));
-        sf :: RectangleShape background({ZONE_SIZE, ZONE_SIZE});
-        background.setFillColor(sf :: Color(222, 184, 135));
+        window.clear(sf :: Color(222, 184, 135));
 
-        window.draw(background);
         sf :: Vertex line[2];
         //it requires two vertexes to draw a line
         line[0].color = sf :: Color :: Black;
@@ -110,16 +109,19 @@ namespace RenderZone{
 
     void initSize(sf :: RenderWindow &window){
         WINDOW_SIZE = sf :: VideoMode :: getDesktopMode().height / 2;
-        window.setSize({WINDOW_SIZE, WINDOW_SIZE});
+        window.setSize({WINDOW_SIZE * ASPECT_RATIO, WINDOW_SIZE});
     }
 
     void normalizeSize(sf :: RenderWindow &window){
-        auto [new_height, new_width] = window.getSize();
-        if (new_height == WINDOW_SIZE || new_width == WINDOW_SIZE){
-            WINDOW_SIZE = (new_height == WINDOW_SIZE ? new_width : new_height);
+        auto [new_width, new_height] = window.getSize();
+        if (new_height == WINDOW_SIZE){
+            WINDOW_SIZE = new_width / ASPECT_RATIO;
+        } else 
+        if (new_width == WINDOW_SIZE){
+            WINDOW_SIZE = new_height;
         } else {
-            WINDOW_SIZE = std :: min(new_height, new_width);
+            WINDOW_SIZE = std :: min(1.0L * new_width / ASPECT_RATIO, 1.0L * new_height);
         }
-        window.setSize({WINDOW_SIZE, WINDOW_SIZE});
+        window.setSize({WINDOW_SIZE * ASPECT_RATIO, WINDOW_SIZE});
     }
 }

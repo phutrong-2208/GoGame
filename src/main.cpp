@@ -8,7 +8,7 @@
 GoBoard goBoard;
 
 int main(){
-    sf :: RenderWindow window(sf :: VideoMode({800, 800}), "GoGame");
+    sf :: RenderWindow window(sf :: VideoMode({1200, 800}), "GoGame");
 
     RenderZone :: initSize(window);
 
@@ -22,7 +22,7 @@ int main(){
             if(event.type == sf :: Event :: Resized){ // normalize window size
                 RenderZone :: normalizeSize(window);
             }
-            if(event.type == sf :: Event :: MouseButtonPressed){ // normalize window size
+            if(event.type == sf :: Event :: MouseButtonPressed){ // place random piece
                 auto [snatchX, snatchY] = MouseInput :: checkBoard(window);
                 goBoard.newStep(snatchX, snatchY, Piece(rand() & 1 ? Black : White));
             }
