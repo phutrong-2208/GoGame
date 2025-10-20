@@ -1,6 +1,7 @@
 #ifndef MOUSE_INPUT_HPP
 #define MOUSE_INPUT_HPP
 
+#include <renderZone.hpp>
 namespace MouseInput{
     std :: pair<int, int> checkBoard(sf :: RenderWindow &window){
         auto [mouseX, mouseY] = sf :: Mouse :: getPosition(window);

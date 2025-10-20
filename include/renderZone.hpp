@@ -1,3 +1,6 @@
+#ifndef RENDER_ZONE_HPP
+#define RENDER_ZONE_HPP
+
 #include <SFML/Graphics.hpp>
 #include <Board.hpp>
 
@@ -80,18 +83,18 @@ namespace RenderZone{
         int vertexX = SHIFT_CONST + i * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (BOARD_SIZE - 1));
         int vertexY = SHIFT_CONST + j * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (BOARD_SIZE - 1));
 
-        sf :: CircleShape hoshi(25.0f);
-        hoshi.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(30, 30, 40) : sf :: Color(220, 220, 200)));        
-        hoshi.setPosition(vertexX - hoshi.getRadius(), vertexY - hoshi.getRadius());
-        window.draw(hoshi);
+        sf :: CircleShape piece(25.0f);
+        piece.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(30, 30, 40) : sf :: Color(220, 220, 200)));        
+        piece.setPosition(vertexX - piece.getRadius(), vertexY - piece.getRadius());
+        window.draw(piece);
 
-        hoshi.setRadius(20.0f);
-        hoshi.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(15, 15, 20)  : sf :: Color(240, 240, 225)));        
-        hoshi.setPosition(vertexX - hoshi.getRadius(), vertexY - hoshi.getRadius());
-        window.draw(hoshi);
+        piece.setRadius(20.0f);
+        piece.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(15, 15, 20)  : sf :: Color(240, 240, 225)));        
+        piece.setPosition(vertexX - piece.getRadius(), vertexY - piece.getRadius());
+        window.draw(piece);
     }
 
-    void drawPieces(sf :: RenderWindow &window, GoBoard &goBoard){
+    void drawAllPieces(sf :: RenderWindow &window, GoBoard &goBoard){
         for (int i = 0; i < BOARD_SIZE; ++i){
             for (int j = 0; j < BOARD_SIZE; ++j){
                 drawPiece(window, goBoard, i, j);
@@ -101,7 +104,7 @@ namespace RenderZone{
 
     void drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
         drawBoard(window);
-        drawPieces(window, goBoard);
+        drawAllPieces(window, goBoard);
     }
 
     void initSize(sf :: RenderWindow &window){
@@ -122,3 +125,4 @@ namespace RenderZone{
         window.setSize({WINDOW_SIZE * ASPECT_RATIO, WINDOW_SIZE});
     }
 }
+#endif RENDER_ZONE_HPP
