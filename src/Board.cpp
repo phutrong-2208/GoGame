@@ -2,7 +2,7 @@
 #include "scoring.hpp"
 
 //===============================================================================
-std :: vector<std :: vector<Piece>> last_grid[2]; //save the last two state of the board 
+std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states, use for rollback operation
 std :: vector<std :: pair<int, int>> validMove;
 
 //starting new game
@@ -11,8 +11,6 @@ bool GoBoard :: newGame(void){
         GoBoard :: grid[i][j] = Empty;
         validMove.emplace_back(i, j);
     }
-    last_grid[0].resize(BOARD_SIZE, std :: vector<Piece>(BOARD_SIZE));
-    last_grid[1].resize(BOARD_SIZE, std :: vector<Piece>(BOARD_SIZE));
     GoBoard :: turn = Black;
     return true;
 }
@@ -83,8 +81,7 @@ bool move_check(int x, int y){
 Score score; 
 
 void GoBoard :: newState(int x, int y){ //update the new state of the board after a move
-    last_grid[0] = last_grid[1];
-    last_grid[1] = grid;
+    previous_grid.emplace_back(grid);
     swap(GoBoard :: grid, temp.grid);
     GoBoard :: turn = (GoBoard :: turn == Black ? White : Black);  
     validMove.clear();
@@ -106,7 +103,7 @@ bool GoBoard :: newStep(int x, int y, Piece turn){
     temp.grid = GoBoard :: grid;
     temp.grid[x][y] = turn;
     cntCaptured = 0;
-    if(!move_check(x, y) or temp.grid == last_grid[0]) return false;
+    if(!move_check(x, y) or (previous_grid.size() > 1 and temp.grid == previous_grid.end()[-2])) return false;
     if(turn == Black) score.blackCaptured += cntCaptured;
     else score.whiteCaptured += cntCaptured;
     newState(x, y);
