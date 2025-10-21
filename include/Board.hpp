@@ -4,6 +4,8 @@
 #include <vector>
 #include <tuple>
 #include <queue>
+#include <stack>
+#include <iostream>
 
 const int BOARD_SIZE = 9;
 
@@ -21,5 +23,6 @@ class GoBoard{
         bool newStep(int x, int y, Piece color);
         void newState(int x, int y);
         bool ended(void);
+        std :: pair<int, int> getScore(void);
 };
 #endif BOARD_HPP

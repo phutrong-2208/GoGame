@@ -31,6 +31,8 @@ int main(){
                 auto [snatchX, snatchY] = MouseInput :: checkBoard(window);
                 goBoard.newStep(snatchX, snatchY, Piece(goBoard.turn == Black ? Black : White));
                 if(goBoard.ended()){
+                    std :: pair<int, int> finalScore = goBoard.getScore();
+                    std :: cout << finalScore.first << " " << finalScore.second << '\n';
                     goBoard.newGame();
                     break;
                 }
