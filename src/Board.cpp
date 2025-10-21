@@ -7,6 +7,8 @@ std :: vector<std :: pair<int, int>> validMove;
 
 //starting new game
 bool GoBoard :: newGame(void){
+    previous_grid.clear();
+    validMove.clear();
     for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
         GoBoard :: grid[i][j] = Empty;
         validMove.emplace_back(i, j);
