@@ -20,5 +20,6 @@ class GoBoard{
         bool newGame(void);
         bool newStep(int x, int y, Piece color);
         void newState(int x, int y);
+        bool ended(void);
 };
 #endif BOARD_HPP

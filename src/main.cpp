@@ -30,10 +30,15 @@ int main(){
             if(event.type == sf :: Event :: MouseButtonPressed){
                 auto [snatchX, snatchY] = MouseInput :: checkBoard(window);
                 goBoard.newStep(snatchX, snatchY, Piece(goBoard.turn == Black ? Black : White));
+                if(goBoard.ended()){
+                    goBoard.newGame();
+                    break;
+                }
             }
         }
         window.clear();
         RenderZone :: drawMain(window, goBoard);
         window.display();
     }
+    
 }

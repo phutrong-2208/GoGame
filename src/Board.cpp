@@ -3,11 +3,13 @@
 #include <stack>
 //===============================================================================
 std :: vector<std :: vector<Piece>> last_grid[2]; //save the last two state of the board 
+std :: vector<std :: pair<int, int>> validMove;
 
 //starting new game
 bool GoBoard :: newGame(void){
     for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
         GoBoard :: grid[i][j] = Empty;
+        validMove.emplace_back(i, j);
     }
     last_grid[0].resize(BOARD_SIZE, std :: vector<Piece>(BOARD_SIZE));
     last_grid[1].resize(BOARD_SIZE, std :: vector<Piece>(BOARD_SIZE));
@@ -57,14 +59,20 @@ bool eatable(int x, int y){
     return true;
 }  
 
-void move_check(void){
+//check that if the move legal
+bool move_check(int x, int y){
     vis.assign(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
+    if(eatable(x, y)) return false; // the suicide case 
+    vis.assign(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
+
+
 
     for (int i = 0; i < BOARD_SIZE; ++i){
         for (int j = 0; j < BOARD_SIZE; ++j) if(!vis[i][j] and temp.grid[i][j] != Empty){
             eatable(i, j);
         }
     }
+    return true;
 }
 
 
@@ -74,7 +82,17 @@ void GoBoard :: newState(int x, int y){
     last_grid[0] = last_grid[1];
     last_grid[1] = grid;
     swap(GoBoard :: grid, temp.grid);
-    GoBoard :: turn = (GoBoard :: turn == Black ? White : Black);   
+    GoBoard :: turn = (GoBoard :: turn == Black ? White : Black);  
+    validMove.clear();
+    for (int i = 0; i < BOARD_SIZE; ++i){
+        for (int j = 0; j < BOARD_SIZE; ++j){
+            if(temp.grid[i][j] == Empty){
+                temp.grid[i][j] = GoBoard :: turn;
+                if(!eatable(i, j)) validMove.emplace_back(i, j);
+                temp.grid[i][j] == Empty;
+            } 
+        }
+    } 
 }
 
 
@@ -83,20 +101,14 @@ bool GoBoard :: newStep(int x, int y, Piece turn){
 
     temp.grid = GoBoard :: grid;
     temp.grid[x][y] = turn;
-    move_check();
-    if(temp.grid == last_grid[0]) return false;
+    if(!move_check(x, y) or  temp.grid == last_grid[0]) return false;
 
     newState(x, y);
-    
-    for (int i = 0; i < BOARD_SIZE; ++i) {
-        for (int j = 0; j < BOARD_SIZE; ++j) {
-            std :: cout << vis[i][j] << " ";
-        }
-        std :: cout << "\n";
-    }
-    std :: cout << "\n";
-
     return true;
 }       
 
 //===============================================================================
+bool GoBoard :: ended(void){
+    if(validMove.empty()) return true;
+    return false;
+}
