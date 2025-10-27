@@ -10,6 +10,7 @@
 #include "renderZone.hpp"
 
 GoBoard goBoard;
+Button buttons;
 
 int main(){
     sf :: RenderWindow window(sf :: VideoMode({1200, 800}), "GoGame");
@@ -17,6 +18,7 @@ int main(){
     RenderZone :: initSize(window);
     
     goBoard.newGame();
+    
     while(window.isOpen()){
         sf :: Event event; 
 
@@ -29,17 +31,16 @@ int main(){
             }
             if(event.type == sf :: Event :: MouseButtonPressed){
                 auto [snatchX, snatchY] = MouseInput :: checkBoard(window);
-                goBoard.newStep(snatchX, snatchY, Piece(goBoard.turn == Black ? Black : White));
+                if(goBoard.newStep(snatchX, snatchY, goBoard.turn)) continue;
+                
                 if(goBoard.ended()){
-                    std :: pair<int, int> finalScore = goBoard.getScore();
-                    std :: cout << finalScore.first << " " << finalScore.second << '\n';
                     goBoard.newGame();
                     break;
                 }
             }
         }
         window.clear();
-        RenderZone :: drawMain(window, goBoard);
+        RenderZone :: drawMain(window, goBoard, buttons);
         window.display();
     }
     

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <Board.hpp>
+#include <button.hpp>
 
 
 namespace RenderZone{
@@ -102,8 +103,12 @@ namespace RenderZone{
         }
     }
 
-    void drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
+    void drawButtonOperation(sf :: RenderWindow& window, Button &buttons){
+        buttons.drawButton(window, {2 * SHIFT_CONST + ZONE_SIZE, SHIFT_CONST}, {100, 100}, "undo", sf :: Color(222, 184, 135));
+    }
+    void drawMain(sf :: RenderWindow &window, GoBoard &goBoard, Button &buttons){
         drawBoard(window);
+        drawButtonOperation(window, buttons);
         drawAllPieces(window, goBoard);
     }
 
