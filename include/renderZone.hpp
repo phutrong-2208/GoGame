@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <Board.hpp>
-#include <button.hpp>
-
 
 namespace RenderZone{
     unsigned int ZONE_SIZE = 800;
@@ -13,6 +11,15 @@ namespace RenderZone{
     double SHIFT_CONST = 50;
     unsigned int LENGTH = ZONE_SIZE + 2 * SHIFT_CONST;
     unsigned int WINDOW_SIZE = sf :: VideoMode :: getDesktopMode().height / 2;
+
+    sf :: Vector2f getPosition(sf :: RenderWindow &window) {
+        auto [mouseX, mouseY] = sf :: Mouse :: getPosition(window);
+
+        mouseX = mouseX * 800.0L / RenderZone :: WINDOW_SIZE;
+        mouseY = mouseY * 800.0L / RenderZone :: WINDOW_SIZE;
+
+        return sf :: Vector2f(mouseX, mouseY);
+    }
 
     void drawBoard(sf :: RenderWindow &window){
         window.clear(sf :: Color(222, 184, 135));
@@ -103,12 +110,8 @@ namespace RenderZone{
         }
     }
 
-    void drawButtonOperation(sf :: RenderWindow& window, Button &buttons){
-        buttons.drawButton(window, {2 * SHIFT_CONST + ZONE_SIZE, SHIFT_CONST}, {100, 100}, "undo", sf :: Color(222, 184, 135));
-    }
-    void drawMain(sf :: RenderWindow &window, GoBoard &goBoard, Button &buttons){
+    void drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
         drawBoard(window);
-        drawButtonOperation(window, buttons);
         drawAllPieces(window, goBoard);
     }
 

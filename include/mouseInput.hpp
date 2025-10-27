@@ -2,12 +2,11 @@
 #define MOUSE_INPUT_HPP
 
 #include <renderZone.hpp>
+#include <mathFunctions.hpp>
+
 namespace MouseInput{
     std :: pair<int, int> checkBoard(sf :: RenderWindow &window){
-        auto [mouseX, mouseY] = sf :: Mouse :: getPosition(window);
-
-        mouseX = mouseX * 800.0L / RenderZone :: WINDOW_SIZE;
-        mouseY = mouseY * 800.0L / RenderZone :: WINDOW_SIZE;
+        auto [mouseX, mouseY] = RenderZone :: getPosition(window);
 
         int snatchX = -1, snatchY = -1;
         double snatchD = 99999;
@@ -26,4 +25,5 @@ namespace MouseInput{
         return std :: pair<int, int>(snatchX, snatchY);
     }
 }
+
 #endif MOUSE_INPUT_HPP

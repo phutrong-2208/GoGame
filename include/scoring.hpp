@@ -1,4 +1,3 @@
-
 #ifndef SCORING_HPP
 #define SCORING_HPP
 #include "board.hpp"
