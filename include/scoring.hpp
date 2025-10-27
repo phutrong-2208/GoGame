@@ -1,7 +1,7 @@
 
 #ifndef SCORING_HPP
 #define SCORING_HPP
-#include "board.hpp"
+#include "Board.hpp"
 
 #include <tuple>
 

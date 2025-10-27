@@ -1,8 +1,10 @@
 #include "button.hpp"
+
 #include <iostream>
 #include <cassert>
 
-void Button :: drawButton(sf :: RenderWindow &window, sf :: Vector2f position, sf :: Vector2f siz, std :: string Text, sf :: Color color){
+
+void Button :: drawButton(sf :: RenderWindow &window){
     sf :: RectangleShape box;
     
     //set the position , color and the size of the boxes
@@ -18,7 +20,7 @@ void Button :: drawButton(sf :: RenderWindow &window, sf :: Vector2f position, s
     sf :: Font font;
 
     if(!font.loadFromFile("font\\arial.ttf")){
-        std :: cout << "The font doesn't exits!";
+        std :: cout << "The font doesn't exist!";
         assert(false);
     }
     sf :: Text label(Text, font, 36);
@@ -37,4 +39,54 @@ void Button :: drawButton(sf :: RenderWindow &window, sf :: Vector2f position, s
 
     window.draw(box);
     window.draw(label);
+}
+
+bool Button :: detectHover(sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render) {
+    auto [mouseX, mouseY] = mouse.getPosition(window, render);
+    if (mouseX < position.x) return 0;
+    if (mouseX > position.x + siz.x) return 0;
+    if (mouseY < position.y) return 0;
+    if (mouseY > position.y + siz.y) return 0;
+    return 1;
+}
+
+void Button :: doActionStall(void) {
+    // hard coded behaviour
+    // 20 = size change speed
+    // 100 = target size
+    // 21 = 20 + 1
+    siz.x = (siz.x * 20 + 100) / 21.0L;
+    siz.y = (siz.y * 20 + 100) / 21.0L;
+}
+
+void Button :: doActionHover(void) {
+    // hard coded behaviour
+    // 20 = size change speed
+    // 120 = target size
+    // 21 = 20 + 1
+    siz.x = (siz.x * 20 + 120) / 21.0L;
+    siz.y = (siz.y * 20 + 120) / 21.0L;
+}
+
+void Button :: doActionClick(void) {
+    switch (type){
+        case 0: 
+            // calls startGame;
+            break; 
+        case 1:
+            // calls endGame;
+            break;
+        case 2:
+            // calls undoMove;
+            break;
+        case 3:
+            // calls redoMove;
+            break;
+        case 4:
+            // calls passMove;
+            break;
+        case 5: 
+            // calls resign;
+            break;
+    }
 }
