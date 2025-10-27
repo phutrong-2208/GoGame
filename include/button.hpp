@@ -6,6 +6,7 @@
 class Button{
     private:
     public:
+        sf :: RectangleShape box;
         sf :: Vector2f position;
         sf :: Vector2f siz;
         std :: string Text;

@@ -88,8 +88,28 @@ void RenderZone :: drawAllPieces(sf :: RenderWindow &window, GoBoard &goBoard){
     }
 }
 
+void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
+    sf :: Vertex line[2];
+    line[0].color = sf :: Color :: Black;
+    line[1].color = sf :: Color :: Black;
+
+
+    //draw control panel
+    line[0].position = sf :: Vector2f(ZONE_SIZE, SHIFT_CONST);
+
+    line[1].position = sf :: Vector2f(ZONE_SIZE, ZONE_SIZE - SHIFT_CONST);
+    window.draw(line, 2, sf :: Lines);
+    line[0].position = sf :: Vector2f(ZONE_SIZE * ASPECT_RATIO - SHIFT_CONST, ZONE_SIZE - SHIFT_CONST);
+    window.draw(line, 2, sf :: Lines);
+    line[1].position = sf :: Vector2f(ZONE_SIZE * ASPECT_RATIO - SHIFT_CONST, SHIFT_CONST);
+    window.draw(line, 2, sf :: Lines);
+    line[0].position = sf :: Vector2f(ZONE_SIZE, SHIFT_CONST);
+    window.draw(line, 2, sf :: Lines);
+}
+
 void RenderZone :: drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
     drawBoard(window);
+    drawControlPanel(window);
     drawAllPieces(window, goBoard);
 }
 
