@@ -1,5 +1,4 @@
 #include "Scoring.hpp"
-#include "Board.hpp"
 
 
 Piece Score :: winner(void){

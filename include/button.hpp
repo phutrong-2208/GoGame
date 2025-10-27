@@ -8,23 +8,7 @@
 class Button{
     private:
     public:
-        sf :: Vector2f position;
-        sf :: Vector2f siz;
-        std :: string Text;
-        sf :: Color color;
-        int type;
-        Button(sf :: Vector2f _position, sf :: Vector2f _siz, std :: string _Text, sf :: Color _color, int _type){
-            position = _position;
-            siz = _siz;
-            Text = _Text;
-            color = _color;
-            type = _type;
-        }
-        void drawButton(sf :: RenderWindow &window);
-        bool detectHover(sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render);
-        void doActionStall(void);
-        void doActionHover(void);
-        void doActionClick(void);
+        void drawButton(sf :: RenderWindow &window, sf :: Vector2f position, sf :: Vector2f siz, std :: string Text, sf :: Color);
 };
 
 #endif BUTTON_HPP
