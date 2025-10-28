@@ -13,7 +13,7 @@ sf :: Vector2f MouseInput :: getPosition(sf :: RenderWindow &window, RenderZone 
 
     return sf :: Vector2f(mouseX, mouseY);
 }
-std :: pair<int, int> MouseInput ::  checkBoard(sf :: RenderWindow &window, RenderZone &render){
+std :: pair<int, int> MouseInput ::  checkBoard(sf :: RenderWindow &window, RenderZone &render, GoBoard &goBoard){
     auto [mouseX, mouseY] = sf :: Mouse :: getPosition(window);
 
     mouseX = mouseX * 800.0L / render.WINDOW_SIZE;
@@ -21,9 +21,9 @@ std :: pair<int, int> MouseInput ::  checkBoard(sf :: RenderWindow &window, Rend
 
     int snatchX = -1, snatchY = -1;
     double snatchD = 99999;
-    double spacing = (1.0 * (render.ZONE_SIZE - 2 * render.SHIFT_CONST) / (BOARD_SIZE - 1));
-    for (int i = 0; i < BOARD_SIZE; ++i){
-        for (int j = 0; j < BOARD_SIZE; ++j){
+    double spacing = (1.0 * (render.ZONE_SIZE - 2 * render.SHIFT_CONST) / (goBoard.siz - 1));
+    for (int i = 0; i < goBoard.siz; ++i){
+        for (int j = 0; j < goBoard.siz; ++j){
             int vertexX = render.SHIFT_CONST + i * spacing;
             int vertexY = render.SHIFT_CONST + j * spacing;
             if (snatchX == -1 || Euclidean(vertexX, vertexY, mouseX, mouseY) < snatchD){

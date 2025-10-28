@@ -21,13 +21,13 @@ int main(){
     render.initSize(window);
     goBoard.newGame();
     
-    setup.setupButtonOpertation(render, button_list);
+    setup.setupButtonOperation(render, button_list);
 
     op.history.emplace_back(goBoard);
 
     while(window.isOpen()){
         sf :: Event event; 
-        auto [snatchX, snatchY] = mouse.checkBoard(window, render);
+        auto [snatchX, snatchY] = mouse.checkBoard(window, render, goBoard);
         while(window.pollEvent(event)){  //get the value and pop it from the queue
             if(event.type == sf :: Event :: Closed){
                 window.close();
@@ -42,10 +42,7 @@ int main(){
                     continue;
                 }
                 for (Button &button : button_list) {
-                    if (button.detectHover(window, mouse, render)) {
-                        button.doActionClick(goBoard, op);
-                        break;
-                    }
+                    button.doActionClick(window, mouse, render, goBoard, op);
                 }
                 if(goBoard.ended()){
                     goBoard.newGame();
@@ -54,11 +51,7 @@ int main(){
             }
         }
         for (Button &button : button_list) {
-            if (button.detectHover(window, mouse, render)) {
-                button.doActionHover();
-            } else {
-                button.doActionStall();
-            }
+            button.doActionHover(window, mouse, render);
         }
         window.clear();
         render.drawMain(window, goBoard);

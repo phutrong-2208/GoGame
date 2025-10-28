@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "Board.hpp"
+#include "MetaControls.hpp"
+
 class Operation{
     public:
         std :: vector<GoBoard> history;
@@ -12,6 +14,7 @@ class Operation{
         void NewGame(GoBoard& goBoard);
         void Resign(GoBoard& goBoard);
         void Pass(GoBoard& goBoard);
+        void SetSize(GoBoard& goBoard, int siz);
 };
 
 

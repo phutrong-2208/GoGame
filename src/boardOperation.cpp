@@ -28,3 +28,9 @@ void Operation :: Pass(GoBoard &goBoard){
     goBoard.pass++;
     goBoard.turn = (goBoard.turn == Black ? White : Black);
 }
+void Operation :: SetSize(GoBoard &goBoard, int siz){
+    std :: cout << "Size set to " << siz << "x" << siz << "\n";
+    goBoard.siz = siz;
+    goBoard.grid.assign(siz, std :: vector<Piece>(siz, Empty));
+    goBoard.newGame();
+}

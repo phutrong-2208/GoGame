@@ -11,7 +11,7 @@ std :: deque<std :: vector<std :: vector<Piece>>> save;
 bool GoBoard :: newGame(void){
     previous_grid.clear();
     validMove.clear();
-    for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
+    for (int i = 0; i < siz; ++i) for (int j = 0; j < siz; ++j){
         grid[i][j] = Empty;
         validMove.emplace_back(i, j);
     }
@@ -22,18 +22,18 @@ bool GoBoard :: newGame(void){
 
 //===============================================================================
 
-bool inside(int x, int y){
-    return x >= 0 and x < BOARD_SIZE and y >= 0 and y < BOARD_SIZE;
+bool GoBoard :: inside(int x, int y){
+    return x >= 0 and x < siz and y >= 0 and y < siz;
 }
 
 GoBoard temp;
 const int dx[] = {-1, 1, 0, 0};
 const int dy[] = {0, 0, -1, 1};
-std :: vector<std :: vector<int>> vis(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
+std :: vector<std :: vector<int>> vis; //(siz, std :: vector<int>(siz, 0));
 
 int cntCaptured = 0; //count the captured piece after a move
 
-bool eatable(int x, int y){
+bool GoBoard :: eatable(int x, int y){
     std :: queue<std :: pair<int, int>> q;
     std :: stack<std :: pair<int, int>> st;
     
@@ -66,25 +66,19 @@ bool eatable(int x, int y){
 }  
 
 //check that if the move legal
-bool move_check(int x, int y){
-    vis.assign(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
+bool GoBoard :: move_check(int x, int y){
+    vis.assign(siz, std :: vector<int>(siz, 0));
     for (int dir = 0; dir < 4; ++dir){
         int nx = x + dx[dir], ny = y + dy[dir];
         if (!inside(nx, ny)) continue;
         if (temp.grid[nx][ny] == Empty) continue;
         if (!vis[nx][ny] && temp.grid[nx][ny] != temp.grid[x][y]) eatable(nx, ny);
     }
-    for (int i = 0; i < BOARD_SIZE; ++i){
-        for (int j = 0; j < BOARD_SIZE; ++j){
-            std :: cout << temp.grid[i][j] << " ";
-        }
-        std :: cout << "\n";
-    }
     if (eatable(x, y)) return false; // the suicide case 
-    vis.assign(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
+    vis.assign(siz, std :: vector<int>(siz, 0));
 
-    for (int i = 0; i < BOARD_SIZE; ++i){
-        for (int j = 0; j < BOARD_SIZE; ++j) if (!vis[i][j] and temp.grid[i][j] != Empty){
+    for (int i = 0; i < siz; ++i){
+        for (int j = 0; j < siz; ++j) if (!vis[i][j] and temp.grid[i][j] != Empty){
             eatable(i, j);
         }
     }
@@ -102,8 +96,8 @@ void GoBoard :: newState(int x, int y){ //update the new state of the board afte
     turn = (turn == Black ? White : Black);  
     pass = 0;
     validMove.clear(); save.clear();
-    for (int i = 0; i < BOARD_SIZE; ++i){
-        for (int j = 0; j < BOARD_SIZE; ++j){
+    for (int i = 0; i < siz; ++i){
+        for (int j = 0; j < siz; ++j){
             if(temp.grid[i][j] == Empty){
                 temp.grid[i][j] = turn;
                 if(!eatable(i, j)) validMove.emplace_back(i, j);
@@ -137,7 +131,7 @@ bool GoBoard :: ended(void){
     return false;
 }
 
-int getTerritory(int x, int y){
+int GoBoard :: getTerritory(int x, int y){
     std :: queue<std :: pair<int, int>> q;
     q.emplace(x, y);
     vis[x][y] = 1;
@@ -169,9 +163,9 @@ int getTerritory(int x, int y){
 }
 
 std :: pair<int, int> GoBoard :: getScore(void){
-    vis.assign(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
-    for (int i = 0; i < BOARD_SIZE; ++i){
-        for (int j = 0; j < BOARD_SIZE; ++j) if(!vis[i][j] and temp.grid[i][j] == Empty){
+    vis.assign(siz, std :: vector<int>(siz, 0));
+    for (int i = 0; i < siz; ++i){
+        for (int j = 0; j < siz; ++j) if(!vis[i][j] and temp.grid[i][j] == Empty){
             int value = getTerritory(i, j);
             if(value < 0) score.whiteCaptured -= value;
             else score.blackCaptured += value;
