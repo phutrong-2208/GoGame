@@ -70,7 +70,7 @@ void RenderZone :: drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i
     int vertexY = SHIFT_CONST + j * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (BOARD_SIZE - 1));
 
     sf :: CircleShape piece(25.0f);
-    piece.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(35, 35, 45) : sf :: Color(220, 220, 200)));        
+    piece.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(35, 35, 45) : sf :: Color(210, 210, 195)));        
     piece.setPosition(vertexX - piece.getRadius(), vertexY - piece.getRadius());
     window.draw(piece);
 

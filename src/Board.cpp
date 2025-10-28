@@ -47,9 +47,10 @@ bool eatable(int x, int y){
         auto [rx, ry] = q.front(); q.pop();
         for (int dir = 0; dir < 4; ++dir){
             int nx = rx + dx[dir], ny = ry + dy[dir];
-            if(!inside(nx, ny) or vis[nx][ny]) continue;
-            if(temp.grid[nx][ny] == Empty) air_flag = 1;
-            if(temp.grid[nx][ny] != color) continue;
+            if (!inside(nx, ny)) continue; 
+            if (temp.grid[nx][ny] == Empty) air_flag = 1;
+            if (temp.grid[nx][ny] != color) continue;
+            if (vis[nx][ny]) continue;
             q.emplace(nx, ny);
             st.emplace(nx, ny);
             vis[nx][ny] = 1;
@@ -67,11 +68,23 @@ bool eatable(int x, int y){
 //check that if the move legal
 bool move_check(int x, int y){
     vis.assign(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
-    if(eatable(x, y)) return false; // the suicide case 
+    for (int dir = 0; dir < 4; ++dir){
+        int nx = x + dx[dir], ny = y + dy[dir];
+        if (!inside(nx, ny)) continue;
+        if (temp.grid[nx][ny] == Empty) continue;
+        if (!vis[nx][ny] && temp.grid[nx][ny] != temp.grid[x][y]) eatable(nx, ny);
+    }
+    for (int i = 0; i < BOARD_SIZE; ++i){
+        for (int j = 0; j < BOARD_SIZE; ++j){
+            std :: cout << temp.grid[i][j] << " ";
+        }
+        std :: cout << "\n";
+    }
+    if (eatable(x, y)) return false; // the suicide case 
     vis.assign(BOARD_SIZE, std :: vector<int>(BOARD_SIZE, 0));
 
     for (int i = 0; i < BOARD_SIZE; ++i){
-        for (int j = 0; j < BOARD_SIZE; ++j) if(!vis[i][j] and temp.grid[i][j] != Empty){
+        for (int j = 0; j < BOARD_SIZE; ++j) if (!vis[i][j] and temp.grid[i][j] != Empty){
             eatable(i, j);
         }
     }
