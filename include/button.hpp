@@ -36,8 +36,6 @@ class Button{
         }
         void drawButton(sf :: RenderWindow &window);
         void setupButtonOperation(RenderZone &render, std :: vector<Button> &button_list);
-        void doActionHover(sf :: RenderWindow &window, MouseInput &mouse, RenderZone &render);
-        void doActionClick(sf :: RenderWindow &window, MouseInput &mouse, RenderZone &render, GoBoard &goBoard, Operation& op);
 };
 
 #endif

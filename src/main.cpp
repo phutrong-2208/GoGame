@@ -7,6 +7,7 @@
 #include "button.hpp"
 #include "renderZone.hpp"
 #include "boardOperation.hpp"
+#include "UIManager.hpp"
 
 GoBoard goBoard;
 RenderZone render;
@@ -14,20 +15,19 @@ MouseInput mouse;
 Operation op;
 Button setup;
 
-std :: vector<Button> button_list;
+Manager ui;
+std :: vector<Button> board_button_list; // save board button
+std :: vector<Button> menu_button_list; // save menu button
 
 int main(){
     sf :: RenderWindow window(sf :: VideoMode({1200, 800}), "GoGame");
     render.initSize(window);
-    goBoard.newGame();
-    
-    setup.setupButtonOperation(render, button_list);
-
+    setup.setupButtonOperation(render, board_button_list);
+    ui.setupMenuButton(render, menu_button_list);
     op.history.emplace_back(goBoard);
 
     while(window.isOpen()){
         sf :: Event event; 
-        auto [snatchX, snatchY] = mouse.checkBoard(window, render, goBoard);
         while(window.pollEvent(event)){  //get the value and pop it from the queue
             if(event.type == sf :: Event :: Closed){
                 window.close();
@@ -35,29 +35,40 @@ int main(){
             if(event.type == sf :: Event :: Resized){ // normalize window size
                 render.normalizeSize(window);
             }
-            if(event.type == sf :: Event :: MouseButtonPressed){
-                if(goBoard.newStep(snatchX, snatchY, goBoard.turn)){
-                    op.history.emplace_back(goBoard);
-                    op.snap.clear();
-                    continue;
-                }
-                for (Button &button : button_list) {
-                    button.doActionClick(window, mouse, render, goBoard, op);
-                }
+
+            if(ui.State == BOARD){
+                ui.boardManager(ui, window, board_button_list, render, mouse, goBoard, op, event);
                 if(goBoard.ended()){
                     goBoard.newGame();
+                    op.history.clear();
+                    op.snap.clear();
+                    op.history.emplace_back(goBoard);
                     break;
                 }
             }
-        }
-        for (Button &button : button_list) {
-            button.doActionHover(window, mouse, render);
+            else if(ui.State == GAME_MENU){
+                ui.MenuManager(ui, window, menu_button_list, render, mouse, goBoard, op, event);
+                if(ui.State != GAME_MENU) break;
+            }
         }
         window.clear();
-        render.drawMain(window, goBoard);
-        if (snatchX != 999) render.drawPiece(window, goBoard, snatchX, snatchY, goBoard.turn);
-        for (Button &button : button_list) {
-            button.drawButton(window);
+        if(ui.State == BOARD){
+            ui.drawBoard(window, goBoard, render, mouse, board_button_list);
+            for (Button &button : board_button_list) {
+                ui.doActionHover(button, window, mouse, render);
+            }
+        }
+        else if(ui.State == GAME_MENU){
+            ui.drawMenu(window, goBoard, render, menu_button_list);
+            for (Button &button : menu_button_list) {
+                ui.doActionHover(button, window, mouse, render);
+            }
+        }
+        else if(ui.State == SETTING_MENU){
+
+        }
+        else if(ui.State == MODE_MENU){
+
         }
         window.display();
     }

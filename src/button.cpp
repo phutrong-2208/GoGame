@@ -44,7 +44,7 @@ void Button :: drawButton(sf :: RenderWindow &window){
 }
 
 void Button :: setupButtonOperation(RenderZone &render, std :: vector<Button> &button_list){
-    int button_count = 11;
+    int button_count = 5;
     float height = 1.0f * (render.ZONE_SIZE - 2 * render.SHIFT_CONST - (button_count + 1) * render.CONTROL_SHIFT) / button_count;
     float width = render.ZONE_SIZE * (render.ASPECT_RATIO - 1) - render.SHIFT_CONST - 2 * render.CONTROL_SHIFT; 
 
@@ -56,134 +56,33 @@ void Button :: setupButtonOperation(RenderZone &render, std :: vector<Button> &b
         1, 2, 
         {"Undo", "Redo"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
     );
-
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         2, 1, 
-        {"Resign"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Pass"}, {sf :: Color(222, 184, 135)}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         3, 1, 
-        {"Reset Game"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Resign"}, {sf :: Color(222, 184, 135)}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         4, 1, 
-        {"Pass Turn"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Reset"}, {sf :: Color(222, 184, 135)}, {0})
     );
-
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
-        5, 2, 
-        {"Import", "Export"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
+        5, 1, 
+        {"Menu"}, {sf :: Color(222, 184, 135)}, {0})
     );
-
-    tmp_posY += render.CONTROL_SHIFT + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        6, 2, 
-        {"1-player", "2-player"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
-    );
-
-    tmp_posY += render.CONTROL_SHIFT + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        7, 3, 
-        {"Easy", "Medium", "Hard"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1, 2})
-    );
-
-    tmp_posY += render.CONTROL_SHIFT + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        8, 2, 
-        {"Play as Black", "Play as White"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
-    );
-
-    tmp_posY += render.CONTROL_SHIFT + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        9, 3, 
-        {"9x9", "13x13", "19x19"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {9, 13, 19})
-    );
-
-    tmp_posY += render.CONTROL_SHIFT + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        10, 2, 
-        {"Music off", "Music on"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
-    );
-
-    tmp_posY += render.CONTROL_SHIFT + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        11, 2, 
-        {"Sounds off", "Sounds on"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
-    );
-
-    assert(button_list.size() == button_count);
 }
 
-void Button :: doActionHover(sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render) {
-    auto [mouseX, mouseY] = mouse.getPosition(window, render);
-    float tmpSpace = 1.0f * siz.x / cnt;
-    for (int i = 0; i < cnt; ++i) {
-        color[i] = sf :: Color(222, 184, 135);
-        if (position.x + tmpSpace * i >= mouseX) continue;
-        if (position.x + tmpSpace * (i + 1) <= mouseX) continue;
-        if (position.y >= mouseY || mouseY >= position.y + siz.y) continue;
-        color[i] = sf :: Color(153, 101, 60);
-    }
-}
 
-void Button :: doActionClick(sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render, GoBoard &goBoard, Operation& op) {
-    auto [mouseX, mouseY] = mouse.getPosition(window, render);
-    float tmpSpace = 1.0f * siz.x / cnt;
-    for (int i = 0; i < cnt; ++i) {
-        if (position.x + tmpSpace * i >= mouseX) continue;
-        if (position.x + tmpSpace * (i + 1) <= mouseX) continue;
-        if (position.y >= mouseY || mouseY >= position.y + siz.y) continue;
-        switch (type){
-            case 1: // Undo / Redo
-                op.Rollback(goBoard, attr[i]);
-                break;
-            case 2:
-                op.Resign(goBoard);
-                break;
-            case 3:
-                op.NewGame(goBoard);
-                break;
-            case 4:
-                op.Pass(goBoard);
-                break;
-            case 5: 
-                // Import / Export game position
-                break;
-            case 6:
-                // Gamemode (1/2-player) 
-                break;
-            case 7:
-                // Difficulty (Easy/Medium/Hard, 2-player only) 
-                break;
-            case 8:
-                // Starting side (Black/White, 1-player only)
-                break;
-            case 9:
-                op.SetSize(goBoard, attr[i]);
-                // Board size (9x9/13x13/19x19)
-                break;
-            case 10:
-                // Toggle music
-                break;
-            case 11:
-                // Toggle sounds
-                break;
-        }
-    }
-}
+
