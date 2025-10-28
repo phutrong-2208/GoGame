@@ -64,18 +64,25 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window){
         window.draw(hoshi);
     }
 }
-void RenderZone :: drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i, int j){
-    if (goBoard.grid[i][j] == Empty) return;
+
+sf :: Color blackColor(55, 55, 65), whiteColor(235, 235, 225), borderColor(20, 20, 20);
+
+void RenderZone :: drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i, int j, int ghost = 0){
+    if ((!!ghost) != (goBoard.grid[i][j] == Empty)) return;
     int vertexX = SHIFT_CONST + i * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (BOARD_SIZE - 1));
     int vertexY = SHIFT_CONST + j * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (BOARD_SIZE - 1));
 
-    sf :: CircleShape piece(25.0f);
-    piece.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(35, 35, 45) : sf :: Color(210, 210, 195)));        
+    sf :: CircleShape piece;
+    sf :: Color pieceColor(ghost == 1 || goBoard.grid[i][j] == Black ? blackColor : whiteColor);
+    pieceColor.a = (1 << (8 - !!ghost)) - 1;
+
+    piece.setRadius(30.0f);
+    piece.setFillColor(pieceColor - borderColor);   
     piece.setPosition(vertexX - piece.getRadius(), vertexY - piece.getRadius());
     window.draw(piece);
 
-    piece.setRadius(20.0f);
-    piece.setFillColor((goBoard.grid[i][j] == Black ? sf :: Color(50, 50, 60)  : sf :: Color(240, 240, 225)));        
+    piece.setRadius(25.0f);
+    piece.setFillColor(pieceColor); 
     piece.setPosition(vertexX - piece.getRadius(), vertexY - piece.getRadius());
     window.draw(piece);
 }

@@ -15,7 +15,7 @@ class RenderZone{
         unsigned CONTROL_SHIFT = 25;
         unsigned int WINDOW_SIZE = sf :: VideoMode :: getDesktopMode().height / 2;
         void drawBoard(sf :: RenderWindow &window);
-        void drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i, int j);
+        void drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i, int j, int ghost);
         void drawAllPieces(sf :: RenderWindow &window, GoBoard &goBoard);
         void drawMain(sf :: RenderWindow &window, GoBoard &goBoard);
         void initSize(sf :: RenderWindow &window);

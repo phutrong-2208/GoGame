@@ -27,6 +27,7 @@ int main(){
 
     while(window.isOpen()){
         sf :: Event event; 
+        auto [snatchX, snatchY] = mouse.checkBoard(window, render);
         while(window.pollEvent(event)){  //get the value and pop it from the queue
             if(event.type == sf :: Event :: Closed){
                 window.close();
@@ -35,7 +36,6 @@ int main(){
                 render.normalizeSize(window);
             }
             if(event.type == sf :: Event :: MouseButtonPressed){
-                auto [snatchX, snatchY] = mouse.checkBoard(window, render);
                 if(goBoard.newStep(snatchX, snatchY, goBoard.turn)){
                     op.history.emplace_back(goBoard);
                     op.snap.clear();
@@ -62,6 +62,7 @@ int main(){
         }
         window.clear();
         render.drawMain(window, goBoard);
+        if (snatchX != 999) render.drawPiece(window, goBoard, snatchX, snatchY, goBoard.turn);
         for (Button &button : button_list) {
             button.drawButton(window);
         }
