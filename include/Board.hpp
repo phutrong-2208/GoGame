@@ -15,6 +15,7 @@ class GoBoard{
     private: 
     public:
         Piece turn;
+        int pass; //save the number consecutive passes of both players, if both people skip their turn, the game will end
         std :: vector<std :: vector<Piece>> grid;
         GoBoard(){
             grid.resize(BOARD_SIZE, std :: vector<Piece>(BOARD_SIZE));

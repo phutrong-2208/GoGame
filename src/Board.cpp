@@ -1,19 +1,22 @@
 #include "Board.hpp"
 #include "scoring.hpp"
+#include <deque>
 
 //===============================================================================
-std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states, use for rollback operation
+std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states till current state, use for rollback operation
 std :: vector<std :: pair<int, int>> validMove;
+std :: deque<std :: vector<std :: vector<Piece>>> save;
 
 //starting new game
 bool GoBoard :: newGame(void){
     previous_grid.clear();
     validMove.clear();
     for (int i = 0; i < 9; ++i) for (int j = 0; j < 9; ++j){
-        GoBoard :: grid[i][j] = Empty;
+        grid[i][j] = Empty;
         validMove.emplace_back(i, j);
     }
-    GoBoard :: turn = Black;
+    save.clear(); previous_grid.emplace_back(grid);
+    turn = Black;
     return true;
 }
 
@@ -43,8 +46,7 @@ bool eatable(int x, int y){
     while(q.size()){
         auto [rx, ry] = q.front(); q.pop();
         for (int dir = 0; dir < 4; ++dir){
-            int nx = rx + dx[dir];
-            int ny = ry + dy[dir];
+            int nx = rx + dx[dir], ny = ry + dy[dir];
             if(!inside(nx, ny) or vis[nx][ny]) continue;
             if(temp.grid[nx][ny] == Empty) air_flag = 1;
             if(temp.grid[nx][ny] != color) continue;
@@ -83,14 +85,14 @@ bool move_check(int x, int y){
 Score score; 
 
 void GoBoard :: newState(int x, int y){ //update the new state of the board after a move
-    previous_grid.emplace_back(grid);
-    swap(GoBoard :: grid, temp.grid);
-    GoBoard :: turn = (GoBoard :: turn == Black ? White : Black);  
-    validMove.clear();
+    swap(grid, temp.grid);
+    turn = (turn == Black ? White : Black);  
+    pass = 0;
+    validMove.clear(); save.clear();
     for (int i = 0; i < BOARD_SIZE; ++i){
         for (int j = 0; j < BOARD_SIZE; ++j){
             if(temp.grid[i][j] == Empty){
-                temp.grid[i][j] = GoBoard :: turn;
+                temp.grid[i][j] = turn;
                 if(!eatable(i, j)) validMove.emplace_back(i, j);
                 temp.grid[i][j] = Empty;
             } 
@@ -100,14 +102,16 @@ void GoBoard :: newState(int x, int y){ //update the new state of the board afte
 
 
 bool GoBoard :: newStep(int x, int y, Piece turn){
-    if(!inside(x,  y) or GoBoard :: grid[x][y] != Empty) return false;
+    if(!inside(x, y) or grid[x][y] != Empty) return false;
     
-    temp.grid = GoBoard :: grid;
+    temp.grid = grid;
     temp.grid[x][y] = turn;
     cntCaptured = 0;
     if(!move_check(x, y) or (previous_grid.size() > 1 and temp.grid == previous_grid.end()[-2])) return false;
+
     if(turn == Black) score.blackCaptured += cntCaptured;
     else score.whiteCaptured += cntCaptured;
+    previous_grid.emplace_back(temp.grid);
     newState(x, y);
     return true;
 }       
@@ -115,15 +119,12 @@ bool GoBoard :: newStep(int x, int y, Piece turn){
 //===============================================================================
 
 //for end stage
-
-int pass = 0; //save the number consecutive passes of both players, if both people skip their turn, the game will end
 bool GoBoard :: ended(void){
     if(validMove.empty() or pass == 2) return true;
     return false;
 }
 
 int getTerritory(int x, int y){
-    
     std :: queue<std :: pair<int, int>> q;
     q.emplace(x, y);
     vis[x][y] = 1;
@@ -165,4 +166,3 @@ std :: pair<int, int> GoBoard :: getScore(void){
     }
     return std :: make_pair(score.whiteCaptured + score.whiteTerr, score.blackCaptured + score.blackTerr);
 }
-

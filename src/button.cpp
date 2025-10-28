@@ -1,9 +1,5 @@
 #include "button.hpp"
 
-#include <iostream>
-#include <cassert>
-
-
 void Button :: drawButton(sf :: RenderWindow &window){
     //set the position , color and the size of the boxes
     box.setPosition(position);
@@ -39,6 +35,33 @@ void Button :: drawButton(sf :: RenderWindow &window){
     window.draw(label);
 }
 
+void Button :: setupButtonOpertation(RenderZone &render, std :: vector<Button> &button_list){
+    float height = (render.ZONE_SIZE - 2 * render.SHIFT_CONST - 5 * render.CONTROL_SHIFT) / 4.0f;
+    float width = render.ZONE_SIZE * (render.ASPECT_RATIO - 1) - render.SHIFT_CONST - 2 * render.CONTROL_SHIFT; 
+
+    button_list.emplace_back(
+        Button({render.ZONE_SIZE + render.CONTROL_SHIFT + width / 4.0f, render.SHIFT_CONST + 1 * render.CONTROL_SHIFT + height / 2.0f}, 
+        {width  / 2, height}, "Undo", sf :: Color(222, 184, 135), 0)
+    );
+    button_list.emplace_back(
+        Button({render.ZONE_SIZE + render.CONTROL_SHIFT + width / 2.0f + width / 4.0f, render.SHIFT_CONST + 1 * render.CONTROL_SHIFT + height / 2.0f},
+        {width / 2, height}, "Redo", sf :: Color(222, 184, 135), 1)
+    );
+    button_list.emplace_back(
+        Button({render.ZONE_SIZE + render.CONTROL_SHIFT + width / 2.0f, render.SHIFT_CONST + 2 * render.CONTROL_SHIFT + height / 2.0f + 1 * height}, 
+        {width, height}, "Resign", sf :: Color(222, 184, 135), 2)
+    );
+    button_list.emplace_back(
+        Button({render.ZONE_SIZE + render.CONTROL_SHIFT + width / 2.0f, render.SHIFT_CONST + 3 * render.CONTROL_SHIFT + height / 2.0f + 2 * height}, 
+        {width, height}, "New Game", sf :: Color(222, 184, 135), 3)
+    );
+    button_list.emplace_back(
+        Button({render.ZONE_SIZE + render.CONTROL_SHIFT + width / 2.0f, render.SHIFT_CONST + 4 * render.CONTROL_SHIFT + height / 2.0f + 3 * height}, 
+        {width, height}, "Pass Turn", sf :: Color(222, 184, 135), 4)
+    );
+}
+
+
 bool Button :: detectHover(sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render) {
     auto [mouseX, mouseY] = mouse.getPosition(window, render);
     if (mouseX < position.x - siz.x * 0.5f) return 0;
@@ -49,44 +72,33 @@ bool Button :: detectHover(sf :: RenderWindow &window, MouseInput& mouse, Render
 }
 
 void Button :: doActionStall(void) {
-    // hard coded behaviour
-    // 20 = size change speed
-    // 100 = target size
-    // 21 = 20 + 1
     // siz.x = (siz.x * 20 + 90) / 21.0L;
     // siz.y = (siz.y * 20 + 110) / 21.0L;
     color = sf :: Color(222, 184, 135);
 }
 
 void Button :: doActionHover(void) {
-    // hard coded behaviour
-    // 20 = size change speed
-    // 120 = target size
-    // 21 = 20 + 1
     // siz.x = (siz.x * 20 + 100) / 21.0L;
     // siz.y = (siz.y * 20 + 120) / 21.0L;
     color = sf :: Color(153, 101, 60);
 }
 
-void Button :: doActionClick(void) {
+void Button :: doActionClick(GoBoard &goBoard, Operation& op) {
     switch (type){
-        case 0: 
-            // calls startGame;
+        case 0: //Undo
+            op.Rollback(goBoard, 0);
             break; 
-        case 1:
-            // calls endGame;
+        case 1: //Redo
+            op.Rollback(goBoard, 1);
             break;
         case 2:
-            // calls undoMove;
+            op.Resign(goBoard);
             break;
         case 3:
-            // calls redoMove;
+            op.NewGame(goBoard);
             break;
         case 4:
-            // calls passMove;
-            break;
-        case 5: 
-            // calls resign;
+            op.Pass(goBoard);
             break;
     }
 }
