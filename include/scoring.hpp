@@ -16,4 +16,4 @@ class Score{
         Piece winner(void);
 };
 
-#endif SCORING_HPP
+#endif

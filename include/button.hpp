@@ -35,4 +35,4 @@ class Button{
         void doActionClick(GoBoard &goBoard, Operation& op);
 };
 
-#endif BUTTON_HPP
+#endif

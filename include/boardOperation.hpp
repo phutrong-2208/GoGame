@@ -15,4 +15,4 @@ class Operation{
 };
 
 
-#endif OPERATION_HPP
+#endif

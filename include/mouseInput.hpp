@@ -9,4 +9,4 @@ class MouseInput{
         sf :: Vector2f getPosition(sf :: RenderWindow &window, RenderZone &render);
 };
 
-#endif MOUSE_INPUT_HPP
+#endif

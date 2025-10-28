@@ -26,4 +26,4 @@ class GoBoard{
         bool ended(void);
         std :: pair<int, int> getScore(void);
 };
-#endif BOARD_HPP
+#endif
