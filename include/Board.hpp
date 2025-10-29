@@ -15,10 +15,11 @@ class GoBoard{
         Piece turn;
         int pass; //save the number consecutive passes of both players, if both people skip their turn, the game will end
         std :: vector<std :: vector<Piece>> grid;
-        GoBoard(int _siz = 13){
-            siz = 13;
-            grid.resize(_siz, std :: vector<Piece>(_siz));
+        void setSize(int _siz) {
+            siz = _siz;
+            grid.assign(siz, std :: vector<Piece>(siz, Empty));
         }
+        GoBoard(int _siz = 13) {setSize(_siz);}
         bool newGame(void);
         bool newStep(int x, int y, Piece color);
         bool ended(void);

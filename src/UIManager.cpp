@@ -34,16 +34,42 @@ void Manager :: doActionClick(Manager &ui, Button &button, sf :: RenderWindow &w
                 break;
             case 5:
                 ui.State = GAME_MENU;
-            break;
+                break;
             case 6:
                 ui.State = BOARD;
                 break;
             case 7: 
+                ui.State = MODE_MENU;
                 break;
             case 8:
+                ui.State = SETTING_MENU;
                 break;
             case 9:
                 window.close();
+                break;
+            case 10:
+                goBoard.setSize(button.attr[i]);
+                break;
+            case 11:
+                metaControls.playWithBot = button.attr[i];
+                break;
+            case 12:
+                metaControls.difficulty = button.attr[i];
+                break;
+            case 13:
+                metaControls.startAsWhite = button.attr[i];
+                break;
+            case 14:
+                metaControls.musicActive = button.attr[i];
+                break;
+            case 15:
+                metaControls.soundActive = button.attr[i];
+                break;
+            case 16:
+                metaControls.audioVolume += button.attr[i];
+                break;
+            case 17:
+                metaControls.themeChoice = button.attr[i];
                 break;
         }
     }
@@ -76,10 +102,9 @@ void Manager :: boardManager(Manager &ui, sf :: RenderWindow &window, std :: vec
 //================================================================================================================================
 //For menu 
 void Manager :: setupMenuButton(RenderZone &render, std :: vector<Button> &button_list){
-    int button_count = 4;
     int distance_between_button = 25;
     float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
-    float height = (2.0f * render.ZONE_SIZE / 3.0f - 4.0f * distance_between_button) / 4;
+    float height = (2.0f * render.ZONE_SIZE / 3.0f) / 4.0f - distance_between_button;
 
     float tmp_posX = width, tmp_posY = 1.0f * render.ZONE_SIZE / 3.0f;
     button_list.emplace_back(Button(
@@ -91,14 +116,14 @@ void Manager :: setupMenuButton(RenderZone &render, std :: vector<Button> &butto
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         7, 1, 
-        {"Mode"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Modes"}, {sf :: Color(222, 184, 135)}, {0})
     );
 
     tmp_posY += distance_between_button + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         8, 1, 
-        {"Setting"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Settings"}, {sf :: Color(222, 184, 135)}, {0})
     );
 
     tmp_posY += distance_between_button + height;
@@ -106,6 +131,86 @@ void Manager :: setupMenuButton(RenderZone &render, std :: vector<Button> &butto
         {tmp_posX, tmp_posY}, {width, height}, 
         9, 1, 
         {"Exit"}, {sf :: Color(222, 184, 135)}, {0})
+    );
+}
+
+void Manager :: setupModeButton(RenderZone &render, std :: vector<Button> &button_list){
+    int distance_between_button = 25;
+    float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
+    float height = (2.0f * render.ZONE_SIZE / 3.0f) / 5.0f - distance_between_button;
+
+    float tmp_posX = width, tmp_posY = 1.0f * render.ZONE_SIZE / 3.0f;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        10, 3, 
+        {"9x9", "13x13", "19x19"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {9, 13, 19})
+    );
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        11, 2, 
+        {"Play Human", "Play Bot"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
+    );
+
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        12, 3, 
+        {"Easy", "Medium", "Hard"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1, 2})
+    );
+
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        13, 2, 
+        {"Play Black", "Play White"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
+    );
+
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        5, 1, 
+        {"Save and return"}, {sf :: Color(222, 184, 135)}, {0})
+    );
+}
+
+void Manager :: setupSettingButton(RenderZone &render, std :: vector<Button> &button_list){
+    int distance_between_button = 25;
+    float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
+    float height = (2.0f * render.ZONE_SIZE / 3.0f) / 5.0f - distance_between_button;
+
+    float tmp_posX = width, tmp_posY = 1.0f * render.ZONE_SIZE / 3.0f;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        14, 2, 
+        {"Music On", "Music Off"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {1, 0})
+    );
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        15, 2, 
+        {"Sounds On", "Sounds Off"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {1, 0})
+    );
+
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        16, 3, 
+        {"Volume down", "placeholder", "Volume up"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {-5, 0, 5})
+    );
+
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        17, 3, 
+        {"Classic", "Futuristic", "Magical"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1, 2})
+    );
+
+    tmp_posY += distance_between_button + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        5, 1, 
+        {"Save and return"}, {sf :: Color(222, 184, 135)}, {0})
     );
 }
 
@@ -127,6 +232,7 @@ void Manager :: drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZon
         button.drawButton(window);
     }    
 }
+
 void Manager :: MenuManager(Manager &ui, sf :: RenderWindow &window, std :: vector<Button> button_list, RenderZone&render, MouseInput& mouse, GoBoard& goBoard, Operation& op, sf :: Event event){
     if(event.type == sf :: Event :: MouseButtonPressed){
         for (Button &button : button_list) {

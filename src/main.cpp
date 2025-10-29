@@ -16,14 +16,18 @@ Operation op;
 Button setup;
 
 Manager ui;
-std :: vector<Button> board_button_list; // save board button
-std :: vector<Button> menu_button_list; // save menu button
+std :: vector<Button> board_button_list;   // save board button
+std :: vector<Button> menu_button_list;    // save menu button
+std :: vector<Button> mode_button_list;    // save mode button
+std :: vector<Button> setting_button_list; // save setting button
 
 int main(){
     sf :: RenderWindow window(sf :: VideoMode({1200, 800}), "GoGame");
     render.initSize(window);
     setup.setupButtonOperation(render, board_button_list);
     ui.setupMenuButton(render, menu_button_list);
+    ui.setupModeButton(render, mode_button_list);
+    ui.setupSettingButton(render, setting_button_list);
     op.history.emplace_back(goBoard);
 
     while(window.isOpen()){
@@ -50,6 +54,14 @@ int main(){
                 ui.MenuManager(ui, window, menu_button_list, render, mouse, goBoard, op, event);
                 if(ui.State != GAME_MENU) break;
             }
+            else if(ui.State == SETTING_MENU){
+                ui.MenuManager(ui, window, setting_button_list, render, mouse, goBoard, op, event);
+                if(ui.State != SETTING_MENU) break;
+            }
+            else if(ui.State == MODE_MENU){
+                ui.MenuManager(ui, window, mode_button_list, render, mouse, goBoard, op, event);
+                if(ui.State != MODE_MENU) break;
+            }
         }
         window.clear();
         if(ui.State == BOARD){
@@ -65,10 +77,16 @@ int main(){
             }
         }
         else if(ui.State == SETTING_MENU){
-
+            ui.drawMenu(window, goBoard, render, setting_button_list);
+            for (Button &button : setting_button_list) {
+                ui.doActionHover(button, window, mouse, render);
+            }
         }
         else if(ui.State == MODE_MENU){
-
+            ui.drawMenu(window, goBoard, render, mode_button_list);
+            for (Button &button : mode_button_list) {
+                ui.doActionHover(button, window, mouse, render);
+            }
         }
         window.display();
     }

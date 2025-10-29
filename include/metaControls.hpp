@@ -7,11 +7,11 @@ class MetaControls{ // contains anything related to the game but not part of the
     private:
     public:
         bool playWithBot = 0, startAsWhite = 0;
-        bool musicActive = 0, soundActive = 0;
-        int audioVolume = 0, audioChoice = 0;
-        int boardChoice = 0;
-        int stoneChoice = 0;
+        bool musicActive = 0, soundActive = 0, audioVolume = 0;
+        int themeChoice = 0;
         int difficulty = 0;
 };
+
+static MetaControls metaControls;
 
 #endif

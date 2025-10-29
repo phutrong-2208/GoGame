@@ -21,14 +21,14 @@ void Button :: drawButton(sf :: RenderWindow &window){
             assert(false);
         }
 
-        sf :: Text label(Text[i], font, 36);
+        sf :: Text label(Text[i], font, 100);
 
         label.setColor(sf :: Color :: Black);
 
         sf :: FloatRect textBounds = label.getGlobalBounds();
         sf :: FloatRect boxBounds = box.getGlobalBounds();
         // do not use textBounds.height
-        float realHeight = (sf :: Text){"o", font, 36}.getGlobalBounds().height;
+        float realHeight = (sf :: Text){"o", font, 100}.getGlobalBounds().height;
 
         //centering the text in the box
         label.setOrigin(textBounds.left + textBounds.width / 2.0, textBounds.top + realHeight / 2.0);
