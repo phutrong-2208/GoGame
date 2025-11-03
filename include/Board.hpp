@@ -26,7 +26,6 @@ class GoBoard{
         bool newStep(int x, int y, Piece color);
         bool ended(void);
         std :: pair<int, int> getScore(void);
-    private:
         bool inside(int x, int y);
         bool eatable(int x, int y);
         bool move_check(int x, int y);

@@ -42,7 +42,7 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink){
     }
 }
 
-void Button :: setupButtonOperation(RenderZone &render, std :: vector<Button> &button_list){
+void Button :: setupButtonOperation(std :: vector<Button> &button_list){
     int button_count = 5;
     float height = 1.0f * (render.ZONE_SIZE - 2 * render.SHIFT_CONST - (button_count + 1) * render.CONTROL_SHIFT) / button_count;
     float width = render.ZONE_SIZE * (render.ASPECT_RATIO - 1) - render.SHIFT_CONST - 2 * render.CONTROL_SHIFT; 
@@ -82,6 +82,5 @@ void Button :: setupButtonOperation(RenderZone &render, std :: vector<Button> &b
         {"Menu"}, {sf :: Color(222, 184, 135)}, {0})
     );
 }
-
 
 

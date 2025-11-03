@@ -22,4 +22,7 @@ class RenderZone{
         void normalizeSize(sf :: RenderWindow &window);
         void drawControlPanel(sf :: RenderWindow &window);
 };
+
+static RenderZone render;
+
 #endif

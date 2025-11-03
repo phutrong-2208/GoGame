@@ -23,16 +23,16 @@ class Manager{
             State = GAME_MENU;
         }
 
-        void boardManager(Manager& ui, sf :: RenderWindow &window, std :: vector<Button> &button_list, RenderZone&render, MouseInput& mouse, GoBoard& goBoard, Operation& op, sf :: Event event);
-        void drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, RenderZone& render, MouseInput& mouse, std :: vector<Button> button_list);
-        void drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZone&render, std :: vector<Button> &button_list, std :: string FontLink);
-        void doActionHover(Button &button, sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render);
-        void doActionClick(Manager &ui, Button &button, sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render, GoBoard &goBoard, Operation& op); 
-        void setupMenuButton(RenderZone &render, std :: vector<Button> &button_list);
-        void setupModeButton(RenderZone &render, std :: vector<Button> &button_list);
-        void setupSettingButton(RenderZone &render, std :: vector<Button> &button_list);
-        void MenuManager(Manager &ui, sf :: RenderWindow &window, std :: vector<Button> button_list, RenderZone&render, MouseInput& mouse, GoBoard& goBoard, Operation& op, sf :: Event event);
+        void boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :: vector<Button> &button_list, sf :: Event event);
+        void drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: vector<Button> button_list);
+        void drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink);
+        void doActionHover(Button &button, sf :: RenderWindow &window);
+        void doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWindow &window); 
+        void setupMenuButton(std :: vector<Button> &button_list);
+        void setupModeButton(std :: vector<Button> &button_list);
+        void setupSettingButton(std :: vector<Button> &button_list);
+        void MenuManager(sf :: RenderWindow &window, std :: vector<Button> button_list, GoBoard& goBoard, sf :: Event event);
 }; 
 
-
+static Manager ui;
 #endif

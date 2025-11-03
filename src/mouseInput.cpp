@@ -5,7 +5,7 @@ double Euclidean(double x1, double y1, double x2, double y2){ //Euclidean distan
     x1 -= x2; y1 -= y2;
     return sqrtl(x1 * x1 + y1 * y1);
 }
-sf :: Vector2f MouseInput :: getPosition(sf :: RenderWindow &window, RenderZone &render) {
+sf :: Vector2f MouseInput :: getPosition(sf :: RenderWindow &window) {
     auto [mouseX, mouseY] = sf :: Mouse :: getPosition(window);
 
     mouseX = mouseX * 800.0L / render.WINDOW_SIZE;
@@ -13,7 +13,7 @@ sf :: Vector2f MouseInput :: getPosition(sf :: RenderWindow &window, RenderZone 
 
     return sf :: Vector2f(mouseX, mouseY);
 }
-std :: pair<int, int> MouseInput ::  checkBoard(sf :: RenderWindow &window, RenderZone &render, GoBoard &goBoard){
+std :: pair<int, int> MouseInput ::  checkBoard(sf :: RenderWindow &window, GoBoard &goBoard){
     auto [mouseX, mouseY] = sf :: Mouse :: getPosition(window);
 
     mouseX = mouseX * 800.0L / render.WINDOW_SIZE;

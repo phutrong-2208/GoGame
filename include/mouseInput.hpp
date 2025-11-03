@@ -5,8 +5,9 @@
 class MouseInput{
     private:
     public:
-        std :: pair<int, int> checkBoard(sf :: RenderWindow &window, RenderZone& render, GoBoard &goBoard);  
-        sf :: Vector2f getPosition(sf :: RenderWindow &window, RenderZone &render);
+        std :: pair<int, int> checkBoard(sf :: RenderWindow &window, GoBoard &goBoard);  
+        sf :: Vector2f getPosition(sf :: RenderWindow &window);
 };
 
+static MouseInput mouse;
 #endif

@@ -34,7 +34,7 @@ class Button{
             assert(attr.size() == cnt);
         }
         void drawButton(sf :: RenderWindow &window, std :: string FontLink);
-        void setupButtonOperation(RenderZone &render, std :: vector<Button> &button_list);
+        void setupButtonOperation(std :: vector<Button> &button_list);
 };
 
 #endif

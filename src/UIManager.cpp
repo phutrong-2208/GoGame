@@ -1,8 +1,8 @@
 #include "UIManager.hpp"
 
 SoundEffect sounds;
-void Manager :: doActionHover(Button &button, sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render) {
-    auto [mouseX, mouseY] = mouse.getPosition(window, render);
+void Manager :: doActionHover(Button &button, sf :: RenderWindow &window) {
+    auto [mouseX, mouseY] = mouse.getPosition(window);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
     for (int i = 0; i < button.cnt; ++i) {
         button.color[i] = sf :: Color(222, 184, 135);
@@ -13,8 +13,8 @@ void Manager :: doActionHover(Button &button, sf :: RenderWindow &window, MouseI
     }
 }
 
-void Manager :: doActionClick(Manager &ui, Button &button, sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render, GoBoard &goBoard, Operation& op) {
-    auto [mouseX, mouseY] = mouse.getPosition(window, render);
+void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWindow &window) {
+    auto [mouseX, mouseY] = mouse.getPosition(window);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
     for (int i = 0; i < button.cnt; ++i) {
         if (button.position.x + tmpSpace * i >= mouseX) continue;
@@ -36,16 +36,16 @@ void Manager :: doActionClick(Manager &ui, Button &button, sf :: RenderWindow &w
                 op.NewGame(goBoard);
                 break;
             case 5:
-                ui.State = GAME_MENU;
+                State = GAME_MENU;
                 break;
             case 6:
-                ui.State = BOARD;
+                State = BOARD;
                 break;
             case 7: 
-                ui.State = MODE_MENU;
+                State = MODE_MENU;
                 break;
             case 8:
-                ui.State = SETTING_MENU;
+                State = SETTING_MENU;
                 break;
             case 9:
                 window.close();
@@ -80,16 +80,16 @@ void Manager :: doActionClick(Manager &ui, Button &button, sf :: RenderWindow &w
 
 //================================================================================================================================
 //For board 
-void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, RenderZone& render, MouseInput& mouse, std :: vector<Button> button_list){
-    auto [snatchX, snatchY] = mouse.checkBoard(window, render, goBoard);
+void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: vector<Button> button_list){
+    auto [snatchX, snatchY] = mouse.checkBoard(window, goBoard);
     render.drawMain(window, goBoard);
     if (snatchX != 999) render.drawPiece(window, goBoard, snatchX, snatchY, goBoard.turn);
     for (Button &button : button_list) {
         button.drawButton(window, "font\\Bungee_Regular.ttf");
     }
 }
-void Manager :: boardManager(Manager &ui, sf :: RenderWindow &window, std :: vector<Button> &button_list, RenderZone&render, MouseInput& mouse, GoBoard& goBoard, Operation& op, sf :: Event event){
-    auto [snatchX, snatchY] = mouse.checkBoard(window, render, goBoard);
+void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :: vector<Button> &button_list, sf :: Event event){
+    auto [snatchX, snatchY] = mouse.checkBoard(window, goBoard);
     if(event.type == sf :: Event :: MouseButtonPressed){
         if(goBoard.newStep(snatchX, snatchY, goBoard.turn)){
             sounds.piece.play();
@@ -98,14 +98,14 @@ void Manager :: boardManager(Manager &ui, sf :: RenderWindow &window, std :: vec
             return;
         }
         for (Button &button : button_list) {
-            doActionClick(ui, button, window, mouse, render, goBoard, op);
+            doActionClick(goBoard, button, window);
         }
     }
 }
 
 //================================================================================================================================
 //For menu 
-void Manager :: setupMenuButton(RenderZone &render, std :: vector<Button> &button_list){
+void Manager :: setupMenuButton(std :: vector<Button> &button_list){
     int distance_between_button = 25;
     float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
     float height = (2.0f * render.ZONE_SIZE / 3.0f) / 4.0f - distance_between_button;
@@ -138,7 +138,7 @@ void Manager :: setupMenuButton(RenderZone &render, std :: vector<Button> &butto
     );
 }
 
-void Manager :: setupModeButton(RenderZone &render, std :: vector<Button> &button_list){
+void Manager :: setupModeButton(std :: vector<Button> &button_list){
     int distance_between_button = 25;
     float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
     float height = (2.0f * render.ZONE_SIZE / 3.0f) / 5.0f - distance_between_button;
@@ -178,7 +178,7 @@ void Manager :: setupModeButton(RenderZone &render, std :: vector<Button> &butto
     );
 }
 
-void Manager :: setupSettingButton(RenderZone &render, std :: vector<Button> &button_list){
+void Manager :: setupSettingButton(std :: vector<Button> &button_list){
     int distance_between_button = 25;
     float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
     float height = (2.0f * render.ZONE_SIZE / 3.0f) / 5.0f - distance_between_button;
@@ -218,7 +218,7 @@ void Manager :: setupSettingButton(RenderZone &render, std :: vector<Button> &bu
     );
 }
 
-void Manager :: drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZone&render, std :: vector<Button> &button_list, std :: string FontLink){
+void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink){
     sf :: Texture background;
     if(!background.loadFromFile("assets\\MenuGameBackground.png")){
         std :: cout << "Cannot file Menu_background image!\n";
@@ -237,10 +237,10 @@ void Manager :: drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZon
     }    
 }
 
-void Manager :: MenuManager(Manager &ui, sf :: RenderWindow &window, std :: vector<Button> button_list, RenderZone&render, MouseInput& mouse, GoBoard& goBoard, Operation& op, sf :: Event event){
+void Manager :: MenuManager(sf :: RenderWindow &window, std :: vector<Button> button_list, GoBoard& goBoard, sf :: Event event){
     if(event.type == sf :: Event :: MouseButtonPressed){
         for (Button &button : button_list) {
-            doActionClick(ui, button, window, mouse, render, goBoard, op);
+            doActionClick(goBoard, button, window);
         }
     }
 }
