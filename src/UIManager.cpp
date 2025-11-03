@@ -1,4 +1,6 @@
 #include "UIManager.hpp"
+
+SoundEffect sounds;
 void Manager :: doActionHover(Button &button, sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render) {
     auto [mouseX, mouseY] = mouse.getPosition(window, render);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
@@ -18,6 +20,7 @@ void Manager :: doActionClick(Manager &ui, Button &button, sf :: RenderWindow &w
         if (button.position.x + tmpSpace * i >= mouseX) continue;
         if (button.position.x + tmpSpace * (i + 1) <= mouseX) continue;
         if (button.position.y >= mouseY || mouseY >= button.position.y + button.siz.y) continue;
+        sounds.click.play();
         
         switch (button.type){
             case 1: // Undo / Redo
@@ -89,6 +92,7 @@ void Manager :: boardManager(Manager &ui, sf :: RenderWindow &window, std :: vec
     auto [snatchX, snatchY] = mouse.checkBoard(window, render, goBoard);
     if(event.type == sf :: Event :: MouseButtonPressed){
         if(goBoard.newStep(snatchX, snatchY, goBoard.turn)){
+            sounds.piece.play();
             op.history.emplace_back(goBoard);
             op.snap.clear();
             return;

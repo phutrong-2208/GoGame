@@ -38,7 +38,6 @@ void Button :: drawButton(sf :: RenderWindow &window){
                                     (boxBounds.height * 0.35f) / realHeight);
 
         label.setScale(fit_ratio, fit_ratio); // resize the text bounds for fitting with the box
-
         window.draw(label);
     }
 }

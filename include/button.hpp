@@ -9,7 +9,6 @@
 #include <iostream>
 #include <cassert>
 
-
 class Button{
     private:
     public:

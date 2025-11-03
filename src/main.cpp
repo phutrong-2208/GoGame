@@ -8,12 +8,15 @@
 #include "renderZone.hpp"
 #include "boardOperation.hpp"
 #include "UIManager.hpp"
+#include "soundEffect.hpp"
 
+SoundEffect sound;
 GoBoard goBoard;
 RenderZone render;
 MouseInput mouse;
 Operation op;
 Button setup;
+
 
 Manager ui;
 std :: vector<Button> board_button_list;   // save board button
@@ -29,6 +32,10 @@ int main(){
     ui.setupModeButton(render, mode_button_list);
     ui.setupSettingButton(render, setting_button_list);
     op.history.emplace_back(goBoard);
+
+    sound.Background.setLoop(true);
+    sound.Background.play();
+    
 
     while(window.isOpen()){
         sf :: Event event; 

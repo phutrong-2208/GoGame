@@ -4,13 +4,16 @@
 #include <vector>
 #include <iostream>
 
+#include "SFML/Audio.hpp"
+#include "SFML/Graphics.hpp"
+
 #include "button.hpp"
 #include "boardOperation.hpp"
-#include "SFML/Graphics.hpp"
 #include "Board.hpp"
 #include "mouseInput.hpp"
 #include "renderZone.hpp"
 #include "metaControls.hpp"
+#include "soundEffect.hpp"
 
 enum Display {GAME_MENU, BOARD, SETTING_MENU, MODE_MENU};
 class Manager{

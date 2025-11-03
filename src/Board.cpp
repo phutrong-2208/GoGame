@@ -1,6 +1,9 @@
 #include "Board.hpp"
 #include "scoring.hpp"
+#include "soundEffect.hpp"
+
 #include <deque>
+
 
 //===============================================================================
 std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states till current state, use for rollback operation
@@ -115,6 +118,7 @@ bool GoBoard :: newStep(int x, int y, Piece turn){
     temp.grid[x][y] = turn;
     cntCaptured = 0;
     if(!move_check(x, y) or (previous_grid.size() > 1 and temp.grid == previous_grid.end()[-2])) return false;
+    
 
     if(turn == Black) score.blackCaptured += cntCaptured;
     else score.whiteCaptured += cntCaptured;
