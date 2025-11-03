@@ -25,7 +25,7 @@ class Manager{
 
         void boardManager(Manager& ui, sf :: RenderWindow &window, std :: vector<Button> &button_list, RenderZone&render, MouseInput& mouse, GoBoard& goBoard, Operation& op, sf :: Event event);
         void drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, RenderZone& render, MouseInput& mouse, std :: vector<Button> button_list);
-        void drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZone&render, std :: vector<Button> &button_list);
+        void drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZone&render, std :: vector<Button> &button_list, std :: string FontLink);
         void doActionHover(Button &button, sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render);
         void doActionClick(Manager &ui, Button &button, sf :: RenderWindow &window, MouseInput& mouse, RenderZone& render, GoBoard &goBoard, Operation& op); 
         void setupMenuButton(RenderZone &render, std :: vector<Button> &button_list);

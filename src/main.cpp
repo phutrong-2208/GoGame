@@ -81,19 +81,19 @@ int main(){
             }
         }
         else if(ui.State == GAME_MENU){
-            ui.drawMenu(window, goBoard, render, menu_button_list);
+            ui.drawMenu(window, goBoard, render, menu_button_list, "font\\Bungee_Regular.ttf");
             for (Button &button : menu_button_list) {
                 ui.doActionHover(button, window, mouse, render);
             }
         }
         else if(ui.State == SETTING_MENU){
-            ui.drawMenu(window, goBoard, render, setting_button_list);
+            ui.drawMenu(window, goBoard, render, setting_button_list, "font\\arial.ttf");
             for (Button &button : setting_button_list) {
                 ui.doActionHover(button, window, mouse, render);
             }
         }
         else if(ui.State == MODE_MENU){
-            ui.drawMenu(window, goBoard, render, mode_button_list);
+            ui.drawMenu(window, goBoard, render, mode_button_list, "font\\arial.ttf");
             for (Button &button : mode_button_list) {
                 ui.doActionHover(button, window, mouse, render);
             }

@@ -85,7 +85,7 @@ void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, RenderZon
     render.drawMain(window, goBoard);
     if (snatchX != 999) render.drawPiece(window, goBoard, snatchX, snatchY, goBoard.turn);
     for (Button &button : button_list) {
-        button.drawButton(window);
+        button.drawButton(window, "font\\Bungee_Regular.ttf");
     }
 }
 void Manager :: boardManager(Manager &ui, sf :: RenderWindow &window, std :: vector<Button> &button_list, RenderZone&render, MouseInput& mouse, GoBoard& goBoard, Operation& op, sf :: Event event){
@@ -218,7 +218,7 @@ void Manager :: setupSettingButton(RenderZone &render, std :: vector<Button> &bu
     );
 }
 
-void Manager :: drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZone&render, std :: vector<Button> &button_list){
+void Manager :: drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZone&render, std :: vector<Button> &button_list, std :: string FontLink){
     sf :: Texture background;
     if(!background.loadFromFile("assets\\MenuGameBackground.png")){
         std :: cout << "Cannot file Menu_background image!\n";
@@ -233,7 +233,7 @@ void Manager :: drawMenu(sf :: RenderWindow &window, GoBoard& goBoard, RenderZon
     bg.setScale(render_width / background.getSize().x, render_height / background.getSize().y);
     window.draw(bg);
     for (Button& button : button_list){
-        button.drawButton(window);
+        button.drawButton(window, FontLink);
     }    
 }
 

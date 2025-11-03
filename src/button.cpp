@@ -1,6 +1,6 @@
 #include "button.hpp"
 
-void Button :: drawButton(sf :: RenderWindow &window){
+void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink){
     for (int i = 0; i < cnt; ++i) {
         //set the position , color and the size of the boxes
         box.setPosition({position.x + 1.0f * i * siz.x / cnt, position.y});
@@ -16,7 +16,7 @@ void Button :: drawButton(sf :: RenderWindow &window){
         //set words font of the texts on each button
         sf :: Font font;
 
-        if(!font.loadFromFile("font\\Bungee_Regular.ttf")){
+        if(!font.loadFromFile(FontLink)){
             std :: cout << "The font doesn't exist!";
             assert(false);
         }

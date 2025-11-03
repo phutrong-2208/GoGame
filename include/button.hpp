@@ -33,7 +33,7 @@ class Button{
             assert(color.size() == cnt);
             assert(attr.size() == cnt);
         }
-        void drawButton(sf :: RenderWindow &window);
+        void drawButton(sf :: RenderWindow &window, std :: string FontLink);
         void setupButtonOperation(RenderZone &render, std :: vector<Button> &button_list);
 };
 
