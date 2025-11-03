@@ -59,14 +59,17 @@ int main(){
             }
             else if(ui.State == GAME_MENU){
                 ui.MenuManager(ui, window, menu_button_list, render, mouse, goBoard, op, event);
+                op.reset(); op.history.emplace_back(goBoard);
                 if(ui.State != GAME_MENU) break;
             }
             else if(ui.State == SETTING_MENU){
                 ui.MenuManager(ui, window, setting_button_list, render, mouse, goBoard, op, event);
+                op.reset(); op.history.emplace_back(goBoard);
                 if(ui.State != SETTING_MENU) break;
             }
             else if(ui.State == MODE_MENU){
                 ui.MenuManager(ui, window, mode_button_list, render, mouse, goBoard, op, event);
+                op.reset(); op.history.emplace_back(goBoard);
                 if(ui.State != MODE_MENU) break;
             }
         }

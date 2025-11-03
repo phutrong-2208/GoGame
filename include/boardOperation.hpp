@@ -10,6 +10,7 @@ class Operation{
         std :: vector<GoBoard> history;
         std :: vector<GoBoard> snap;
 
+        void reset(void);
         void Rollback(GoBoard &goBoard, int t);
         void NewGame(GoBoard& goBoard);
         void Resign(GoBoard& goBoard);

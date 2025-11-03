@@ -7,6 +7,8 @@
 #include <stack>
 #include <iostream>
 
+#include "scoring.hpp"
+#include "soundEffect.hpp"
 enum Piece {Empty, Black, White};
 
 class GoBoard{

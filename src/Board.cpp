@@ -1,10 +1,4 @@
 #include "Board.hpp"
-#include "scoring.hpp"
-#include "soundEffect.hpp"
-
-#include <deque>
-
-
 //===============================================================================
 std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states till current state, use for rollback operation
 std :: vector<std :: pair<int, int>> validMove;

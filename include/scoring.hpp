@@ -12,8 +12,6 @@ class Score{
             whiteCaptured = blackCaptured = 0;
             whiteTerr = blackTerr = 0;
         }
-
-        Piece winner(void);
 };
 
 #endif

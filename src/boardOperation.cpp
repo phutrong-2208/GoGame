@@ -1,6 +1,9 @@
 #include <boardOperation.hpp>
 
-
+void Operation :: reset(void){
+    history.clear();
+    snap.clear();
+}
 void Operation :: Rollback(GoBoard &goBoard, int t){
     if(t == 0) { //undo case
         if(history.size() <= 1) return;
