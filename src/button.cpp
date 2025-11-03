@@ -16,7 +16,7 @@ void Button :: drawButton(sf :: RenderWindow &window){
         //set words font of the texts on each button
         sf :: Font font;
 
-        if(!font.loadFromFile("font\\arial.ttf")){
+        if(!font.loadFromFile("font\\Bungee_Regular.ttf")){
             std :: cout << "The font doesn't exist!";
             assert(false);
         }
