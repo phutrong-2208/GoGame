@@ -15,7 +15,8 @@
 #include "metaControls.hpp"
 #include "soundEffect.hpp"
 
-enum Display {GAME_MENU, BOARD, SETTING_MENU, MODE_MENU};
+enum Display {GAME_MENU, BOARD, SETTING_MENU, MODE_MENU, CONF_DIALOG, SCORE};
+
 class Manager{
     public: 
         Display State;
@@ -32,7 +33,10 @@ class Manager{
         void setupModeButton(std :: vector<Button> &button_list);
         void setupSettingButton(std :: vector<Button> &button_list);
         void MenuManager(sf :: RenderWindow &window, std :: vector<Button> button_list, GoBoard& goBoard, sf :: Event event);
+        void drawConfigDialog(sf :: RenderWindow &window, std :: vector<Button> button_list);
+        void drawScoreDisplayed(sf :: RenderWindow& window);
 }; 
+
 
 static Manager ui;
 #endif

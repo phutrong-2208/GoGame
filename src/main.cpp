@@ -28,7 +28,7 @@ int main(){
     sound.Background.setLoop(true);
     sound.Background.play();
     
-
+    
     while(window.isOpen()){
         sf :: Event event; 
         while(window.pollEvent(event)){  //get the value and pop it from the queue
@@ -38,7 +38,7 @@ int main(){
             if(event.type == sf :: Event :: Resized){ // normalize window size
                 render.normalizeSize(window);
             }
-
+            
             if(ui.State == BOARD){
                 ui.boardManager(window, goBoard, button_list[0], event);
                 if(goBoard.ended()){

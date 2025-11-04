@@ -1,32 +1,51 @@
 #include "button.hpp"
 
-void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink){
+void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink, std :: string ImageLink){
+    sf :: FloatRect textBounds, boxBounds;
     for (int i = 0; i < cnt; ++i) {
-        //set the position , color and the size of the boxes
-        box.setPosition({position.x + 1.0f * i * siz.x / cnt, position.y});
-        box.setSize({1.0f * siz.x / cnt, siz.y});
-        box.setFillColor(color[i]);
-        
-        //set the color of outline and the thinkness
-        box.setOutlineThickness(2);
-        box.setOutlineColor(sf :: Color :: Black);
-        // box.setOrigin(siz.x * 0.5f / cnt, siz.y * 0.5f);
-        window.draw(box);
+        if(ImageLink != ""){
+            sf :: Texture button;
+            if(!button.loadFromFile(ImageLink)){
+                std :: cout << "The image doesn't exist!\n";
+                assert(false);
+            }
+            float image_width = button.getSize().x;
+            float image_height = button.getSize().y;
 
+            button.setSmooth(true);
+            sf :: Sprite sprite(button);
+            sprite.setScale(siz.x / image_width, siz.y / image_height);
+            sprite.setPosition({position.x + 1.0f * i * siz.x / cnt, position.y});;
+            boxBounds = sprite.getGlobalBounds();
+            window.draw(sprite);
+        }
+        else{
+            //set the position , color and the size of the boxes
+            box.setPosition({position.x + 1.0f * i * siz.x / cnt, position.y});
+            box.setSize({1.0f * siz.x / cnt, siz.y});
+            box.setFillColor(color[i]);
+            
+            //set the color of outline and the thinkness
+            box.setOutlineThickness(2);
+            box.setOutlineColor(sf :: Color :: Black);
+            window.draw(box); 
+            boxBounds = box.getGlobalBounds();
+        }
+        
         //set words font of the texts on each button
         sf :: Font font;
-
+        
         if(!font.loadFromFile(FontLink)){
             std :: cout << "The font doesn't exist!";
             assert(false);
         }
-
+        
         sf :: Text label(Text[i], font, 100);
-
+        
         label.setColor(sf :: Color :: Black);
+        textBounds = label.getGlobalBounds();
 
-        sf :: FloatRect textBounds = label.getGlobalBounds();
-        sf :: FloatRect boxBounds = box.getGlobalBounds();
+        
         // do not use textBounds.height
         float realHeight = (sf :: Text){"o", font, 100}.getGlobalBounds().height;
 

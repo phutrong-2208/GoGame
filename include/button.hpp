@@ -19,9 +19,10 @@ class Button{
         std :: vector<std :: string> Text;
         std :: vector<sf :: Color> color;
         std :: vector<int> attr;
+        std :: string ImageLink;
         Button(){}
         Button(sf :: Vector2f _position, sf :: Vector2f _siz, int _type, int _cnt, 
-            std :: vector<std :: string> _Text, std :: vector<sf :: Color> _color, std :: vector<int> _attr){
+            std :: vector<std :: string> _Text, std :: vector<sf :: Color> _color, std :: vector<int> _attr, std :: string _ImageLink = ""){
             position = _position;
             siz = _siz;
             type = _type;
@@ -29,11 +30,12 @@ class Button{
             Text.swap(_Text);
             color.swap(_color);
             attr.swap(_attr);
+            ImageLink = _ImageLink;
             assert(Text.size() == cnt);
             assert(color.size() == cnt);
             assert(attr.size() == cnt);
         }
-        void drawButton(sf :: RenderWindow &window, std :: string FontLink);
+        void drawButton(sf :: RenderWindow &window, std :: string FontLink, std :: string ImageLink = "");
         void setupButtonOperation(std :: vector<Button> &button_list);
 };
 

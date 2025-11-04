@@ -114,27 +114,27 @@ void Manager :: setupMenuButton(std :: vector<Button> &button_list){
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         6, 1, 
-        {"Play"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Play"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
     );
     tmp_posY += distance_between_button + height;
     button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
+        {tmp_posX, tmp_posY}, {width, height},  
         7, 1, 
-        {"Modes"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Modes"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
     );
 
     tmp_posY += distance_between_button + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         8, 1, 
-        {"Settings"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Settings"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
     );
 
     tmp_posY += distance_between_button + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         9, 1, 
-        {"Exit"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Exit"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
     );
 }
 
@@ -233,7 +233,7 @@ void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &butt
     bg.setScale(render_width / background.getSize().x, render_height / background.getSize().y);
     window.draw(bg);
     for (Button& button : button_list){
-        button.drawButton(window, FontLink);
+        button.drawButton(window, FontLink, button.ImageLink);
     }    
 }
 
@@ -243,4 +243,11 @@ void Manager :: MenuManager(sf :: RenderWindow &window, std :: vector<Button> bu
             doActionClick(goBoard, button, window);
         }
     }
+}
+
+void Manager :: drawConfigDialog(sf :: RenderWindow &window, std :: vector<Button> button_list){    
+
+}
+void Manager :: drawScoreDisplayed(sf :: RenderWindow &window){
+    
 }
