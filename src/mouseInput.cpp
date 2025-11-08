@@ -14,10 +14,7 @@ sf :: Vector2f MouseInput :: getPosition(sf :: RenderWindow &window) {
     return sf :: Vector2f(mouseX, mouseY);
 }
 std :: pair<int, int> MouseInput ::  checkBoard(sf :: RenderWindow &window, GoBoard &goBoard){
-    auto [mouseX, mouseY] = sf :: Mouse :: getPosition(window);
-
-    mouseX = mouseX * 800.0L / render.WINDOW_SIZE;
-    mouseY = mouseY * 800.0L / render.WINDOW_SIZE;
+    auto [mouseX, mouseY] = getPosition(window);
 
     int snatchX = -1, snatchY = -1;
     double snatchD = 99999;

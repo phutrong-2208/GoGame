@@ -10,9 +10,14 @@
 #include "UIManager.hpp"
 #include "soundEffect.hpp"
 
+Operation op;
+MetaControls metaControls;
+MouseInput mouse;
 SoundEffect sound;
 Button setup;
 GoBoard goBoard;
+RenderZone render;
+Manager ui;
 
 std :: vector<Button> button_list[4];   // save board button
 
@@ -34,11 +39,12 @@ int main(){
         while(window.pollEvent(event)){  //get the value and pop it from the queue
             if(event.type == sf :: Event :: Closed){
                 window.close();
+                continue;
             }
             if(event.type == sf :: Event :: Resized){ // normalize window size
                 render.normalizeSize(window);
+                continue;
             }
-            
             if(ui.State == BOARD){
                 ui.boardManager(window, goBoard, button_list[0], event);
                 if(goBoard.ended()){

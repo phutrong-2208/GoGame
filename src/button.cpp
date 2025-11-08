@@ -78,14 +78,14 @@ void Button :: setupButtonOperation(std :: vector<Button> &button_list){
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         2, 1, 
-        {"Pass"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Resign"}, {sf :: Color(222, 184, 135)}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         3, 1, 
-        {"Resign"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Pass"}, {sf :: Color(222, 184, 135)}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;

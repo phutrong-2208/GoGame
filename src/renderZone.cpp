@@ -123,18 +123,18 @@ void RenderZone :: drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
 
 void RenderZone :: initSize(sf :: RenderWindow &window){
     WINDOW_SIZE = sf :: VideoMode :: getDesktopMode().height / 2;
-    window.setSize({WINDOW_SIZE * ASPECT_RATIO, WINDOW_SIZE});
+    window.setSize({(unsigned int)(WINDOW_SIZE * ASPECT_RATIO), WINDOW_SIZE});
 }
 
 void RenderZone :: normalizeSize(sf :: RenderWindow &window){
     auto [new_width, new_height] = window.getSize();
-    if (new_height == WINDOW_SIZE){
+    if ((unsigned int)new_height == WINDOW_SIZE){
         WINDOW_SIZE = new_width / ASPECT_RATIO;
     } else 
-    if (new_width == WINDOW_SIZE){
+    if ((unsigned int)new_width == WINDOW_SIZE){
         WINDOW_SIZE = new_height;
     } else {
         WINDOW_SIZE = std :: min(1.0L * new_width / ASPECT_RATIO, 1.0L * new_height);
     }
-    window.setSize({WINDOW_SIZE * ASPECT_RATIO, WINDOW_SIZE});
+    window.setSize({(unsigned int)(WINDOW_SIZE * ASPECT_RATIO), WINDOW_SIZE});
 }

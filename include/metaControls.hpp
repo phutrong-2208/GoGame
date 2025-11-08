@@ -12,6 +12,5 @@ class MetaControls{ // contains anything related to the game but not part of the
         int difficulty = 0;
 };
 
-static MetaControls metaControls;
-
+extern MetaControls metaControls;
 #endif

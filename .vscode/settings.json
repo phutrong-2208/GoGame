@@ -93,5 +93,6 @@
         "queue": "cpp",
         "stack": "cpp",
         "text_encoding": "cpp"
-    }
+    },
+    "makefile.configureOnOpen": false
 }

@@ -31,9 +31,9 @@ class Button{
             color.swap(_color);
             attr.swap(_attr);
             ImageLink = _ImageLink;
-            assert(Text.size() == cnt);
-            assert(color.size() == cnt);
-            assert(attr.size() == cnt);
+            assert((int)Text.size() == cnt);
+            assert((int)color.size() == cnt);
+            assert((int)attr.size() == cnt);
         }
         void drawButton(sf :: RenderWindow &window, std :: string FontLink, std :: string ImageLink = "");
         void setupButtonOperation(std :: vector<Button> &button_list);

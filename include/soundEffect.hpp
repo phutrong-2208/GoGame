@@ -21,5 +21,4 @@ class SoundEffect{
     }
 };
 
-
-#endif SOUND_EFFECT_HPP
+#endif

@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <Board.hpp>
 
-
 class RenderZone{
     private:
     public:
@@ -23,6 +22,5 @@ class RenderZone{
         void drawControlPanel(sf :: RenderWindow &window);
 };
 
-static RenderZone render;
-
+extern RenderZone render;
 #endif

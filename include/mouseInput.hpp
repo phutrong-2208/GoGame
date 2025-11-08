@@ -9,5 +9,5 @@ class MouseInput{
         sf :: Vector2f getPosition(sf :: RenderWindow &window);
 };
 
-static MouseInput mouse;
+extern MouseInput mouse;
 #endif

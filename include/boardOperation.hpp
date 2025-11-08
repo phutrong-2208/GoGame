@@ -18,6 +18,5 @@ class Operation{
         void SetSize(GoBoard& goBoard, int siz);
 };
 
-static Operation op;
-
+extern Operation op;
 #endif

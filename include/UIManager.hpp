@@ -37,6 +37,5 @@ class Manager{
         void drawScoreDisplayed(sf :: RenderWindow& window);
 }; 
 
-
-static Manager ui;
+extern Manager ui;
 #endif
