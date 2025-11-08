@@ -37,3 +37,11 @@ void Operation :: SetSize(GoBoard &goBoard, int siz){
     goBoard.grid.assign(siz, std :: vector<Piece>(siz, Empty));
     goBoard.newGame();
 }
+void Operation :: File(GoBoard &goBoard, int attr){
+    if (attr) FileImport(goBoard); 
+    else FileExport(goBoard);
+}
+void Operation :: FileImport(GoBoard &goBoard){
+}
+void Operation :: FileExport(GoBoard &goBoard){
+}

@@ -16,6 +16,11 @@ class Operation{
         void Resign(GoBoard& goBoard);
         void Pass(GoBoard& goBoard);
         void SetSize(GoBoard& goBoard, int siz);
+        void File(GoBoard& goBoard, int attr);
+
+    private:
+        void FileImport(GoBoard& goBoard);
+        void FileExport(GoBoard& goBoard);
 };
 
 extern Operation op;

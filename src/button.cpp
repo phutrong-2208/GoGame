@@ -64,7 +64,7 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink, st
 }
 
 void Button :: setupButtonOperation(std :: vector<Button> &button_list){
-    int button_count = 5;
+    int button_count = 6;
     float height = 1.0f * (render.ZONE_SIZE - 2 * render.SHIFT_CONST - (button_count + 1) * render.CONTROL_SHIFT) / button_count;
     float width = render.ZONE_SIZE * (render.ASPECT_RATIO - 1) - render.SHIFT_CONST - 2 * render.CONTROL_SHIFT; 
 
@@ -76,6 +76,7 @@ void Button :: setupButtonOperation(std :: vector<Button> &button_list){
         1, 2, 
         {"Undo", "Redo"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
     );
+
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
@@ -96,11 +97,19 @@ void Button :: setupButtonOperation(std :: vector<Button> &button_list){
         4, 1, 
         {"Reset"}, {sf :: Color(222, 184, 135)}, {0})
     );
+
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         5, 1, 
         {"Menu"}, {sf :: Color(222, 184, 135)}, {0})
+    );
+
+    tmp_posY += render.CONTROL_SHIFT + height;
+    button_list.emplace_back(Button(
+        {tmp_posX, tmp_posY}, {width, height}, 
+        18, 2, 
+        {"Import","Export"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
     );
 }
 

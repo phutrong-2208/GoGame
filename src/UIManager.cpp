@@ -76,6 +76,9 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
             case 17:
                 metaControls.themeChoice = button.attr[i];
                 break;
+            case 18:
+                op.File(goBoard, button.attr[i]);
+                break;
         }
     }
 }
