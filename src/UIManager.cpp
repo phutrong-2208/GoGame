@@ -6,10 +6,12 @@ void Manager :: doActionHover(Button &button, sf :: RenderWindow &window) {
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
     for (int i = 0; i < button.cnt; ++i) {
         button.color[i] = sf :: Color(222, 184, 135);
+        button.hover[i] = 0;
         if (button.position.x + tmpSpace * i >= mouseX) continue;
         if (button.position.x + tmpSpace * (i + 1) <= mouseX) continue;
         if (button.position.y >= mouseY || mouseY >= button.position.y + button.siz.y) continue;
         button.color[i] = sf :: Color(153, 101, 60);
+        button.hover[i] = 1;
     }
 }
 

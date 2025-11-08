@@ -16,6 +16,7 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink, st
             sf :: Sprite sprite(button);
             sprite.setScale(siz.x / image_width, siz.y / image_height);
             sprite.setPosition({position.x + 1.0f * i * siz.x / cnt, position.y});;
+            if (hover[i]) sprite.setColor(sf :: Color(200, 200, 200));
             boxBounds = sprite.getGlobalBounds();
             window.draw(sprite);
         }
@@ -23,7 +24,8 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink, st
             //set the position , color and the size of the boxes
             box.setPosition({position.x + 1.0f * i * siz.x / cnt, position.y});
             box.setSize({1.0f * siz.x / cnt, siz.y});
-            box.setFillColor(color[i]);
+            if (!hover[i]) box.setFillColor(color[i]);
+            else box.setFillColor(color[i] * sf :: Color(200, 200, 200));
             
             //set the color of outline and the thinkness
             box.setOutlineThickness(2);

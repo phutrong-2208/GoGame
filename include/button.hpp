@@ -20,6 +20,7 @@ class Button{
         std :: vector<sf :: Color> color;
         std :: vector<int> attr;
         std :: string ImageLink;
+        std :: vector<bool> hover;
         Button(){}
         Button(sf :: Vector2f _position, sf :: Vector2f _siz, int _type, int _cnt, 
             std :: vector<std :: string> _Text, std :: vector<sf :: Color> _color, std :: vector<int> _attr, std :: string _ImageLink = ""){
@@ -34,6 +35,7 @@ class Button{
             assert((int)Text.size() == cnt);
             assert((int)color.size() == cnt);
             assert((int)attr.size() == cnt);
+            hover.assign(cnt, 0);
         }
         void drawButton(sf :: RenderWindow &window, std :: string FontLink, std :: string ImageLink = "");
         void setupButtonOperation(std :: vector<Button> &button_list);
