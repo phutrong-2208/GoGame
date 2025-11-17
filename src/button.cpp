@@ -1,17 +1,31 @@
 #include "button.hpp"
+#include <map> 
 
-void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink, std :: string ImageLink){
+static std :: map<std :: string, sf :: Font> fontCache; // save for reducing the number time of loading the Font from the file
+static std :: map<std :: string, sf :: Texture> textureCache; // save for reducing the number time of loading the Texture from the file
+
+void Button :: drawButton(sf :: RenderWindow &window, std :: string &FontLink, std :: string &ImageLink){
+    /*
+        ImageLink for the Texture of the buttons
+        FontLink for the fonts of texts
+        divide presents for dividing button into many parts or just one
+    */
+
     sf :: FloatRect textBounds, boxBounds;
     for (int i = 0; i < cnt; ++i) {
         if(ImageLink != ""){
-            sf :: Texture button;
-            if(!button.loadFromFile(ImageLink)){
-                std :: cout << "The image doesn't exist!\n";
-                assert(false);
+            if(fontCache.find(FontLink) == fontCache.end()){
+                sf :: Texture new_texture;
+                if(!new_texture.loadFromFile(ImageLink)){
+                    std :: cout << "The image doesn't exist!\n";
+                    assert(false);
+                }
+                textureCache[ImageLink] = new_texture;
             }
+            sf :: Texture &button = textureCache[ImageLink];
             float image_width = button.getSize().x;
             float image_height = button.getSize().y;
-
+            
             button.setSmooth(true);
             sf :: Sprite sprite(button);
             sprite.setScale(siz.x / image_width, siz.y / image_height);
@@ -35,15 +49,20 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string FontLink, st
         }
         
         //set words font of the texts on each button
-        sf :: Font font;
         
-        if(!font.loadFromFile(FontLink)){
-            std :: cout << "The font doesn't exist!";
-            assert(false);
+        if(fontCache.find(FontLink) == fontCache.end()){
+            sf :: Font newFont; 
+            if(!newFont.loadFromFile(FontLink)){
+                std :: cout << "The font doesn't exist!";
+                assert(false);
+            }
+            fontCache[FontLink] = newFont;
         }
+        sf :: Font &font = fontCache[FontLink];
         
-        sf :: Text label(Text[i], font, 100);
         
+        sf :: Text label(Text[currentSelection], font, 100);
+
         label.setColor(sf :: Color :: Black);
         textBounds = label.getGlobalBounds();
 

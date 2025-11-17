@@ -15,26 +15,26 @@
 #include "metaControls.hpp"
 #include "soundEffect.hpp"
 
-enum Display {GAME_MENU, BOARD, SETTING_MENU, MODE_MENU, CONF_DIALOG, SCORE};
+#define BOARD               0
+#define GAME_MENU           1
+#define SETTING_MENU        2
+#define MODE_MENU           3
+#define CONF_DIALOG         4
+#define SCORE               5
 
 class Manager{
     public: 
-        Display State;
+        int State;
         Manager(){
             State = GAME_MENU;
         }
-
+        
         void boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :: vector<Button> &button_list, sf :: Event event);
-        void drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: vector<Button> button_list);
+        void drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: vector<Button> &button_list);
         void drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink);
         void doActionHover(Button &button, sf :: RenderWindow &window);
         void doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWindow &window); 
-        void setupMenuButton(std :: vector<Button> &button_list);
-        void setupModeButton(std :: vector<Button> &button_list);
-        void setupSettingButton(std :: vector<Button> &button_list);
-        void MenuManager(sf :: RenderWindow &window, std :: vector<Button> button_list, GoBoard& goBoard, sf :: Event event);
-        void drawConfigDialog(sf :: RenderWindow &window, std :: vector<Button> button_list);
-        void drawScoreDisplayed(sf :: RenderWindow& window);
+        void MenuManager(sf :: RenderWindow &window, std :: vector<Button> &button_list, GoBoard& goBoard, sf :: Event event);
 }; 
 
 extern Manager ui;

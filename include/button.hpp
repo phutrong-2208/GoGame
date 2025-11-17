@@ -12,6 +12,7 @@
 class Button{
     private:
     public:
+        int currentSelection; // for changing state of the button
         sf :: RectangleShape box;
         sf :: Vector2f position;
         sf :: Vector2f siz;
@@ -25,19 +26,13 @@ class Button{
         Button(sf :: Vector2f _position, sf :: Vector2f _siz, int _type, int _cnt, 
             std :: vector<std :: string> _Text, std :: vector<sf :: Color> _color, std :: vector<int> _attr, std :: string _ImageLink = ""){
             position = _position;
-            siz = _siz;
-            type = _type;
+            siz = _siz; type = _type;
             cnt = _cnt;
-            Text.swap(_Text);
-            color.swap(_color);
-            attr.swap(_attr);
+            Text.swap(_Text); color.swap(_color); attr.swap(_attr); hover.assign(cnt, 0);
             ImageLink = _ImageLink;
-            assert((int)Text.size() == cnt);
-            assert((int)color.size() == cnt);
-            assert((int)attr.size() == cnt);
-            hover.assign(cnt, 0);
+            currentSelection = 0;
         }
-        void drawButton(sf :: RenderWindow &window, std :: string FontLink, std :: string ImageLink = "");
+        void drawButton(sf :: RenderWindow &window, std :: string &FontLink, std :: string &ImageLink);
         void setupButtonOperation(std :: vector<Button> &button_list);
 };
 

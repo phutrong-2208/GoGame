@@ -53,44 +53,53 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 window.close();
                 break;
             case 10:
-                goBoard.setSize(button.attr[i]);
+                (button.currentSelection += 1) %= button.Text.size();
+                goBoard.setSize(button.attr[button.currentSelection]);
                 break;
             case 11:
-                metaControls.playWithBot = button.attr[i];
+                (button.currentSelection += 1) %= button.Text.size();
+                metaControls.playWithBot = button.attr[button.currentSelection];
                 break;
             case 12:
-                metaControls.difficulty = button.attr[i];
+                (button.currentSelection += 1) %= button.Text.size();
+                metaControls.difficulty = button.attr[button.currentSelection];
                 break;
             case 13:
-                metaControls.startAsWhite = button.attr[i];
+                (button.currentSelection += 1) %= button.Text.size();
+                metaControls.startAsWhite = button.attr[button.currentSelection];
                 break;
             case 14:
-                metaControls.musicActive = button.attr[i];
+                (button.currentSelection += 1) %= button.Text.size();
+                metaControls.musicActive = button.attr[button.currentSelection];
                 break;
             case 15:
-                metaControls.soundActive = button.attr[i];
+                (button.currentSelection += 1) %= button.Text.size();
+                metaControls.soundActive = button.attr[button.currentSelection];
                 break;
             case 16:
-                metaControls.audioVolume += button.attr[i];
+                (button.currentSelection += 1) %= button.Text.size();
+                metaControls.audioVolume += button.attr[button.currentSelection];
                 break;
-            case 17:
-                metaControls.themeChoice = button.attr[i];
-                break;
+            case 17:    
+                (button.currentSelection += 1) %= button.Text.size();
+                metaControls.themeChoice = button.attr[button.currentSelection];
             case 18:
                 op.File(goBoard, button.attr[i]);
                 break;
         }
     }
 }
-
+std :: string ImageLink = "assets\\Button.png";
 //================================================================================================================================
 //For board 
-void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: vector<Button> button_list){
+void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: vector<Button> &button_list){
     auto [snatchX, snatchY] = mouse.checkBoard(window, goBoard);
     render.drawMain(window, goBoard);
     if (snatchX != 999) render.drawPiece(window, goBoard, snatchX, snatchY, goBoard.turn);
+    std :: string font = "font\\Bungee_Regular.ttf";
+    std :: string ImageLink =  "";
     for (Button &button : button_list) {
-        button.drawButton(window, "font\\Bungee_Regular.ttf");
+        button.drawButton(window, font, ImageLink);
     }
 }
 void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :: vector<Button> &button_list, sf :: Event event){
@@ -109,120 +118,6 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
 }
 
 //================================================================================================================================
-//For menu 
-void Manager :: setupMenuButton(std :: vector<Button> &button_list){
-    int distance_between_button = 25;
-    float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
-    float height = (2.0f * render.ZONE_SIZE / 3.0f) / 4.0f - distance_between_button;
-
-    float tmp_posX = width, tmp_posY = 1.0f * render.ZONE_SIZE / 3.0f;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        6, 1, 
-        {"Play"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
-    );
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height},  
-        7, 1, 
-        {"Modes"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        8, 1, 
-        {"Settings"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        9, 1, 
-        {"Exit"}, {sf :: Color(222, 184, 135)}, {0}, "assets\\Button.png")
-    );
-}
-
-void Manager :: setupModeButton(std :: vector<Button> &button_list){
-    int distance_between_button = 25;
-    float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
-    float height = (2.0f * render.ZONE_SIZE / 3.0f) / 5.0f - distance_between_button;
-
-    float tmp_posX = width, tmp_posY = 1.0f * render.ZONE_SIZE / 3.0f;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        10, 3, 
-        {"9x9", "13x13", "19x19"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {9, 13, 19})
-    );
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        11, 2, 
-        {"Play Human", "Play Bot"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        12, 3, 
-        {"Easy", "Medium", "Hard"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1, 2})
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        13, 2, 
-        {"Play Black", "Play White"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        5, 1, 
-        {"Save and return"}, {sf :: Color(222, 184, 135)}, {0})
-    );
-}
-
-void Manager :: setupSettingButton(std :: vector<Button> &button_list){
-    int distance_between_button = 25;
-    float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
-    float height = (2.0f * render.ZONE_SIZE / 3.0f) / 5.0f - distance_between_button;
-
-    float tmp_posX = width, tmp_posY = 1.0f * render.ZONE_SIZE / 3.0f;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        14, 2, 
-        {"Music On", "Music Off"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {1, 0})
-    );
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        15, 2, 
-        {"Sounds On", "Sounds Off"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {1, 0})
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        16, 3, 
-        {"Volume down", "placeholder", "Volume up"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {-5, 0, 5})
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        17, 3, 
-        {"Classic", "Futuristic", "Magical"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1, 2})
-    );
-
-    tmp_posY += distance_between_button + height;
-    button_list.emplace_back(Button(
-        {tmp_posX, tmp_posY}, {width, height}, 
-        5, 1, 
-        {"Save and return"}, {sf :: Color(222, 184, 135)}, {0})
-    );
-}
-
 void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink){
     sf :: Texture background;
     if(!background.loadFromFile("assets\\MenuGameBackground.png")){
@@ -242,17 +137,10 @@ void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &butt
     }    
 }
 
-void Manager :: MenuManager(sf :: RenderWindow &window, std :: vector<Button> button_list, GoBoard& goBoard, sf :: Event event){
+void Manager :: MenuManager(sf :: RenderWindow &window, std :: vector<Button> &button_list, GoBoard& goBoard, sf :: Event event){
     if(event.type == sf :: Event :: MouseButtonPressed){
         for (Button &button : button_list) {
             doActionClick(goBoard, button, window);
         }
     }
-}
-
-void Manager :: drawConfigDialog(sf :: RenderWindow &window, std :: vector<Button> button_list){    
-
-}
-void Manager :: drawScoreDisplayed(sf :: RenderWindow &window){
-    
 }

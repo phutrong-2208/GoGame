@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+
+//including header file
 #include "SFML/Graphics.hpp"
 #include "mouseInput.hpp"
 #include "Board.hpp"
@@ -9,15 +11,25 @@
 #include "boardOperation.hpp"
 #include "UIManager.hpp"
 #include "soundEffect.hpp"
+#include "ModeManager.hpp"
+#include "SettingManager.hpp"
+#include "MenuManager.hpp"
 
-Operation op;
+
+Operation op; 
 MetaControls metaControls;
 MouseInput mouse;
 SoundEffect sound;
 Button setup;
 GoBoard goBoard;
 RenderZone render;
+
+
+//UIs Manager 
 Manager ui;
+Mode ModeUI;
+Setting SettingUI;
+Menu MenuUI;
 
 std :: vector<Button> button_list[4];   // save board button
 
@@ -25,9 +37,9 @@ int main(){
     sf :: RenderWindow window(sf :: VideoMode({1200, 800}), "GoGame");
     render.initSize(window);
     setup.setupButtonOperation(button_list[0]);
-    ui.setupMenuButton(button_list[1]);
-    ui.setupModeButton(button_list[2]);
-    ui.setupSettingButton(button_list[3]);
+    MenuUI.setupMenuButton(button_list[1]);
+    SettingUI.setupSettingButton(button_list[2]);
+    ModeUI.setupModeButton(button_list[3]);
     op.history.emplace_back(goBoard);
 
     sound.Background.setLoop(true);
@@ -54,47 +66,19 @@ int main(){
                     op.history.emplace_back(goBoard);
                     break;
                 }
+                continue;
             }
-            else if(ui.State == GAME_MENU){
-                ui.MenuManager(window, button_list[1], goBoard, event);
-                op.reset(); op.history.emplace_back(goBoard);
-                if(ui.State != GAME_MENU) break;
-            }
-            else if(ui.State == SETTING_MENU){
-                ui.MenuManager(window, button_list[2], goBoard, event);
-                op.reset(); op.history.emplace_back(goBoard);
-                if(ui.State != SETTING_MENU) break;
-            }
-            else if(ui.State == MODE_MENU){
-                ui.MenuManager(window, button_list[3], goBoard, event);
-                op.reset(); op.history.emplace_back(goBoard);
-                if(ui.State != MODE_MENU) break;
-            }
+            op.reset(); op.history.emplace_back(goBoard);
+            goBoard.newGame();
+            ui.MenuManager(window, button_list[ui.State], goBoard, event);
         }
+
         window.clear();
-        if(ui.State == BOARD){
-            ui.drawBoard(window, goBoard, button_list[0]);
-            for (Button &button : button_list[0]) {
-                ui.doActionHover(button, window);
-            }
-        }
-        else if(ui.State == GAME_MENU){
-            ui.drawMenu(window, button_list[1], "font\\Bungee_Regular.ttf");
-            for (Button &button : button_list[1]) {
-                ui.doActionHover(button, window);
-            }
-        }
-        else if(ui.State == SETTING_MENU){
-            ui.drawMenu(window, button_list[2], "font\\arial.ttf");
-            for (Button &button : button_list[2]) {
-                ui.doActionHover(button, window);
-            }
-        }
-        else if(ui.State == MODE_MENU){
-            ui.drawMenu(window, button_list[3], "font\\arial.ttf");
-            for (Button &button : button_list[3]) {
-                ui.doActionHover(button, window);
-            }
+        if(ui.State == 0) ui.drawBoard(window, goBoard, button_list[ui.State]);
+        else ui.drawMenu(window, button_list[ui.State], "font\\Bungee_Regular.ttf");
+
+        for (Button &button : button_list[ui.State]) {
+            ui.doActionHover(button, window);
         }
         window.display();
     }
