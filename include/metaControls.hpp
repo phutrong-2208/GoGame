@@ -2,6 +2,7 @@
 #define META_CONTROLS_HPP
 
 #include <vector>
+#include "SFML/Graphics.hpp"
 
 class MetaControls{ // contains anything related to the game but not part of the game
     private:
@@ -10,7 +11,10 @@ class MetaControls{ // contains anything related to the game but not part of the
         bool musicActive = 0, soundActive = 0, audioVolume = 0;
         int themeChoice = 0;
         int difficulty = 0;
+        sf :: Color Button_Color = sf :: Color(236, 203, 126);
+        sf :: Color Background_Color = sf :: Color(236, 203, 126);
 };
+
 
 extern MetaControls metaControls;
 #endif

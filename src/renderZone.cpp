@@ -1,7 +1,8 @@
 #include "renderZone.hpp"
 
+
 void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
-    window.clear(sf :: Color(222, 184, 135));
+    window.clear(metaControls.Background_Color);
 
     sf :: Vertex line[2];
     //it requires two vertexes to draw a line

@@ -21,7 +21,7 @@ class GoBoard{
             siz = _siz;
             grid.assign(siz, std :: vector<Piece>(siz, Empty));
         }
-        GoBoard(int _siz = 13) {setSize(_siz);}
+        GoBoard(int _siz = 9) {setSize(_siz);}
         bool newGame(void);
         bool newStep(int x, int y, Piece color);
         bool ended(void);

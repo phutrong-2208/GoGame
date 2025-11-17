@@ -15,16 +15,21 @@
 #include "metaControls.hpp"
 #include "soundEffect.hpp"
 
-#define BOARD               0
-#define GAME_MENU           1
-#define SETTING_MENU        2
-#define MODE_MENU           3
-#define CONF_DIALOG         4
-#define SCORE               5
+enum state {BOARD, GAME_MENU, SETTING_MENU, MODE_MENU, CONF_DIALOG, SCORE};
+
+/*
+    This UI manager will manage 6 different cpp file for:
+    Board UI
+    Game option UI
+    Setting menu UI
+    Mode menu UI
+    Config dialog 
+    Score Reveal UI 
+*/
 
 class Manager{
     public: 
-        int State;
+        state State;
         Manager(){
             State = GAME_MENU;
         }

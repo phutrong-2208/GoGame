@@ -1,4 +1,5 @@
 #include "button.hpp"
+#include "metaControls.hpp"
 #include <map> 
 
 static std :: map<std :: string, sf :: Font> fontCache; // save for reducing the number time of loading the Font from the file
@@ -8,9 +9,8 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string &FontLink, s
     /*
         ImageLink for the Texture of the buttons
         FontLink for the fonts of texts
-        divide presents for dividing button into many parts or just one
     */
-
+    
     sf :: FloatRect textBounds, boxBounds;
     for (int i = 0; i < cnt; ++i) {
         if(ImageLink != ""){
@@ -61,7 +61,7 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string &FontLink, s
         sf :: Font &font = fontCache[FontLink];
         
         
-        sf :: Text label(Text[currentSelection], font, 100);
+        sf :: Text label(Text[(cnt > 1 ? i : currentSelection)], font, 100);
 
         label.setColor(sf :: Color :: Black);
         textBounds = label.getGlobalBounds();
@@ -93,42 +93,42 @@ void Button :: setupButtonOperation(std :: vector<Button> &button_list){
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         1, 2, 
-        {"Undo", "Redo"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
+        {"Undo", "Redo"}, {metaControls.Button_Color, metaControls.Button_Color}, {0, 1})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         2, 1, 
-        {"Resign"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Resign"}, {metaControls.Button_Color}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         3, 1, 
-        {"Pass"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Pass"}, {metaControls.Button_Color}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         4, 1, 
-        {"Reset"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Reset"}, {metaControls.Button_Color}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         5, 1, 
-        {"Menu"}, {sf :: Color(222, 184, 135)}, {0})
+        {"Menu"}, {metaControls.Button_Color}, {0})
     );
 
     tmp_posY += render.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         18, 2, 
-        {"Import","Export"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1})
+        {"Import","Export"}, {metaControls.Button_Color, metaControls.Button_Color}, {0, 1})
     );
 }
 

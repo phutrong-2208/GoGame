@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <Board.hpp>
+#include "metaControls.hpp"
 
 class RenderZone{
     private:
