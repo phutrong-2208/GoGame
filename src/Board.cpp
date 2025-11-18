@@ -16,8 +16,6 @@ bool GoBoard :: newGame(void){
     save.clear(); previous_grid.emplace_back(grid);
     pass = 0; turn = Black; endGame = 0; 
 
-    //reset the score state
-    score.blackCaptured = score.blackTerr = score.whiteCaptured = score.whiteTerr = 0;
     return true;
 }
 
@@ -31,9 +29,6 @@ GoBoard temp;
 const int dx[] = {-1, 1, 0, 0};
 const int dy[] = {0, 0, -1, 1};
 std :: vector<std :: vector<int>> vis; //(siz, std :: vector<int>(siz, 0));
-
-int cntCaptured = 0; //count the captured piece after a move
-
 bool GoBoard :: eatable(int x, int y){
     std :: queue<std :: pair<int, int>> q;
     std :: stack<std :: pair<int, int>> st;
@@ -58,7 +53,6 @@ bool GoBoard :: eatable(int x, int y){
         }
     }
     if (air_flag) return false;
-    cntCaptured += st.size();
     while(st.size()){
         auto[x, y] = st.top(); st.pop();
         temp.grid[x][y] = Empty;
@@ -113,12 +107,8 @@ bool GoBoard :: newStep(int x, int y, Piece turn){
     
     temp.grid = grid;
     temp.grid[x][y] = turn;
-    cntCaptured = 0;
     if(!move_check(x, y) or (previous_grid.size() > 1 and temp.grid == previous_grid.end()[-2])) return false;
     
-
-    if(turn == Black) score.blackCaptured += cntCaptured;
-    else score.whiteCaptured += cntCaptured;
     previous_grid.emplace_back(temp.grid);
     newState(x, y);
     return true;
@@ -166,15 +156,20 @@ int GoBoard :: getTerritory(int x, int y){
     }
 }
 
-std :: pair<int, int> GoBoard :: getScore(void){
-    score.whiteTerr = score.blackTerr = 0; //reset for every draw
+std :: pair<int, int> GoBoard :: getScore(void){ //China's rule
+    score.blackCaptured = score.blackTerr = score.whiteCaptured = score.whiteTerr = 0; //reset for every draw
     vis.assign(siz, std :: vector<int>(siz, 0));
     temp.grid = grid;
     for (int i = 0; i < siz; ++i){
-        for (int j = 0; j < siz; ++j) if(!vis[i][j] and temp.grid[i][j] == Empty){
-            int value = getTerritory(i, j);
-            if(value < 0) score.whiteTerr -= value;
-            else score.blackTerr += value;
+        for (int j = 0; j < siz; ++j){
+            if(!vis[i][j] and temp.grid[i][j] == Empty){
+                int value = getTerritory(i, j);
+                if(value < 0) score.whiteTerr -= value;
+                else score.blackTerr += value;
+            }
+            else if(temp.grid[i][j] != Empty){
+                temp.grid[i][j] == Black ? score.blackCaptured++ : score.whiteCaptured++;
+            }
         }
     }
     return std :: make_pair(score.whiteCaptured + score.whiteTerr, score.blackCaptured + score.blackTerr);
