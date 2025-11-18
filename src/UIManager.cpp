@@ -30,6 +30,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 break;
             case 2:
                 op.Resign(goBoard);
+                std :: cout << goBoard.endGame << '\n';
                 break;
             case 3:
                 op.Pass(goBoard);
@@ -85,6 +86,11 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 metaControls.themeChoice = button.attr[button.currentSelection];
             case 18:
                 op.File(goBoard, button.attr[i]);
+                break;
+            case 19: 
+                if(button.attr[i] == 1) State = GAME_MENU;
+                else State = BOARD;
+                goBoard.newGame();
                 break;
         }
     }
@@ -143,4 +149,10 @@ void Manager :: MenuManager(sf :: RenderWindow &window, std :: vector<Button> &b
             doActionClick(goBoard, button, window);
         }
     }
+}
+//================================================================================================================================
+void Manager :: drawScore(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink){
+    for (Button& button : button_list){
+        button.drawButton(window, FontLink, button.ImageLink);
+    } 
 }

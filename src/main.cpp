@@ -14,7 +14,7 @@
 #include "ModeManager.hpp"
 #include "SettingManager.hpp"
 #include "MenuManager.hpp"
-
+#include "ScoreRevealManager.hpp"
 
 Operation op; 
 MetaControls metaControls;
@@ -30,8 +30,8 @@ Manager ui;
 Mode ModeUI;
 Setting SettingUI;
 Menu MenuUI;
-
-std :: vector<Button> button_list[4];   // save board button
+ScoreReveal ScoreUI;
+std :: vector<Button> button_list[5];   // save board button
 
 int main(){
     sf :: RenderWindow window(sf :: VideoMode({1200, 800}), "GoGame");
@@ -40,6 +40,9 @@ int main(){
     MenuUI.setupMenuButton(button_list[1]);
     SettingUI.setupSettingButton(button_list[2]);
     ModeUI.setupModeButton(button_list[3]);
+    ScoreUI.setupScoreButton(button_list[4]);
+
+    goBoard.newGame(); 
     op.history.emplace_back(goBoard);
 
     sound.Background.setLoop(true);
@@ -59,22 +62,22 @@ int main(){
             }
             if(ui.State == BOARD){
                 ui.boardManager(window, goBoard, button_list[0], event);
-                if(goBoard.ended()){
-                    goBoard.newGame();
-                    op.history.clear();
-                    op.snap.clear();
-                    op.history.emplace_back(goBoard);
-                    break;
+                goBoard.ended();
+                if(goBoard.endGame){
+                    ui.State = SCORE;
                 }
                 continue;
             }
-            op.reset(); op.history.emplace_back(goBoard);
-            goBoard.newGame();
             ui.MenuManager(window, button_list[ui.State], goBoard, event);
         }
 
         window.clear();
-        if(ui.State == 0) ui.drawBoard(window, goBoard, button_list[ui.State]);
+        if(ui.State == BOARD) ui.drawBoard(window, goBoard, button_list[BOARD]);
+        else if(ui.State == SCORE){
+            ui.drawBoard(window, goBoard, button_list[BOARD]);
+            ScoreUI.drawScoreReveal(window, goBoard);
+            ui.drawScore(window, button_list[SCORE], "font\\Bungee_Regular.ttf");
+        }
         else ui.drawMenu(window, button_list[ui.State], "font\\Bungee_Regular.ttf");
 
         for (Button &button : button_list[ui.State]) {

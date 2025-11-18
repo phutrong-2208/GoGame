@@ -23,8 +23,8 @@ void Operation :: NewGame(GoBoard &goBoard){
     goBoard.newGame();
 }
 void Operation :: Resign(GoBoard &goBoard){
+    goBoard.endGame = 2;
     std :: cout << (goBoard.turn == Black ? "White " : "Black ") << " win by resignation!!\n";
-    goBoard.newGame();
 }
 void Operation :: Pass(GoBoard &goBoard){
     std :: cout << (goBoard.turn == Black ? "Black " : "White ") << " Pass the turn!\n";

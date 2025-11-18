@@ -15,7 +15,7 @@
 #include "metaControls.hpp"
 #include "soundEffect.hpp"
 
-enum state {BOARD, GAME_MENU, SETTING_MENU, MODE_MENU, CONF_DIALOG, SCORE};
+enum state {BOARD, GAME_MENU, SETTING_MENU, MODE_MENU, SCORE, CONF_DIALOG};
 
 /*
     This UI manager will manage 6 different cpp file for:
@@ -40,6 +40,7 @@ class Manager{
         void doActionHover(Button &button, sf :: RenderWindow &window);
         void doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWindow &window); 
         void MenuManager(sf :: RenderWindow &window, std :: vector<Button> &button_list, GoBoard& goBoard, sf :: Event event);
+        void drawScore(sf :: RenderWindow &window, std :: vector<Button>&button_list, std :: string FontLink);
 }; 
 
 extern Manager ui;

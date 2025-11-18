@@ -17,11 +17,23 @@ class GoBoard{
         Piece turn;
         int pass; //save the number consecutive passes of both players, if both people skip their turn, the game will end
         std :: vector<std :: vector<Piece>> grid;
+
+        int endGame;
+        //answer for the question, did the match ended?
+        /*
+            0: Still continuous
+            1: End by passing or doesn't exist any valid move 
+            2: End by resignation
+        */
         void setSize(int _siz) {
             siz = _siz;
             grid.assign(siz, std :: vector<Piece>(siz, Empty));
         }
-        GoBoard(int _siz = 9) {setSize(_siz);}
+        GoBoard(int _siz = 9) {
+            setSize(_siz); 
+            endGame = 0; 
+            pass = 0;
+        }
         bool newGame(void);
         bool newStep(int x, int y, Piece color);
         bool ended(void);

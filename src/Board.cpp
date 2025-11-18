@@ -1,8 +1,9 @@
 #include "Board.hpp"
 //===============================================================================
-std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states till current state, use for rollback operation
+std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states till current state, use for Ko rule
 std :: vector<std :: pair<int, int>> validMove;
 std :: deque<std :: vector<std :: vector<Piece>>> save;
+Score score; 
 
 //starting new game
 bool GoBoard :: newGame(void){
@@ -13,7 +14,10 @@ bool GoBoard :: newGame(void){
         validMove.emplace_back(i, j);
     }
     save.clear(); previous_grid.emplace_back(grid);
-    turn = Black;
+    pass = 0; turn = Black; endGame = 0; 
+
+    //reset the score state
+    score.blackCaptured = score.blackTerr = score.whiteCaptured = score.whiteTerr = 0;
     return true;
 }
 
@@ -86,7 +90,6 @@ bool GoBoard :: move_check(int x, int y){
 //===============================================================================
 
 //for updating the board state
-Score score; 
 
 void GoBoard :: newState(int x, int y){ //update the new state of the board after a move
     swap(grid, temp.grid);
@@ -125,7 +128,10 @@ bool GoBoard :: newStep(int x, int y, Piece turn){
 
 //for end stage
 bool GoBoard :: ended(void){
-    if(validMove.empty() or pass == 2) return true;
+    if(validMove.empty() or pass == 2) {
+        endGame = 1;
+        return true;
+    }
     return false;
 }
 
@@ -161,12 +167,14 @@ int GoBoard :: getTerritory(int x, int y){
 }
 
 std :: pair<int, int> GoBoard :: getScore(void){
+    score.whiteTerr = score.blackTerr = 0; //reset for every draw
     vis.assign(siz, std :: vector<int>(siz, 0));
+    temp.grid = grid;
     for (int i = 0; i < siz; ++i){
         for (int j = 0; j < siz; ++j) if(!vis[i][j] and temp.grid[i][j] == Empty){
             int value = getTerritory(i, j);
-            if(value < 0) score.whiteCaptured -= value;
-            else score.blackCaptured += value;
+            if(value < 0) score.whiteTerr -= value;
+            else score.blackTerr += value;
         }
     }
     return std :: make_pair(score.whiteCaptured + score.whiteTerr, score.blackCaptured + score.blackTerr);
