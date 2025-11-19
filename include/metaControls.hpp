@@ -7,10 +7,11 @@
 class MetaControls{ // contains anything related to the game but not part of the game
     private:
     public:
-        bool playWithBot = 0, startAsWhite = 0;
+        bool playWithBot = 0;
         bool musicActive = 0, soundActive = 0, audioVolume = 0;
         int themeChoice = 0;
         int difficulty = 0;
+        int goFirst = 0; // 0 if you, 1 if bot
         sf :: Color Button_Color = sf :: Color(236, 203, 126);
         sf :: Color Background_Color = sf :: Color(236, 203, 126);
 };

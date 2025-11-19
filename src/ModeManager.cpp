@@ -34,7 +34,7 @@ void Mode :: setupModeButton(std :: vector<Button> &button_list){
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         13, 1, 
-        {"Black First", "White First"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1}, ModeImage)
+        {"First Move: You", "First Move: Bot"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1}, ModeImage)
     );
 
     tmp_posY += distance_between_button + height;

@@ -30,7 +30,6 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 break;
             case 2:
                 op.Resign(goBoard);
-                std :: cout << goBoard.endGame << '\n';
                 break;
             case 3:
                 op.Pass(goBoard);
@@ -67,7 +66,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 break;
             case 13:
                 (button.currentSelection += 1) %= button.Text.size();
-                metaControls.startAsWhite = button.attr[button.currentSelection];
+                metaControls.goFirst = button.attr[button.currentSelection];
                 break;
             case 14:
                 (button.currentSelection += 1) %= button.Text.size();
@@ -84,6 +83,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
             case 17:    
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.themeChoice = button.attr[button.currentSelection];
+                break;
             case 18:
                 op.File(goBoard, button.attr[i]);
                 break;
@@ -109,14 +109,29 @@ void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: ve
     }
 }
 void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :: vector<Button> &button_list, sf :: Event event){
+    if(botMode.botisThinking) return; // to prevent pre-moving
     auto [snatchX, snatchY] = mouse.checkBoard(window, goBoard);
+    if(metaControls.playWithBot){
+        Piece botColor = (metaControls.goFirst == 0 ? White : Black);
+        if(goBoard.turn == botColor){
+            botMode.botisThinking = true;
+            sf :: sleep(sf :: seconds(0.5));
+            botMode.botMove(goBoard);
+            sounds.piece.play();
+            op.history.emplace_back(goBoard);
+            op.snap.clear();
+            botMode.botisThinking = false;
+            return; 
+        }
+    }
     if(event.type == sf :: Event :: MouseButtonPressed){
-        if(goBoard.newStep(snatchX, snatchY, goBoard.turn)){
+        if(goBoard.playMove(snatchX, snatchY, goBoard.turn)){
             sounds.piece.play();
             op.history.emplace_back(goBoard);
             op.snap.clear();
             return;
         }
+
         for (Button &button : button_list) {
             doActionClick(goBoard, button, window);
         }

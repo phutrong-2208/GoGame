@@ -9,39 +9,43 @@
 
 #include "scoring.hpp"
 #include "soundEffect.hpp"
-enum Piece {Empty, Black, White};
+#include "metaControls.hpp"
+
+enum Piece {
+    Empty, 
+    Black, 
+    White
+};
 
 class GoBoard{
     public:
-        int siz;
+        int boardSize;
         Piece turn;
-        int pass; //save the number consecutive passes of both players, if both people skip their turn, the game will end
-        std :: vector<std :: vector<Piece>> grid;
-
+        int pass;
         int endGame;
-        //answer for the question, did the match ended?
-        /*
-            0: Still continuous
-            1: End by passing or doesn't exist any valid move 
-            2: End by resignation
-        */
-        void setSize(int _siz) {
-            siz = _siz;
-            grid.assign(siz, std :: vector<Piece>(siz, Empty));
+        std :: vector<std :: vector<Piece>> grid;
+        std :: vector<std :: pair<int, int>> validMove;
+
+        void setSize(int _boardSize) {
+            boardSize  = _boardSize ;
+            grid.assign(boardSize , std :: vector<Piece>(boardSize , Empty));
         }
-        GoBoard(int _siz = 9) {
-            setSize(_siz); 
+        GoBoard(int _boardSize = 9) {
+            setSize(_boardSize); 
             endGame = 0; 
             pass = 0;
         }
-        bool newGame(void);
-        bool newStep(int x, int y, Piece color);
-        bool ended(void);
-        std :: pair<int, int> getScore(void);
-        bool inside(int x, int y);
-        bool eatable(int x, int y);
-        bool move_check(int x, int y);
-        void newState(int x, int y);
+        
+    bool newGame(void);
+    bool playMove(int x, int y, Piece color);
+    std :: pair<int, int> getScore(void);
+    bool ended(void);
+        
+    private: //internal helps
+        bool inBounds(int x, int y);
+        bool canCapture(int x, int y);
+        bool isLegalMove(int x, int y);
+        void applyMove(int x, int y);
         int getTerritory(int x, int y);
 };
 #endif

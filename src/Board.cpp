@@ -1,122 +1,182 @@
 #include "Board.hpp"
-//===============================================================================
-std :: vector<std :: vector<std :: vector<Piece>>> previous_grid; //save the previous states till current state, use for Ko rule
-std :: vector<std :: pair<int, int>> validMove;
-std :: deque<std :: vector<std :: vector<Piece>>> save;
+
+//===============================================================
+//DECLARE
+//===============================================================
+
+static constexpr int DX[4] = {-1, 1, 0, 0};
+static constexpr int DY[4] = {0, 0, -1, 1};
+
+std :: vector<std :: vector<std :: vector<Piece>>> previousState; //save the previous states till current state, use for Ko rule
+std :: deque<std :: vector<std :: vector<Piece>>> stateHistory;
+
+GoBoard scratchGrid;
 Score score; 
 
-//starting new game
+
+//===============================================================
+//NEW GAME
+//===============================================================
 bool GoBoard :: newGame(void){
-    previous_grid.clear();
+    previousState.clear(); 
     validMove.clear();
-    for (int i = 0; i < siz; ++i) for (int j = 0; j < siz; ++j){
-        grid[i][j] = Empty;
-        validMove.emplace_back(i, j);
-    }
-    save.clear(); previous_grid.emplace_back(grid);
-    pass = 0; turn = Black; endGame = 0; 
+    
+    grid.assign(boardSize, std :: vector<Piece> (boardSize, Empty));
+    scratchGrid.grid = grid;
+
+    for (int i = 0; i < boardSize; ++i)
+        for (int j = 0; j < boardSize; ++j)
+            validMove.emplace_back(i, j);
+    
+    
+    stateHistory.clear(); 
+    previousState.emplace_back(grid);
+    
+    pass = 0; 
+    endGame = 0; 
+    turn = Black;
 
     return true;
 }
 
-//===============================================================================
-
-bool GoBoard :: inside(int x, int y){
-    return x >= 0 and x < siz and y >= 0 and y < siz;
+//===============================================================
+//HELPER
+//===============================================================
+bool GoBoard :: inBounds(int x, int y){
+    return x >= 0 and x < boardSize and 
+           y >= 0 and y < boardSize;
 }
 
-GoBoard temp;
-const int dx[] = {-1, 1, 0, 0};
-const int dy[] = {0, 0, -1, 1};
-std :: vector<std :: vector<int>> vis; //(siz, std :: vector<int>(siz, 0));
-bool GoBoard :: eatable(int x, int y){
-    std :: queue<std :: pair<int, int>> q;
-    std :: stack<std :: pair<int, int>> st;
+
+//===============================================================
+//LIBERTY + CAPTURED CHECK
+//===============================================================
+std :: vector<std :: vector<int>> visited; //(siz, std :: vector<int>(siz, 0));
+bool GoBoard :: canCapture(int x, int y){
+    std :: queue<std :: pair<int, int>> queue;
+    std :: stack<std :: pair<int, int>> group;
     
-    Piece color = temp.grid[x][y];
+    const Piece color = scratchGrid.grid[x][y];
+    bool hasLiberty = false;
     
-    q.emplace(x, y);
-    st.emplace(x, y);    
-    vis[x][y] = 1;
-    int air_flag = 0;
-    while(q.size()){
-        auto [rx, ry] = q.front(); q.pop();
+    queue.emplace(x, y);  
+    visited[x][y] = 1;
+
+    while(queue.size()){
+        auto [cx, cy] = queue.front(); 
+        queue.pop();
+        group.emplace(cx, cy);
+        
         for (int dir = 0; dir < 4; ++dir){
-            int nx = rx + dx[dir], ny = ry + dy[dir];
-            if (!inside(nx, ny)) continue; 
-            if (temp.grid[nx][ny] == Empty) air_flag = 1;
-            if (temp.grid[nx][ny] != color) continue;
-            if (vis[nx][ny]) continue;
-            q.emplace(nx, ny);
-            st.emplace(nx, ny);
-            vis[nx][ny] = 1;
+            int next_x = cx + DX[dir];
+            int next_y = cy + DY[dir];
+            
+            if (!inBounds(next_x, next_y)) continue; 
+
+            if (scratchGrid.grid[next_x][next_y] == Empty){
+                hasLiberty = true;
+                continue;
+            }
+            if (scratchGrid.grid[next_x][next_y] != color) continue;
+            if (visited[next_x][next_y]) continue;
+
+            visited[next_x][next_y] = true;
+            queue.emplace(next_x, next_y);
         }
     }
-    if (air_flag) return false;
-    while(st.size()){
-        auto[x, y] = st.top(); st.pop();
-        temp.grid[x][y] = Empty;
+    if (hasLiberty) return false;
+    
+    while(group.size()){
+        auto[x, y] = group.top(); group.pop();
+        scratchGrid.grid[x][y] = Empty;
     }
+
     return true;
 }  
 
-//check that if the move legal
-bool GoBoard :: move_check(int x, int y){
-    vis.assign(siz, std :: vector<int>(siz, 0));
-    for (int dir = 0; dir < 4; ++dir){
-        int nx = x + dx[dir], ny = y + dy[dir];
-        if (!inside(nx, ny)) continue;
-        if (temp.grid[nx][ny] == Empty) continue;
-        if (!vis[nx][ny] && temp.grid[nx][ny] != temp.grid[x][y]) eatable(nx, ny);
-    }
-    if (eatable(x, y)) return false; // the suicide case 
-    vis.assign(siz, std :: vector<int>(siz, 0));
+//===============================================================
+//LEGAL MOVE CHECKING (SUICIDE + CAPTURE + KO RULE)
+//===============================================================
+bool GoBoard :: isLegalMove(int x, int y){
+    visited.assign(boardSize, std :: vector<int>(boardSize, 0));
 
-    for (int i = 0; i < siz; ++i){
-        for (int j = 0; j < siz; ++j) if (!vis[i][j] and temp.grid[i][j] != Empty){
-            eatable(i, j);
-        }
+    for (int dir = 0; dir < 4; ++dir){
+        int next_x = x + DX[dir];
+        int next_y = y + DY[dir];
+
+        if (!inBounds(next_x, next_y)) 
+            continue;
+        
+        if (scratchGrid.grid[next_y][next_y] == Empty) 
+            continue;
+
+        if (!visited[next_x][next_y] && scratchGrid.grid[next_x][next_y] != scratchGrid.grid[x][y]) 
+            canCapture(next_x, next_y);
     }
+    if (canCapture(x, y)) 
+        return false; // the suicide case 
+
+    visited.assign(boardSize, std :: vector<int>(boardSize, 0));
+
+    for (int i = 0; i < boardSize ; ++i)
+        for (int j = 0; j < boardSize ; ++j) 
+            if (!visited[i][j] and scratchGrid.grid[i][j] != Empty)
+                canCapture(i, j);
+
     return true;
 }
 
 
-//===============================================================================
+//===============================================================
+//APPLY MOVE + GENERATE NEW LEGAL MOVES
+//===============================================================
+void GoBoard :: applyMove(int x, int y){ //update the new state of the board after a move
+    swap(grid, scratchGrid.grid);
 
-//for updating the board state
-
-void GoBoard :: newState(int x, int y){ //update the new state of the board after a move
-    swap(grid, temp.grid);
-    turn = (turn == Black ? White : Black);  
+    turn = (turn == Black ? White : Black); 
     pass = 0;
-    validMove.clear(); save.clear();
-    for (int i = 0; i < siz; ++i){
-        for (int j = 0; j < siz; ++j){
-            if(temp.grid[i][j] == Empty){
-                temp.grid[i][j] = turn;
-                if(!eatable(i, j)) validMove.emplace_back(i, j);
-                temp.grid[i][j] = Empty;
+    
+    validMove.clear(); 
+    stateHistory.clear();
+    
+    for (int i = 0; i < boardSize; ++i){
+        for (int j = 0; j < boardSize; ++j){
+            if(scratchGrid.grid[i][j] == Empty){
+                scratchGrid.grid[i][j] = turn;
+                
+                if(!canCapture(i, j)) 
+                    validMove.emplace_back(i, j);
+
+                scratchGrid.grid[i][j] = Empty;
+
             } 
         }
     } 
 }
 
+//===============================================================
+//PLAY MOVE
+//===============================================================
+bool GoBoard :: playMove(int x, int y, Piece turn){
+    if(!inBounds(x, y) || grid[x][y] != Empty){
+        return false;
+    }
 
-bool GoBoard :: newStep(int x, int y, Piece turn){
-    if(!inside(x, y) or grid[x][y] != Empty) return false;
-    
-    temp.grid = grid;
-    temp.grid[x][y] = turn;
-    if(!move_check(x, y) or (previous_grid.size() > 1 and temp.grid == previous_grid.end()[-2])) return false;
-    
-    previous_grid.emplace_back(temp.grid);
-    newState(x, y);
+    scratchGrid.grid = grid;
+    scratchGrid.grid[x][y] = turn;
+    if(!isLegalMove(x, y) ||
+        (previousState.size() > 1 and scratchGrid.grid == previousState.end()[-2])){
+           return false; // the valid move and Ko violation
+    }
+
+    previousState.emplace_back(scratchGrid.grid);
+    applyMove(x, y);
     return true;
 }       
 
-//===============================================================================
-
-//for end stage
+//===============================================================
+//END GAME CHECK
+//===============================================================
 bool GoBoard :: ended(void){
     if(validMove.empty() or pass == 2) {
         endGame = 1;
@@ -125,52 +185,69 @@ bool GoBoard :: ended(void){
     return false;
 }
 
+
+//===============================================================
+//TERRITORY CALCULATION
+//===============================================================
 int GoBoard :: getTerritory(int x, int y){
     std :: queue<std :: pair<int, int>> q;
     q.emplace(x, y);
-    vis[x][y] = 1;
+    visited[x][y] = 1;
     int terr = 1;
-    int onlyOne = 0; // check if there's only one player is capturing this area
+    int borderMask  = 0; // check if there's only one player is capturing this area
 
     while(q.size()){
         auto[rx, ry] = q.front(); q.pop();
         for (int dir = 0; dir < 4; ++dir){
-            int nx = rx + dx[dir];
-            int ny = ry + dy[dir];
-            if(!inside(nx, ny) or vis[nx][ny]) continue;
-            if(temp.grid[nx][ny] == Empty){
+            int next_x = rx + DX[dir];
+            int next_y = ry + DY[dir];
+
+            if(!inBounds(next_x, next_y) or visited[next_x][next_y]) 
+                continue;
+            
+            if(scratchGrid.grid[next_x][next_y] == Empty){
+                visited[next_x][next_y] = 1;
+                q.emplace(next_x, next_y);
                 ++terr;
-                vis[nx][ny] = 1;
-                q.emplace(nx, ny);
             }
-            if(temp.grid[nx][ny] == Black) onlyOne |= 1;
-            if(temp.grid[nx][ny] == White) onlyOne |= 2;
+            else if(scratchGrid.grid[next_x][next_y] == Black) 
+                borderMask  |= 1;
+            
+            else if(scratchGrid.grid[next_x][next_y] == White) 
+                borderMask  |= 2;
         }
     }
-    if(__builtin_popcount(onlyOne) == 1){
-        if(onlyOne == 1) return terr;
-        return -terr;
-    }
-    else{
-        return 0;
-    }
+    if(borderMask == 1) return terr;
+    if(borderMask == 2) return -terr;
+    
+    return 0;
 }
 
-std :: pair<int, int> GoBoard :: getScore(void){ //China's rule
-    score.blackCaptured = score.blackTerr = score.whiteCaptured = score.whiteTerr = 0; //reset for every draw
-    vis.assign(siz, std :: vector<int>(siz, 0));
-    temp.grid = grid;
-    for (int i = 0; i < siz; ++i){
-        for (int j = 0; j < siz; ++j){
-            if(!vis[i][j] and temp.grid[i][j] == Empty){
+//===============================================================
+//SCORING --- CHINESE RULE
+//===============================================================
+std :: pair<int, int> GoBoard :: getScore(void){
+    score = Score();
+
+    scratchGrid.grid = grid;
+    visited.assign(boardSize, std :: vector<int>(boardSize, 0));
+
+    for (int i = 0; i < boardSize; ++i){
+        for (int j = 0; j < boardSize; ++j){
+
+            if(!visited[i][j] and scratchGrid.grid[i][j] == Empty){
                 int value = getTerritory(i, j);
                 if(value < 0) score.whiteTerr -= value;
                 else score.blackTerr += value;
             }
-            else if(temp.grid[i][j] != Empty){
-                temp.grid[i][j] == Black ? score.blackCaptured++ : score.whiteCaptured++;
+            else if(scratchGrid.grid[i][j] != Empty){
+                scratchGrid.grid[i][j] == Black ? score.blackCaptured++ : score.whiteCaptured++;
             }
         }
     }
-    return std :: make_pair(score.whiteCaptured + score.whiteTerr, score.blackCaptured + score.blackTerr);
+
+    return {
+        score.whiteCaptured + score.whiteTerr, 
+        score.blackCaptured + score.blackTerr
+    };
 }

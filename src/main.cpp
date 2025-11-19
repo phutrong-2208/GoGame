@@ -15,6 +15,7 @@
 #include "SettingManager.hpp"
 #include "MenuManager.hpp"
 #include "ScoreRevealManager.hpp"
+#include "BotLogic.hpp"
 
 Operation op; 
 MetaControls metaControls;
@@ -23,7 +24,7 @@ SoundEffect sound;
 Button setup;
 GoBoard goBoard;
 RenderZone render;
-
+GoBot botMode;
 
 //UIs Manager 
 Manager ui;
@@ -41,9 +42,6 @@ int main(){
     SettingUI.setupSettingButton(button_list[2]);
     ModeUI.setupModeButton(button_list[3]);
     ScoreUI.setupScoreButton(button_list[4]);
-
-    goBoard.newGame(); 
-    op.history.emplace_back(goBoard);
 
     sound.Background.setLoop(true);
     sound.Background.play();
@@ -68,9 +66,14 @@ int main(){
                 }
                 continue;
             }
+            if(ui.State != SCORE){
+                goBoard.newGame();
+                op.history.clear();
+                op.snap.clear();
+                op.history.emplace_back(goBoard);
+            }
             ui.MenuManager(window, button_list[ui.State], goBoard, event);
         }
-
         window.clear();
         if(ui.State == BOARD) ui.drawBoard(window, goBoard, button_list[BOARD]);
         else if(ui.State == SCORE){

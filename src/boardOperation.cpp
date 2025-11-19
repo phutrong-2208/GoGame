@@ -24,17 +24,15 @@ void Operation :: NewGame(GoBoard &goBoard){
 }
 void Operation :: Resign(GoBoard &goBoard){
     goBoard.endGame = 2;
-    std :: cout << (goBoard.turn == Black ? "White " : "Black ") << " win by resignation!!\n";
 }
 void Operation :: Pass(GoBoard &goBoard){
-    std :: cout << (goBoard.turn == Black ? "Black " : "White ") << " Pass the turn!\n";
     goBoard.pass++;
     goBoard.turn = (goBoard.turn == Black ? White : Black);
 }
-void Operation :: SetSize(GoBoard &goBoard, int siz){
-    std :: cout << "Size set to " << siz << "x" << siz << "\n";
-    goBoard.siz = siz;
-    goBoard.grid.assign(siz, std :: vector<Piece>(siz, Empty));
+void Operation :: SetSize(GoBoard &goBoard, int boardSize){
+    goBoard.boardSize = boardSize;
+    goBoard.grid.assign(boardSize, std :: vector<Piece>(boardSize, Empty));
+    
     goBoard.newGame();
 }
 void Operation :: File(GoBoard &goBoard, int attr){

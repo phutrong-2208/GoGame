@@ -14,6 +14,7 @@
 #include "renderZone.hpp"
 #include "metaControls.hpp"
 #include "soundEffect.hpp"
+#include "BotLogic.hpp"
 
 enum state {BOARD, GAME_MENU, SETTING_MENU, MODE_MENU, SCORE, CONF_DIALOG};
 
