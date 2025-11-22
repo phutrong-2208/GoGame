@@ -1,6 +1,8 @@
 #include "UIManager.hpp"
 #include "metaControls.hpp"
-SoundEffect sounds;
+
+
+SoundEffect soundButton;
 void Manager :: doActionHover(Button &button, sf :: RenderWindow &window) {
     auto [mouseX, mouseY] = mouse.getPosition(window);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
@@ -22,7 +24,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
         if (button.position.x + tmpSpace * i >= mouseX) continue;
         if (button.position.x + tmpSpace * (i + 1) <= mouseX) continue;
         if (button.position.y >= mouseY || mouseY >= button.position.y + button.siz.y) continue;
-        sounds.click.play();
+        soundButton.click.play();
         
         switch (button.type){
             case 1: // Undo / Redo
@@ -115,9 +117,10 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
         Piece botColor = (metaControls.goFirst == 0 ? White : Black);
         if(goBoard.turn == botColor){
             botMode.botisThinking = true;
+
             sf :: sleep(sf :: seconds(0.5));
+            
             botMode.botMove(goBoard);
-            sounds.piece.play();
             op.history.emplace_back(goBoard);
             op.snap.clear();
             botMode.botisThinking = false;
@@ -125,8 +128,7 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
         }
     }
     if(event.type == sf :: Event :: MouseButtonPressed){
-        if(goBoard.playMove(snatchX, snatchY, goBoard.turn)){
-            sounds.piece.play();
+        if(goBoard.playMove(snatchX, snatchY, goBoard.turn, 1)){
             op.history.emplace_back(goBoard);
             op.snap.clear();
             return;

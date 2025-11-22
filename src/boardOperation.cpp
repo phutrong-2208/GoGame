@@ -5,18 +5,20 @@ void Operation :: reset(void){
     snap.clear();
 }
 void Operation :: Rollback(GoBoard &goBoard, int t){
-    if(t == 0) { //undo case
-        if(history.size() <= 1) return;
-        snap.emplace_back(history.back());
-        history.pop_back();
-        goBoard = history.back();
-    }
-    else{ //redo case
-        if(snap.empty()) return;
+    for (int i = 0; i < (metaControls.playWithBot ? 2 : 1); ++i){
+        if(t == 0) { //undo case
+            if(history.size() <= 1) return;
+            snap.emplace_back(history.back());
+            history.pop_back();
+            goBoard = history.back();
+        }
+        else{ //redo case
+            if(snap.empty()) return;
 
-        history.emplace_back(snap.back());
-        goBoard = snap.back();
-        snap.pop_back();
+            history.emplace_back(snap.back());
+            goBoard = snap.back();
+            snap.pop_back();
+        }
     }
 }
 void Operation :: NewGame(GoBoard &goBoard){

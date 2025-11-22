@@ -3,6 +3,8 @@
 
 
 //including header file
+
+#include "soundEffect.hpp"
 #include "SFML/Graphics.hpp"
 #include "mouseInput.hpp"
 #include "Board.hpp"
@@ -10,21 +12,25 @@
 #include "renderZone.hpp"
 #include "boardOperation.hpp"
 #include "UIManager.hpp"
-#include "soundEffect.hpp"
 #include "ModeManager.hpp"
 #include "SettingManager.hpp"
 #include "MenuManager.hpp"
 #include "ScoreRevealManager.hpp"
 #include "BotLogic.hpp"
+#include "EasyMode.hpp"
+#include "MediumMode.hpp"
+#include "HardMode.hpp"
 
+SoundEffect backGround;
 Operation op; 
 MetaControls metaControls;
 MouseInput mouse;
-SoundEffect sound;
 Button setup;
 GoBoard goBoard;
 RenderZone render;
 GoBot botMode;
+Score score;
+
 
 //UIs Manager 
 Manager ui;
@@ -33,6 +39,12 @@ Setting SettingUI;
 Menu MenuUI;
 ScoreReveal ScoreUI;
 std :: vector<Button> button_list[5];   // save board button
+
+//Game Modes
+EasyMode easy;
+MediumMode medium;
+HardMode hard;
+
 
 int main(){
     sf :: RenderWindow window(sf :: VideoMode({1200, 800}), "GoGame");
@@ -43,8 +55,8 @@ int main(){
     ModeUI.setupModeButton(button_list[3]);
     ScoreUI.setupScoreButton(button_list[4]);
 
-    sound.Background.setLoop(true);
-    sound.Background.play();
+    backGround.Background.setLoop(true);
+    backGround.Background.play();
     
     
     while(window.isOpen()){
@@ -60,8 +72,7 @@ int main(){
             }
             if(ui.State == BOARD){
                 ui.boardManager(window, goBoard, button_list[0], event);
-                goBoard.ended();
-                if(goBoard.endGame){
+                if(goBoard.ended()){
                     ui.State = SCORE;
                 }
                 continue;

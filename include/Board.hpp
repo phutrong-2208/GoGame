@@ -25,6 +25,7 @@ class GoBoard{
         int endGame;
         std :: vector<std :: vector<Piece>> grid;
         std :: vector<std :: pair<int, int>> validMove;
+        std :: vector<std :: vector<std :: vector<Piece>>> previousState;
 
         void setSize(int _boardSize) {
             boardSize  = _boardSize ;
@@ -35,9 +36,18 @@ class GoBoard{
             endGame = 0; 
             pass = 0;
         }
-        
+    GoBoard operator = (const GoBoard& other) {
+        boardSize = other.boardSize;
+        grid = other.grid;
+        turn = other.turn;
+        pass = other.pass;
+        endGame = other.endGame;
+        validMove = other.validMove;
+        previousState = other.previousState;
+        return *this;
+    }
     bool newGame(void);
-    bool playMove(int x, int y, Piece color);
+    bool playMove(int x, int y, Piece color, bool mainMove);
     std :: pair<int, int> getScore(void);
     bool ended(void);
         

@@ -7,11 +7,9 @@
 static constexpr int DX[4] = {-1, 1, 0, 0};
 static constexpr int DY[4] = {0, 0, -1, 1};
 
-std :: vector<std :: vector<std :: vector<Piece>>> previousState; //save the previous states till current state, use for Ko rule
-std :: deque<std :: vector<std :: vector<Piece>>> stateHistory;
+ //save the previous states till current state, use for Ko rule
 
 GoBoard scratchGrid;
-Score score; 
 
 
 //===============================================================
@@ -28,8 +26,6 @@ bool GoBoard :: newGame(void){
         for (int j = 0; j < boardSize; ++j)
             validMove.emplace_back(i, j);
     
-    
-    stateHistory.clear(); 
     previousState.emplace_back(grid);
     
     pass = 0; 
@@ -100,29 +96,30 @@ bool GoBoard :: canCapture(int x, int y){
 bool GoBoard :: isLegalMove(int x, int y){
     visited.assign(boardSize, std :: vector<int>(boardSize, 0));
 
+
     for (int dir = 0; dir < 4; ++dir){
         int next_x = x + DX[dir];
         int next_y = y + DY[dir];
 
         if (!inBounds(next_x, next_y)) 
             continue;
-        
-        if (scratchGrid.grid[next_y][next_y] == Empty) 
+        if (scratchGrid.grid[next_x][next_y] == Empty) 
             continue;
 
-        if (!visited[next_x][next_y] && scratchGrid.grid[next_x][next_y] != scratchGrid.grid[x][y]) 
+        if (!visited[next_x][next_y] && scratchGrid.grid[next_x][next_y] != scratchGrid.grid[x][y]){
             canCapture(next_x, next_y);
+        }
     }
-    if (canCapture(x, y)) 
+    if (canCapture(x, y)){
         return false; // the suicide case 
-
+    }
     visited.assign(boardSize, std :: vector<int>(boardSize, 0));
 
     for (int i = 0; i < boardSize ; ++i)
         for (int j = 0; j < boardSize ; ++j) 
             if (!visited[i][j] and scratchGrid.grid[i][j] != Empty)
                 canCapture(i, j);
-
+    if (previousState.size() > 1 and scratchGrid.grid == previousState.end()[-2]) return false; //KO rule
     return true;
 }
 
@@ -131,13 +128,12 @@ bool GoBoard :: isLegalMove(int x, int y){
 //APPLY MOVE + GENERATE NEW LEGAL MOVES
 //===============================================================
 void GoBoard :: applyMove(int x, int y){ //update the new state of the board after a move
-    swap(grid, scratchGrid.grid);
+    grid = scratchGrid.grid;
 
     turn = (turn == Black ? White : Black); 
     pass = 0;
     
     validMove.clear(); 
-    stateHistory.clear();
     
     for (int i = 0; i < boardSize; ++i){
         for (int j = 0; j < boardSize; ++j){
@@ -157,18 +153,18 @@ void GoBoard :: applyMove(int x, int y){ //update the new state of the board aft
 //===============================================================
 //PLAY MOVE
 //===============================================================
-bool GoBoard :: playMove(int x, int y, Piece turn){
+SoundEffect clickSound;
+bool GoBoard :: playMove(int x, int y, Piece turn, bool mainMove){
     if(!inBounds(x, y) || grid[x][y] != Empty){
         return false;
     }
 
     scratchGrid.grid = grid;
     scratchGrid.grid[x][y] = turn;
-    if(!isLegalMove(x, y) ||
-        (previousState.size() > 1 and scratchGrid.grid == previousState.end()[-2])){
-           return false; // the valid move and Ko violation
+    if(!isLegalMove(x, y)){
+        return false; // the valid move and Ko violation
     }
-
+    if(mainMove) clickSound.piece.play();
     previousState.emplace_back(scratchGrid.grid);
     applyMove(x, y);
     return true;
@@ -178,6 +174,7 @@ bool GoBoard :: playMove(int x, int y, Piece turn){
 //END GAME CHECK
 //===============================================================
 bool GoBoard :: ended(void){
+    if(endGame) return endGame;
     if(validMove.empty() or pass == 2) {
         endGame = 1;
         return true;
@@ -202,9 +199,13 @@ int GoBoard :: getTerritory(int x, int y){
             int next_x = rx + DX[dir];
             int next_y = ry + DY[dir];
 
-            if(!inBounds(next_x, next_y) or visited[next_x][next_y]) 
+            if(!inBounds(next_x, next_y)) {
+                borderMask = 3;
+                break;
+            }
+            if(visited[next_x][next_y])
                 continue;
-            
+
             if(scratchGrid.grid[next_x][next_y] == Empty){
                 visited[next_x][next_y] = 1;
                 q.emplace(next_x, next_y);
@@ -241,13 +242,13 @@ std :: pair<int, int> GoBoard :: getScore(void){
                 else score.blackTerr += value;
             }
             else if(scratchGrid.grid[i][j] != Empty){
-                scratchGrid.grid[i][j] == Black ? score.blackCaptured++ : score.whiteCaptured++;
+                scratchGrid.grid[i][j] == White ? score.aliveWhiteStones++ : score.aliveBlackStones++;
             }
         }
     }
 
     return {
-        score.whiteCaptured + score.whiteTerr, 
-        score.blackCaptured + score.blackTerr
+        score.aliveWhiteStones + score.whiteTerr, 
+        score.aliveBlackStones + score.blackTerr
     };
 }
