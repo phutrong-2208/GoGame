@@ -116,10 +116,7 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
     if(metaControls.playWithBot){
         Piece botColor = (metaControls.goFirst == 0 ? White : Black);
         if(goBoard.turn == botColor){
-            botMode.botisThinking = true;
-
-            sf :: sleep(sf :: seconds(0.5));
-            
+            botMode.botisThinking = true;            
             botMode.botMove(goBoard);
             op.history.emplace_back(goBoard);
             op.snap.clear();

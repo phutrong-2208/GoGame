@@ -159,7 +159,6 @@ bool GoBoard :: playMove(int x, int y, Piece turn, bool mainMove){
     if(!inBounds(x, y) || grid[x][y] != Empty){
         return false;
     }
-
     scratchGrid.grid = grid;
     scratchGrid.grid[x][y] = turn;
     if(!isLegalMove(x, y)){
@@ -175,8 +174,8 @@ bool GoBoard :: playMove(int x, int y, Piece turn, bool mainMove){
 //END GAME CHECK
 //===============================================================
 bool GoBoard :: ended(void){
-    if(endGame) return endGame;
-    if(validMove.empty() or pass == 2) {
+    if(endGame) return true;
+    if(pass == 2) {
         endGame = 1;
         return true;
     }

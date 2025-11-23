@@ -47,8 +47,10 @@ int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int be
         int best = -oo;
         for (std :: pair<int, int>&move : currentBoard.validMove){
             GoBoard newBoard = currentBoard;
-            if(move.first == -1 and move.second == -1) // AI gonna pass the turn
+            if(move.first == -1 and move.second == -1){ // AI gonna pass the turn
                 newBoard.pass++;
+                newBoard.turn = (newBoard.turn == Black ? White : Black);
+            }
             else
                 newBoard.playMove(move.first, move.second, botColor, 0);
             
@@ -63,8 +65,10 @@ int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int be
         int best = oo;
         for (std :: pair<int, int>&move :currentBoard.validMove){
             GoBoard newBoard = currentBoard;
-            if(move.first == -1 and move.second == -1) // AI gonna pass the turn
+            if(move.first == -1 and move.second == -1){// AI gonna pass the turn
                 newBoard.pass++;
+                newBoard.turn = (newBoard.turn == Black ? White : Black);
+            }
             else    
                 newBoard.playMove(move.first, move.second, botColor, 0);
 
@@ -100,6 +104,8 @@ void MediumMode :: Medium_Mode(GoBoard& goBoard){
     }
     if(bestMove != std :: make_pair(-1, -1))
         goBoard.playMove(bestMove.first, bestMove.second, botColor, 1);
-    else
+    else{
         goBoard.pass++;
+        goBoard.turn = (goBoard.turn == Black ? White : Black);
+    }
 }   
