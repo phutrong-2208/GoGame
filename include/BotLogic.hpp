@@ -5,7 +5,6 @@
 
 #include "Board.hpp"
 #include "metaControls.hpp"
-#include "BotLogic.hpp"
 #include "scoring.hpp"
 
 #include "EasyMode.hpp"
@@ -16,11 +15,12 @@ class GoBot{
     public: 
         Piece botTurn;
         bool botisThinking;
-
+        
         GoBot(){
             botTurn = (metaControls.goFirst == 1 ? White : Black);
             botisThinking = false;
-        }
+            
+        };
         void botMove(GoBoard& goBoard);
 };
 

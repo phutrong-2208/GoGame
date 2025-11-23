@@ -2,6 +2,12 @@
 #define HARD_MODE_HPP
 
 #include "Board.hpp"
+#include "metaControls.hpp"
+
+#include "random"
+#include "memory"
+#include "chrono"
+#include "cassert"
 
 class HardMode{
     public: 

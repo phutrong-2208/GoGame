@@ -20,6 +20,9 @@ Piece botColor = (metaControls.goFirst == 0 ? White : Black);
 Piece playerColor = (botColor == White ? Black : White);
 int MediumMode :: scoreGain(GoBoard goBoard, std :: pair<int, int> &move){
     std :: pair<int, int> nowScore = goBoard.getScore();
+    if(move.first == -1 and move.second == -1){ //pass the turn
+        return 0;
+    }
     int before = (botColor == White ? nowScore.first - nowScore.second : nowScore.second - nowScore.first);
     goBoard.playMove(move.first, move.second, botColor, 0);
     
@@ -44,7 +47,10 @@ int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int be
         int best = -oo;
         for (std :: pair<int, int>&move : currentBoard.validMove){
             GoBoard newBoard = currentBoard;
-            newBoard.playMove(move.first, move.second, botColor, 0);
+            if(move.first == -1 and move.second == -1) // AI gonna pass the turn
+                newBoard.pass++;
+            else
+                newBoard.playMove(move.first, move.second, botColor, 0);
             
             int value = minimax(newBoard, treeDepth - 1, alpha, beta, 0);
             alpha = std :: max(alpha, value);
@@ -57,7 +63,10 @@ int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int be
         int best = oo;
         for (std :: pair<int, int>&move :currentBoard.validMove){
             GoBoard newBoard = currentBoard;
-            newBoard.playMove(move.first, move.second, playerColor, 0);
+            if(move.first == -1 and move.second == -1) // AI gonna pass the turn
+                newBoard.pass++;
+            else    
+                newBoard.playMove(move.first, move.second, botColor, 0);
 
             int value = minimax(newBoard, treeDepth - 1, alpha, beta, 1);
             beta = std :: min(beta, value);
@@ -91,4 +100,6 @@ void MediumMode :: Medium_Mode(GoBoard& goBoard){
     }
     if(bestMove != std :: make_pair(-1, -1))
         goBoard.playMove(bestMove.first, bestMove.second, botColor, 1);
+    else
+        goBoard.pass++;
 }   

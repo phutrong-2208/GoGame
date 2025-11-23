@@ -25,7 +25,7 @@ bool GoBoard :: newGame(void){
     for (int i = 0; i < boardSize; ++i)
         for (int j = 0; j < boardSize; ++j)
             validMove.emplace_back(i, j);
-    
+    validMove.emplace_back(-1, -1); //pass turn
     previousState.emplace_back(grid);
     
     pass = 0; 
@@ -148,6 +148,7 @@ void GoBoard :: applyMove(int x, int y){ //update the new state of the board aft
             } 
         }
     } 
+    validMove.emplace_back(-1, -1);
 }
 
 //===============================================================
