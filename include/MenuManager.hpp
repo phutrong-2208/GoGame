@@ -9,4 +9,4 @@ class Menu{
 
 extern Menu MenuUI;
 
-#endif MENU_MANAGER_HPP
+#endif

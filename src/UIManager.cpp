@@ -148,8 +148,8 @@ void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &butt
 
     sf :: Sprite bg(background);
     
-    float render_height = render.ZONE_SIZE;
-    float render_width = render.ZONE_SIZE * render.ASPECT_RATIO; 
+    float render_height = metaControls.ZONE_SIZE;
+    float render_width = metaControls.ZONE_SIZE * metaControls.ASPECT_RATIO; 
     bg.setScale(render_width / background.getSize().x, render_height / background.getSize().y);
     window.draw(bg);
     for (Button& button : button_list){

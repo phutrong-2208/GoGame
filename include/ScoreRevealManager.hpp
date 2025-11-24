@@ -13,4 +13,4 @@ class ScoreReveal{
 
 extern ScoreReveal ScoreUI;
 
-#endif SCORE_REVEAL_MANAGER_HPP
+#endif

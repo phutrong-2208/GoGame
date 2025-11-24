@@ -11,24 +11,24 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
 
     //Drawing the horizontal line
     for (int i = 0; i < goBoard.boardSize; ++i){
-        int vertexPos = SHIFT_CONST + i * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (goBoard.boardSize - 1));
-        line[0].position = sf :: Vector2f(SHIFT_CONST, vertexPos);
-        line[1].position = sf :: Vector2f(ZONE_SIZE - SHIFT_CONST, vertexPos);
+        int vertexPos = metaControls.SHIFT_CONST + i * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
+        line[0].position = sf :: Vector2f(metaControls.SHIFT_CONST, vertexPos);
+        line[1].position = sf :: Vector2f(metaControls.ZONE_SIZE - metaControls.SHIFT_CONST, vertexPos);
         window.draw(line, 2, sf :: Lines);
     }
 
     //Drawing the vertical line  
     for (int i = 0; i < goBoard.boardSize; ++i){
-        int vertexPos = SHIFT_CONST + i * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (goBoard.boardSize - 1));
-        line[0].position = sf :: Vector2f(vertexPos, SHIFT_CONST);
-        line[1].position = sf :: Vector2f(vertexPos, ZONE_SIZE - SHIFT_CONST);
+        int vertexPos = metaControls.SHIFT_CONST + i * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
+        line[0].position = sf :: Vector2f(vertexPos, metaControls.SHIFT_CONST);
+        line[1].position = sf :: Vector2f(vertexPos, metaControls.ZONE_SIZE - metaControls.SHIFT_CONST);
         window.draw(line, 2, sf :: Lines);
     }
 
     //Drawing hoshi point
     std :: vector<sf :: Vector2f> hoshiPosition;
     
-    double CeilSize = (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (goBoard.boardSize - 1));
+    double CeilSize = (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
 
     if(goBoard.boardSize == 9){
         std :: vector<std :: pair<int, int>> point = {
@@ -61,7 +61,7 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
     sf :: CircleShape hoshi(5.0f);
     hoshi.setFillColor(sf :: Color :: Black);
     for (sf :: Vector2f x : hoshiPosition){
-        hoshi.setPosition(SHIFT_CONST + x.x - hoshi.getRadius(), SHIFT_CONST + x.y - hoshi.getRadius());
+        hoshi.setPosition(metaControls.SHIFT_CONST + x.x - hoshi.getRadius(), metaControls.SHIFT_CONST + x.y - hoshi.getRadius());
         window.draw(hoshi);
     }
 }
@@ -70,8 +70,8 @@ sf :: Color blackColor(55, 55, 65), whiteColor(235, 235, 225), borderColor(20, 2
 
 void RenderZone :: drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i, int j, int ghost = 0){
     if ((!!ghost) != (goBoard.grid[i][j] == Empty)) return;
-    int vertexX = SHIFT_CONST + i * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (goBoard.boardSize - 1));
-    int vertexY = SHIFT_CONST + j * (1.0 * (ZONE_SIZE - 2 * SHIFT_CONST) / (goBoard.boardSize - 1));
+    int vertexX = metaControls.SHIFT_CONST + i * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
+    int vertexY = metaControls.SHIFT_CONST + j * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
 
     sf :: CircleShape piece;
     sf :: Color pieceColor(ghost == 1 || goBoard.grid[i][j] == Black ? blackColor : whiteColor);
@@ -104,15 +104,15 @@ void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
 
 
     //draw control panel
-    line[0].position = sf :: Vector2f(ZONE_SIZE, SHIFT_CONST);
+    line[0].position = sf :: Vector2f(metaControls.ZONE_SIZE, metaControls.SHIFT_CONST);
 
-    line[1].position = sf :: Vector2f(ZONE_SIZE, ZONE_SIZE - SHIFT_CONST);
+    line[1].position = sf :: Vector2f(metaControls.ZONE_SIZE, metaControls.ZONE_SIZE - metaControls.SHIFT_CONST);
     window.draw(line, 2, sf :: Lines);
-    line[0].position = sf :: Vector2f(ZONE_SIZE * ASPECT_RATIO - SHIFT_CONST, ZONE_SIZE - SHIFT_CONST);
+    line[0].position = sf :: Vector2f(metaControls.ZONE_SIZE * metaControls.ASPECT_RATIO - metaControls.SHIFT_CONST, metaControls.ZONE_SIZE - metaControls.SHIFT_CONST);
     window.draw(line, 2, sf :: Lines);
-    line[1].position = sf :: Vector2f(ZONE_SIZE * ASPECT_RATIO - SHIFT_CONST, SHIFT_CONST);
+    line[1].position = sf :: Vector2f(metaControls.ZONE_SIZE * metaControls.ASPECT_RATIO - metaControls.SHIFT_CONST, metaControls.SHIFT_CONST);
     window.draw(line, 2, sf :: Lines);
-    line[0].position = sf :: Vector2f(ZONE_SIZE, SHIFT_CONST);
+    line[0].position = sf :: Vector2f(metaControls.ZONE_SIZE, metaControls.SHIFT_CONST);
     window.draw(line, 2, sf :: Lines);
 }
 
@@ -124,18 +124,18 @@ void RenderZone :: drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
 
 void RenderZone :: initSize(sf :: RenderWindow &window){
     WINDOW_SIZE = sf :: VideoMode :: getDesktopMode().height / 2;
-    window.setSize({(unsigned int)(WINDOW_SIZE * ASPECT_RATIO), WINDOW_SIZE});
+    window.setSize({(unsigned int)(WINDOW_SIZE * metaControls.ASPECT_RATIO), WINDOW_SIZE});
 }
 
 void RenderZone :: normalizeSize(sf :: RenderWindow &window){
     auto [new_width, new_height] = window.getSize();
     if ((unsigned int)new_height == WINDOW_SIZE){
-        WINDOW_SIZE = new_width / ASPECT_RATIO;
+        WINDOW_SIZE = new_width / metaControls.ASPECT_RATIO;
     } else 
     if ((unsigned int)new_width == WINDOW_SIZE){
         WINDOW_SIZE = new_height;
     } else {
-        WINDOW_SIZE = std :: min(1.0L * new_width / ASPECT_RATIO, 1.0L * new_height);
+        WINDOW_SIZE = std :: min(1.0L * new_width / metaControls.ASPECT_RATIO, 1.0L * new_height);
     }
-    window.setSize({(unsigned int)(WINDOW_SIZE * ASPECT_RATIO), WINDOW_SIZE});
+    window.setSize({(unsigned int)(WINDOW_SIZE * metaControls.ASPECT_RATIO), WINDOW_SIZE});
 }

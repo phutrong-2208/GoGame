@@ -18,11 +18,11 @@ std :: pair<int, int> MouseInput ::  checkBoard(sf :: RenderWindow &window, GoBo
 
     int snatchX = -1, snatchY = -1;
     double snatchD = 99999;
-    double spacing = (1.0 * (render.ZONE_SIZE - 2 * render.SHIFT_CONST) / (goBoard.boardSize - 1));
+    double spacing = (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
     for (int i = 0; i < goBoard.boardSize; ++i){
         for (int j = 0; j < goBoard.boardSize; ++j){
-            int vertexX = render.SHIFT_CONST + i * spacing;
-            int vertexY = render.SHIFT_CONST + j * spacing;
+            int vertexX = metaControls.SHIFT_CONST + i * spacing;
+            int vertexY = metaControls.SHIFT_CONST + j * spacing;
             if (snatchX == -1 || Euclidean(vertexX, vertexY, mouseX, mouseY) < snatchD){
                 snatchD = Euclidean(vertexX, vertexY, mouseX, mouseY);
                 snatchX = i; snatchY = j;

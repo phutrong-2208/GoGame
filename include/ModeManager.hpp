@@ -8,4 +8,4 @@ class Mode{
 };
 extern Mode ModeUI;
 
-#endif MODE_MANAGER_HPP
+#endif

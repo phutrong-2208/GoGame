@@ -7,6 +7,7 @@
 #include "soundEffect.hpp"
 #include "SFML/Graphics.hpp"
 #include "mouseInput.hpp"
+#include "roundedRectangle.hpp"
 #include "Board.hpp"
 #include "button.hpp"
 #include "renderZone.hpp"

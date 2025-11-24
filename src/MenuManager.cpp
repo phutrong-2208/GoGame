@@ -2,10 +2,10 @@
 
 void Menu :: setupMenuButton(std :: vector<Button> &button_list){
     int distance_between_button = 25;
-    float width = render.ZONE_SIZE * render.ASPECT_RATIO / 3.0f;
-    float height = (2.0f * render.ZONE_SIZE / 3.0f) / 4.0f - distance_between_button;
+    float width = metaControls.ZONE_SIZE * metaControls.ASPECT_RATIO / 3.0f;
+    float height = (2.0f * metaControls.ZONE_SIZE / 3.0f) / 4.0f - distance_between_button;
 
-    float tmp_posX = width, tmp_posY = 1.0f * render.ZONE_SIZE / 3.0f;
+    float tmp_posX = width, tmp_posY = 1.0f * metaControls.ZONE_SIZE / 3.0f;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         6, 1, 

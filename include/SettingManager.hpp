@@ -8,4 +8,4 @@ class Setting{
 };
 
 extern Setting SettingUI;
-#endif SETTING_MANAGER_HPP
+#endif

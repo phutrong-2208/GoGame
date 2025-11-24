@@ -1,6 +1,7 @@
 #ifndef MOUSE_INPUT_HPP
 #define MOUSE_INPUT_HPP
 #include "renderZone.hpp"
+#include "metaControls.hpp"
 
 class MouseInput{
     private:
