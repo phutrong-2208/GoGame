@@ -12,9 +12,8 @@ void Operation :: Rollback(GoBoard &goBoard, int t){
             history.pop_back();
             goBoard = history.back();
         }
-        else{ //redo case
+        else { //redo case
             if(snap.empty()) return;
-
             history.emplace_back(snap.back());
             goBoard = snap.back();
             snap.pop_back();
@@ -46,6 +45,10 @@ void Operation :: SetSize(GoBoard &goBoard, int boardSize){
     goBoard.newGame();
 }
 void Operation :: File(GoBoard &goBoard, int attr){
-    if (attr) fop.exportBoard(goBoard); 
-    else fop.importBoard(goBoard);
+    if (attr) {
+        fop.exportBoard(goBoard); 
+    } else {
+        fop.importBoard(goBoard);
+        reset();
+    }
 }

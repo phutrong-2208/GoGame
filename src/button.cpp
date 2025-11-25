@@ -1,6 +1,5 @@
 #include "button.hpp"
 
-
 static std :: map<std :: string, sf :: Font> fontCache; // save for reducing the number time of loading the Font from the file
 static std :: map<std :: string, sf :: Texture> textureCache; // save for reducing the number time of loading the Texture from the file
 
@@ -41,7 +40,7 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string &FontLink, s
             box.setSize({1.0L * (siz.x - (cnt - 1) * metaControls.CONTROL_SHIFT) / cnt, siz.y});
             if (!hover[i]) box.setFillColor(color[i]);
             else box.setFillColor(color[i] * sf :: Color(200, 200, 200));
-            customButton(window, box);
+            customPanelRender(window, box);
             boxBounds = box.getGlobalBounds();
         }
         

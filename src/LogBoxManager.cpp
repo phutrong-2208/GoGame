@@ -15,13 +15,10 @@ float posY = metaControls.SHIFT_CONST + metaControls.CONTROL_SHIFT + 6.0f * (met
 float width = metaControls.ZONE_SIZE * (metaControls.ASPECT_RATIO - 1) - metaControls.SHIFT_CONST - 2 * metaControls.CONTROL_SHIFT; 
 float height = metaControls.ZONE_SIZE - metaControls.CONTROL_SHIFT - metaControls.SHIFT_CONST - posY;
 
-void LogBox :: drawLogBox(sf :: RenderWindow& window){        
-    sf :: Vector2f size(width, height);
-    sf :: Color logboxColor(210, 170, 90);
-    sf :: Color shadowColor(0, 0, 0, 80);
-    roundedRectangle(window, {posX, posY}, {posX + width, posY + height}, shadowColor, 20);
-    roundedRectangle(window, {posX, posY}, {posX + width, posY + height}, logboxColor, 20);
+void LogBox :: drawLogBox(sf :: RenderWindow& window){
+    customPanelRender(window, {posX, posY}, {posX + width, posY + height}, metaControls.logboxColor);
 }
+
 // void LogBox :: drawConfigDialog(sf :: RenderWindow& window, GoBoard &goBoard){
 //     float coordX = posX + width / 2.0f;
 //     float coordY = posY + coeff_shift + (5 + (height / MAX_LINES) * fudge * fudge) * MAX_LINES;

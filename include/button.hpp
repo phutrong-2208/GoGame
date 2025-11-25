@@ -1,7 +1,9 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
+
 #include <SFML/Graphics.hpp>
 
+#include "roundedRectangle.hpp"
 #include "mouseInput.hpp"
 #include "renderZone.hpp"
 #include "boardOperation.hpp"

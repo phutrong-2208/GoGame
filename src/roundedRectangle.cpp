@@ -17,11 +17,11 @@ void roundedRectangle(sf :: RenderWindow &window, sf :: Vector2<double> A, sf ::
     window.draw(shape);
 }
 
-void customButton(sf :: RenderWindow &window, sf :: Vector2<double> A, sf :: Vector2<double> B, sf :: Color col){
+void customPanelRender(sf :: RenderWindow &window, sf :: Vector2<double> A, sf :: Vector2<double> B, sf :: Color col){
     roundedRectangle(window, A + sf :: Vector2<double>{5, 5}, B + sf :: Vector2<double>{5, 5}, {0, 0, 0, 20});
     roundedRectangle(window, A, B, col);
 }
 
-void customButton(sf :: RenderWindow &window, sf :: RectangleShape shape){
-    customButton(window, sf :: Vector2<double>(shape.getPosition()), sf :: Vector2<double>(shape.getPosition() + shape.getSize()), shape.getFillColor());
+void customPanelRender(sf :: RenderWindow &window, sf :: RectangleShape shape){
+    customPanelRender(window, sf :: Vector2<double>(shape.getPosition()), sf :: Vector2<double>(shape.getPosition() + shape.getSize()), shape.getFillColor());
 }
