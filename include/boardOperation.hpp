@@ -2,6 +2,7 @@
 #define OPERATION_HPP
 
 #include <vector>
+#include "fileOperation.hpp"
 #include "Board.hpp"
 #include "MetaControls.hpp"
 
@@ -17,10 +18,8 @@ class Operation{
         void Pass(GoBoard& goBoard);
         void SetSize(GoBoard& goBoard, int siz);
         void File(GoBoard& goBoard, int attr);
-
     private:
-        void FileImport(GoBoard& goBoard);
-        void FileExport(GoBoard& goBoard);
+        FileOperation fop;
 };
 
 extern Operation op;

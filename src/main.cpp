@@ -11,6 +11,7 @@
 #include "Board.hpp"
 #include "button.hpp"
 #include "renderZone.hpp"
+#include "fileOperation.hpp"
 #include "boardOperation.hpp"
 #include "UIManager.hpp"
 #include "ModeManager.hpp"

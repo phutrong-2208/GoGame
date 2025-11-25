@@ -38,10 +38,6 @@ void Operation :: SetSize(GoBoard &goBoard, int boardSize){
     goBoard.newGame();
 }
 void Operation :: File(GoBoard &goBoard, int attr){
-    if (attr) FileImport(goBoard); 
-    else FileExport(goBoard);
-}
-void Operation :: FileImport(GoBoard &goBoard){
-}
-void Operation :: FileExport(GoBoard &goBoard){
+    if (attr) fop.exportBoard(goBoard); 
+    else fop.importBoard(goBoard);
 }
