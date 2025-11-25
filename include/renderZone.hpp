@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <Board.hpp>
 #include "metaControls.hpp"
+#include "LogBoxManager.hpp"
 
 class RenderZone{
     private:

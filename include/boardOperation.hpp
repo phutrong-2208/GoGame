@@ -1,7 +1,8 @@
 #ifndef OPERATION_HPP
 #define OPERATION_HPP
-
 #include <vector>
+
+#include "LogBoxManager.hpp"
 #include "Board.hpp"
 #include "MetaControls.hpp"
 

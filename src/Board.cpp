@@ -1,5 +1,4 @@
 #include "Board.hpp"
-
 //===============================================================
 //DECLARE
 //===============================================================
@@ -27,7 +26,7 @@ bool GoBoard :: newGame(void){
             validMove.emplace_back(i, j);
     validMove.emplace_back(-1, -1); //pass turn
     previousState.emplace_back(grid);
-    
+
     pass = 0; 
     endGame = 0; 
     turn = Black;

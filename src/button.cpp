@@ -1,7 +1,5 @@
 #include "button.hpp"
-#include "metaControls.hpp"
-#include "roundedRectangle.hpp"
-#include <map> 
+
 
 static std :: map<std :: string, sf :: Font> fontCache; // save for reducing the number time of loading the Font from the file
 static std :: map<std :: string, sf :: Texture> textureCache; // save for reducing the number time of loading the Texture from the file

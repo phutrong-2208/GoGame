@@ -40,9 +40,6 @@ void MediumMode :: optimizeMove(GoBoard& goBoard, std :: vector<std :: pair<int,
 int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int beta, bool maxi){
     if(treeDepth == 0 || currentBoard.ended())
         return evaluateScore(currentBoard);
-
-    optimizeMove(currentBoard, currentBoard.validMove);
-
     if(maxi){
         int best = -oo;
         for (std :: pair<int, int>&move : currentBoard.validMove){
@@ -106,6 +103,8 @@ void MediumMode :: Medium_Mode(GoBoard& goBoard){
         goBoard.playMove(bestMove.first, bestMove.second, botColor, 1);
     else{
         goBoard.pass++;
+        std :: string color = (goBoard.turn == Black ? "Black" : "White");
+        logbox.insertText(color + "Passed!");
         goBoard.turn = (goBoard.turn == Black ? White : Black);
     }
 }   

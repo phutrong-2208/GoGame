@@ -1,6 +1,5 @@
 #include "renderZone.hpp"
 
-
 void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
     window.clear(metaControls.Background_Color);
 
@@ -96,7 +95,7 @@ void RenderZone :: drawAllPieces(sf :: RenderWindow &window, GoBoard &goBoard){
         }
     }
 }
-
+LogBox logbox;
 void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
     sf :: Vertex line[2];
     line[0].color = sf :: Color :: Black;
@@ -114,6 +113,8 @@ void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
     window.draw(line, 2, sf :: Lines);
     line[0].position = sf :: Vector2f(metaControls.ZONE_SIZE, metaControls.SHIFT_CONST);
     window.draw(line, 2, sf :: Lines);
+
+    
 }
 
 void RenderZone :: drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
