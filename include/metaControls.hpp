@@ -15,11 +15,18 @@ class MetaControls{ // contains anything related to the game but not part of the
         const unsigned CONTROL_SHIFT = 15;
 
         // Variables
-        bool playWithBot = 0;
-        bool musicActive = 0, soundActive = 0, audioVolume = 0;
-        int themeChoice = 0;
-        int difficulty = 0;
-        int goFirst = 0; // 0 if you, 1 if bot
+    bool playWithBot;
+    bool musicActive, soundActive, audioVolume;
+    int themeChoice;
+    int difficulty;
+    int goFirst; // 0 if you, 1 if bot
+    MetaControls(){
+        playWithBot = 0;
+        musicActive = 0, soundActive = 0, audioVolume = 0;
+        themeChoice = 0;
+        difficulty = 0;
+        goFirst = 0; // 0 if you, 1 if bot
+    }
         sf :: Color Background_Color = sf :: Color(236, 203, 126);
         sf :: Color Button_Color = sf :: Color(184, 159, 98);
 };

@@ -23,12 +23,20 @@ void Operation :: Rollback(GoBoard &goBoard, int t){
 }
 void Operation :: NewGame(GoBoard &goBoard){
     goBoard.newGame();
+    logbox.reset();
+    op.history.clear();
+    op.snap.clear();
+    op.history.emplace_back(goBoard);
 }
 void Operation :: Resign(GoBoard &goBoard){
+    std :: string color = (goBoard.turn == Black ? "Black" : "White");
+    logbox.insertText(color + " Resigned!");
     goBoard.endGame = 2;
 }
 void Operation :: Pass(GoBoard &goBoard){
     goBoard.pass++;
+    std :: string color = (goBoard.turn == Black ? "Black" : "White");
+    logbox.insertText(color + " Passed!");
     goBoard.turn = (goBoard.turn == Black ? White : Black);
 }
 void Operation :: SetSize(GoBoard &goBoard, int boardSize){

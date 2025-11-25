@@ -59,7 +59,8 @@ int main(){
 
     backGround.Background.setLoop(true);
     backGround.Background.play();
-    
+
+    logbox.reset();
     
     while(window.isOpen()){
         sf :: Event event; 
@@ -79,10 +80,11 @@ int main(){
                 }
                 continue;
             }
+            op.history.clear();
+            op.snap.clear();
+            logbox.reset();
             if(ui.State != SCORE){
                 goBoard.newGame();
-                op.history.clear();
-                op.snap.clear();
                 op.history.emplace_back(goBoard);
             }
             ui.MenuManager(window, button_list[ui.State], goBoard, event);

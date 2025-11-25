@@ -2,6 +2,8 @@
 #define MEDIUM_MODE_HPP
 
 #include "Board.hpp"
+#include "LogBoxManager.hpp"
+
 const int oo = 1e9; // infinity for alpha and beta pruning  
 
 class MediumMode{

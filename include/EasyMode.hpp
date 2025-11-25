@@ -5,6 +5,7 @@
 #include <cassert>
 #include <random>
 
+#include "LogBoxManager.hpp"
 #include "Board.hpp"
 
 class EasyMode{

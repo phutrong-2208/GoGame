@@ -94,6 +94,8 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 else State = BOARD;
                 goBoard.newGame();
                 break;
+            case 20:
+                break;
         }
     }
 }
@@ -103,6 +105,8 @@ std :: string ImageLink = "assets\\Button.png";
 void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: vector<Button> &button_list){
     auto [snatchX, snatchY] = mouse.checkBoard(window, goBoard);
     render.drawMain(window, goBoard);
+    logbox.drawLogBox(window);
+    logbox.drawText(window);
     if (snatchX != 999) render.drawPiece(window, goBoard, snatchX, snatchY, goBoard.turn);
     std :: string font = "font\\Bungee_Regular.ttf";
     std :: string ImageLink =  "";
@@ -130,9 +134,21 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
             op.snap.clear();
             return;
         }
-
+        
         for (Button &button : button_list) {
             doActionClick(goBoard, button, window);
+        }
+    }
+    if(event.type == sf :: Event :: MouseWheelScrolled){
+        auto [snatchX, snatchY] = mouse.getPosition(window);
+        if(logbox.inBound(snatchX, snatchY)){
+            int delta = event.mouseWheelScroll.delta;
+            if(delta > 0){
+                logbox.scrollUp();
+            }
+            else{
+                logbox.scrollDown();
+            }
         }
     }
 }

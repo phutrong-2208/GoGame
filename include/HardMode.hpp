@@ -3,6 +3,7 @@
 
 #include "Board.hpp"
 #include "metaControls.hpp"
+#include "LogBoxManager.hpp"
 
 #include "random"
 #include "memory"
