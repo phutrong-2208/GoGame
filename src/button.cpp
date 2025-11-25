@@ -57,7 +57,7 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string &FontLink, s
         
         sf :: Text label(Text[(cnt > 1 ? i : currentSelection)], font, 100);
 
-        label.setColor(sf :: Color :: Black);
+        label.setColor(metaControls.Color4);
         textBounds = label.getGlobalBounds();
         
         // do not use textBounds.height
@@ -86,42 +86,42 @@ void Button :: setupButtonOperation(std :: vector<Button> &button_list){
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         1, 2, 
-        {"Undo", "Redo"}, {metaControls.Button_Color, metaControls.Button_Color}, {0, 1})
+        {"Undo", "Redo"}, {metaControls.Color2, metaControls.Color2}, {0, 1})
     );
 
     tmp_posY += metaControls.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         2, 1, 
-        {"Resign"}, {metaControls.Button_Color}, {0})
+        {"Resign"}, {metaControls.Color2}, {0})
     );
 
     tmp_posY += metaControls.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         3, 1, 
-        {"Pass"}, {metaControls.Button_Color}, {0})
+        {"Pass"}, {metaControls.Color2}, {0})
     );
 
     tmp_posY += metaControls.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         4, 1, 
-        {"Reset"}, {metaControls.Button_Color}, {0})
+        {"Reset"}, {metaControls.Color2}, {0})
     );
 
     tmp_posY += metaControls.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         5, 1, 
-        {"Menu"}, {metaControls.Button_Color}, {0})
+        {"Menu"}, {metaControls.Color2}, {0})
     );
 
     tmp_posY += metaControls.CONTROL_SHIFT + height;
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         18, 2, 
-        {"Import","Export"}, {metaControls.Button_Color, metaControls.Button_Color}, {0, 1})
+        {"Import","Export"}, {metaControls.Color2, metaControls.Color2}, {0, 1})
     );
 }
 

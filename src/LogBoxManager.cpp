@@ -16,7 +16,7 @@ float width = metaControls.ZONE_SIZE * (metaControls.ASPECT_RATIO - 1) - metaCon
 float height = metaControls.ZONE_SIZE - metaControls.CONTROL_SHIFT - metaControls.SHIFT_CONST - posY;
 
 void LogBox :: drawLogBox(sf :: RenderWindow& window){
-    customPanelRender(window, {posX, posY}, {posX + width, posY + height}, metaControls.logboxColor);
+    customPanelRender(window, {posX, posY}, {posX + width, posY + height}, metaControls.Color2);
 }
 
 // void LogBox :: drawConfigDialog(sf :: RenderWindow& window, GoBoard &goBoard){
@@ -40,9 +40,9 @@ std :: string getCurrentTime(){
     std :: tm* tm_ptr = std :: localtime(&now_time);
 
     std :: ostringstream oss;
-    oss << std::setfill('0') << std::setw(2) << tm_ptr -> tm_hour << ":"
-        << std::setfill('0') << std::setw(2) << tm_ptr -> tm_min << ":"
-        << std::setfill('0') << std::setw(2) << tm_ptr -> tm_sec << ": ";
+    oss << std :: setfill('0') << std :: setw(2) << tm_ptr -> tm_hour << ":"
+        << std :: setfill('0') << std :: setw(2) << tm_ptr -> tm_min << ":"
+        << std :: setfill('0') << std :: setw(2) << tm_ptr -> tm_sec << ": ";
     return oss.str();
 }
 
@@ -53,13 +53,13 @@ void LogBox :: insertText(std :: string notif){
     
     time.setCharacterSize(textSize);
     time.setString(currentTime);
-    time.setColor(sf :: Color :: Black);
+    time.setColor(metaControls.Color4);
     time.setFont(font);
     time.setStyle(sf :: Text :: Bold);
     
     label.setCharacterSize(textSize);
     label.setString(notif);
-    label.setColor(sf :: Color :: Black);
+    label.setColor(metaControls.Color4);
     label.setFont(font);
     notification.emplace_back(time, label);
 

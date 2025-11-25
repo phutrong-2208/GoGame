@@ -7,7 +7,7 @@ void Manager :: doActionHover(Button &button, sf :: RenderWindow &window) {
     auto [mouseX, mouseY] = mouse.getPosition(window);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
     for (int i = 0; i < button.cnt; ++i) {
-        button.color[i] = metaControls.Button_Color;
+        button.color[i] = metaControls.Color3;
         button.hover[i] = 0;
         if (button.position.x + tmpSpace * i >= mouseX) continue;
         if (button.position.x + tmpSpace * (i + 1) <= mouseX) continue;

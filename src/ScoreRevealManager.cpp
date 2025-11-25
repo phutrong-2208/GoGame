@@ -1,13 +1,12 @@
 #include "ScoreRevealManager.hpp"
 
-
 void drawText(sf :: RenderWindow& window, std :: string Font_link, std :: string Text, sf :: Vector2f pos){
     sf :: Font newFont;
     newFont.loadFromFile(Font_link);
     
     sf :: Text label(Text, newFont, 30);
     
-    label.setColor(sf :: Color :: Black);
+    label.setColor(metaControls.Color4);
     sf :: FloatRect textBounds = label.getGlobalBounds();
     // do not use textBounds.height
     float realHeight = (sf :: Text){"o", newFont, 30}.getGlobalBounds().height;
@@ -18,6 +17,7 @@ void drawText(sf :: RenderWindow& window, std :: string Font_link, std :: string
     label.setPosition(pos);
     window.draw(label);
 }
+
 void ScoreReveal :: setupScoreButton(std :: vector<Button> &button_list){
     int width = metaControls.ZONE_SIZE * metaControls.ASPECT_RATIO;
     int height = metaControls.ZONE_SIZE;
@@ -27,10 +27,11 @@ void ScoreReveal :: setupScoreButton(std :: vector<Button> &button_list){
         {1, 2}, ""
     ));
 }   
+
 void ScoreReveal :: drawScoreReveal(sf :: RenderWindow &window, GoBoard& goBoard){
     sf :: Texture ScoringBoard;
     if(!ScoringBoard.loadFromFile("assets\\ScoreReveal.png")){
-        std :: cout << "Can't find the Scoring Board image!\n";
+        std :: cerr << "Can't find the Scoring Board image!\n";
         assert(false);
     }
     ScoringBoard.setSmooth(true);
@@ -38,7 +39,6 @@ void ScoreReveal :: drawScoreReveal(sf :: RenderWindow &window, GoBoard& goBoard
     sf :: Sprite board(ScoringBoard);
     board.setOrigin(ScoringBoard.getSize().x / 2.0f, ScoringBoard.getSize().y / 2.0f);
     board.setPosition(metaControls.ZONE_SIZE * metaControls.ASPECT_RATIO / 2.0f, metaControls.ZONE_SIZE / 2.0f - 50);
-    
     
     window.draw(board);
     std :: string winner, reason;

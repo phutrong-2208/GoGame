@@ -1,14 +1,24 @@
 #include "renderZone.hpp"
 
 void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
-    window.clear(metaControls.Background_Color);
+    window.clear(metaControls.Color1);
 
+    // Filling the board with colour
+    sf :: RectangleShape boardFill;
+    boardFill.setSize({metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST, metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST});
+    boardFill.setPosition({metaControls.SHIFT_CONST, metaControls.SHIFT_CONST});
+    boardFill.setFillColor(metaControls.Color2);
+    window.draw(boardFill);
+
+    // Initialise lines
     sf :: Vertex line[2];
-    //it requires two vertexes to draw a line
-    line[0].color = sf :: Color :: Black;
-    line[1].color = sf :: Color :: Black;
+    sf :: Color lineColor(metaControls.Color3 * sf :: Color(128, 128, 128, 255));
 
-    //Drawing the horizontal line
+    // It requires two vertices to draw a line
+    line[0].color = lineColor;
+    line[1].color = lineColor;
+
+    // Drawing the horizontal lines
     for (int i = 0; i < goBoard.boardSize; ++i){
         int vertexPos = metaControls.SHIFT_CONST + i * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
         line[0].position = sf :: Vector2f(metaControls.SHIFT_CONST, vertexPos);
@@ -16,7 +26,7 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
         window.draw(line, 2, sf :: Lines);
     }
 
-    //Drawing the vertical line  
+    // Drawing the vertical lines
     for (int i = 0; i < goBoard.boardSize; ++i){
         int vertexPos = metaControls.SHIFT_CONST + i * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
         line[0].position = sf :: Vector2f(vertexPos, metaControls.SHIFT_CONST);
@@ -24,7 +34,7 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
         window.draw(line, 2, sf :: Lines);
     }
 
-    //Drawing hoshi point
+    // Drawing hoshi point
     std :: vector<sf :: Vector2f> hoshiPosition;
     
     double CeilSize = (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
@@ -58,7 +68,7 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
     }
 
     sf :: CircleShape hoshi(5.0f);
-    hoshi.setFillColor(sf :: Color :: Black);
+    hoshi.setFillColor(lineColor);
     for (sf :: Vector2f x : hoshiPosition){
         hoshi.setPosition(metaControls.SHIFT_CONST + x.x - hoshi.getRadius(), metaControls.SHIFT_CONST + x.y - hoshi.getRadius());
         window.draw(hoshi);
@@ -98,9 +108,8 @@ void RenderZone :: drawAllPieces(sf :: RenderWindow &window, GoBoard &goBoard){
 LogBox logbox;
 void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
     sf :: Vertex line[2];
-    line[0].color = sf :: Color :: Black;
-    line[1].color = sf :: Color :: Black;
-
+    line[0].color = metaControls.Color4;
+    line[1].color = metaControls.Color4;
 
     //draw control panel
     line[0].position = sf :: Vector2f(metaControls.ZONE_SIZE, metaControls.SHIFT_CONST);
@@ -113,8 +122,6 @@ void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
     window.draw(line, 2, sf :: Lines);
     line[0].position = sf :: Vector2f(metaControls.ZONE_SIZE, metaControls.SHIFT_CONST);
     window.draw(line, 2, sf :: Lines);
-
-    
 }
 
 void RenderZone :: drawMain(sf :: RenderWindow &window, GoBoard &goBoard){
