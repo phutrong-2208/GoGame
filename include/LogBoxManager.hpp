@@ -15,7 +15,6 @@
 #include <sstream>
 
 
-
 class LogBox{
     int index;
     sf :: Font font;

@@ -8,6 +8,7 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
     boardFill.setSize({metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST, metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST});
     boardFill.setPosition({metaControls.SHIFT_CONST, metaControls.SHIFT_CONST});
     boardFill.setFillColor(metaControls.Color2);
+    customPanelRender(window, boardFill);
     window.draw(boardFill);
 
     // Initialise lines
@@ -107,6 +108,8 @@ void RenderZone :: drawAllPieces(sf :: RenderWindow &window, GoBoard &goBoard){
 }
 LogBox logbox;
 void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
+    /* 
+    Deprecated code 
     sf :: Vertex line[2];
     line[0].color = metaControls.Color4;
     line[1].color = metaControls.Color4;
@@ -122,6 +125,12 @@ void RenderZone :: drawControlPanel(sf :: RenderWindow &window){
     window.draw(line, 2, sf :: Lines);
     line[0].position = sf :: Vector2f(metaControls.ZONE_SIZE, metaControls.SHIFT_CONST);
     window.draw(line, 2, sf :: Lines);
+    */
+    sf :: RectangleShape box;
+    box.setPosition(metaControls.ZONE_SIZE, metaControls.SHIFT_CONST);
+    box.setSize({metaControls.ZONE_SIZE * (metaControls.ASPECT_RATIO - 1) - metaControls.SHIFT_CONST, metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST});
+    box.setFillColor(metaControls.Color2);
+    customPanelRender(window, box);
 }
 
 void RenderZone :: drawMain(sf :: RenderWindow &window, GoBoard &goBoard){

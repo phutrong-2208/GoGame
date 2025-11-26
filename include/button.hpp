@@ -36,6 +36,7 @@ class Button{
         }
         void drawButton(sf :: RenderWindow &window, std :: string &FontLink, std :: string &ImageLink);
         void setupButtonOperation(std :: vector<Button> &button_list);
+        void updateDisplayVolume();
 };
 
 #endif

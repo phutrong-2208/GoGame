@@ -79,8 +79,13 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 metaControls.soundActive = button.attr[button.currentSelection];
                 break;
             case 16:
-                (button.currentSelection += 1) %= button.Text.size();
-                metaControls.audioVolume += button.attr[button.currentSelection];
+                {
+                    int &tVolume = metaControls.audioVolume;
+                    tVolume += button.attr[i];
+                    if (tVolume > 100) tVolume = 100;
+                    if (tVolume < 0) tVolume = 0;
+                }
+                button.updateDisplayVolume();
                 break;
             case 17:    
                 (button.currentSelection += 1) %= button.Text.size();
@@ -154,20 +159,41 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
 }
 
 //================================================================================================================================
-void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink){
-    sf :: Texture background;
-    if(!background.loadFromFile("assets\\MenuGameBackground.png")){
-        std :: cout << "Cannot file Menu_background image!\n";
-        return;
-    }
-    background.setSmooth(true);
 
+void Manager :: initBackgrounds(){
+    presetBackgrounds.resize(4);
+    for (int i = 0; i < 4; i++) {
+        auto &bg = presetBackgrounds[i];
+        if (!bg.loadFromFile(("assets\\MenuGameBackground" + std :: to_string(i) + ".png").c_str())){
+            std :: cerr << "Cannot find MenuGameBackground" << i << ".png!\n";
+            return;
+        }
+        bg.setSmooth(true);
+    }
+
+    // MenuGameBackground0.png: 
+    // https://www.flickr.com/photos/vintage_illustration/51916036912
+    // https://commons.wikimedia.org/wiki/File:%E6%98%8E-%E6%96%87%E5%BE%B5%E6%98%8E_%E6%8B%99%E6%94%BF%E5%9C%92%E5%9C%96%E8%A9%A9_%E5%86%8A-Garden_of_the_Inept_Administrator_MET_DP235625.jpg
+
+    // MenuGameBackground1.png:
+    // https://pxhere.com/en/photo/912000
+    // https://commons.wikimedia.org/wiki/File:Artist%27s_impression_of_Saturn%27s_rings.jpg
+
+    // MenuGameBackground2.png:
+    // https://www.goodfon.com/fantasy/wallpaper-castle-towers-snow-river-boats-trees-winter-lanterns-sky-clo.html
+
+    // MenuGameBackground3.png:
+    // https://www.goodfon.com/painting/wallpaper-the-three-wishes-dominik-mayer-by-dominik-mayer-30-min-speed.html
+}
+
+void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink){
+    sf :: Texture &background = presetBackgrounds[metaControls.themeChoice];
     sf :: Sprite bg(background);
-    
     float render_height = metaControls.ZONE_SIZE;
     float render_width = metaControls.ZONE_SIZE * metaControls.ASPECT_RATIO; 
     bg.setScale(render_width / background.getSize().x, render_height / background.getSize().y);
     window.draw(bg);
+
     for (Button& button : button_list){
         button.drawButton(window, FontLink, button.ImageLink);
     }    

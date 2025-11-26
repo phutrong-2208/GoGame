@@ -16,7 +16,7 @@ float width = metaControls.ZONE_SIZE * (metaControls.ASPECT_RATIO - 1) - metaCon
 float height = metaControls.ZONE_SIZE - metaControls.CONTROL_SHIFT - metaControls.SHIFT_CONST - posY;
 
 void LogBox :: drawLogBox(sf :: RenderWindow& window){
-    customPanelRender(window, {posX, posY}, {posX + width, posY + height}, metaControls.Color2);
+    customPanelRender(window, {posX, posY}, {posX + width, posY + height}, metaControls.Color3);
 }
 
 // void LogBox :: drawConfigDialog(sf :: RenderWindow& window, GoBoard &goBoard){

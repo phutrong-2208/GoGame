@@ -11,8 +11,9 @@ void Button :: drawButton(sf :: RenderWindow &window, std :: string &FontLink, s
     
     sf :: FloatRect textBounds, boxBounds;
     for (int i = 0; i < cnt; ++i) {
-        if(ImageLink != ""){
-            // Asset mode
+        // if (ImageLink != ""){
+        if (0){
+            // Asset mode is temporarily turned off
             if(fontCache.find(FontLink) == fontCache.end()){
                 sf :: Texture new_texture;
                 if(!new_texture.loadFromFile(ImageLink)){
@@ -123,6 +124,11 @@ void Button :: setupButtonOperation(std :: vector<Button> &button_list){
         18, 2, 
         {"Import","Export"}, {metaControls.Color2, metaControls.Color2}, {0, 1})
     );
+}
+
+// Ad-hoc functions
+void Button :: updateDisplayVolume() {
+    Text[1] = std :: to_string(metaControls.audioVolume);
 }
 
 

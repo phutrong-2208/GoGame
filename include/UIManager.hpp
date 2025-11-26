@@ -29,10 +29,13 @@ enum state {BOARD, GAME_MENU, SETTING_MENU, MODE_MENU, SCORE, CONF_DIALOG};
 */
 
 class Manager{
+    private:
+        std :: vector<sf :: Texture> presetBackgrounds;
     public: 
         state State;
         Manager(){
             State = GAME_MENU;
+            initBackgrounds();
         }
         
         void boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :: vector<Button> &button_list, sf :: Event event);
@@ -42,6 +45,7 @@ class Manager{
         void doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWindow &window); 
         void MenuManager(sf :: RenderWindow &window, std :: vector<Button> &button_list, GoBoard& goBoard, sf :: Event event);
         void drawScore(sf :: RenderWindow &window, std :: vector<Button>&button_list, std :: string FontLink);
+        void initBackgrounds();
 }; 
 
 extern Manager ui;
