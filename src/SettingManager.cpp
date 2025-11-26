@@ -31,7 +31,7 @@ void Setting :: setupSettingButton(std :: vector<Button> &button_list){
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         17, 1, 
-        {"Classic", "Galactic", "Fantasy", "Militant"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1, 2, 3}
+        {"Classic", "Space", "Fantasy", "Militant", "Nature"}, {sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135), sf :: Color(222, 184, 135)}, {0, 1, 2, 3, 4}
     , SettingImage)
     );
 

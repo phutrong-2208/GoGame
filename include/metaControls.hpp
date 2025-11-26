@@ -13,10 +13,10 @@ class MetaControls{ // contains anything related to the game but not part of the
     const double ASPECT_RATIO = 1.0L * (ZONE_SIZE + CONTROL_SIZE) / ZONE_SIZE;
     const double SHIFT_CONST = 50;
     const unsigned CONTROL_SHIFT = 15;
-    const std :: vector<sf :: Color> presetColor1 = {{237, 212, 145}, {236, 203, 126}, {236, 203, 126}, {236, 203, 126}};    // Background colour (very light)
-    const std :: vector<sf :: Color> presetColor2 = {{236, 203, 126}, {236, 203, 126}, {236, 203, 126}, {236, 203, 126}};    // Panel colour (light)
-    const std :: vector<sf :: Color> presetColor3 = {{219, 168, 78},  {236, 203, 126}, {236, 203, 126}, {236, 203, 126}};    // Object colour (bright)
-    const std :: vector<sf :: Color> presetColor4 = {{36, 28, 13},    {236, 203, 126}, {236, 203, 126}, {236, 203, 126}};    // Outline colour (dark)
+    const std :: vector<sf :: Color> presetColor1 = {{217, 186, 132}, {82, 138, 160},  {193, 101, 220}, {178, 64, 54},   {106, 151, 63}};     // Background colour (damp)
+    const std :: vector<sf :: Color> presetColor2 = {{229, 194, 117}, {97, 176, 241},  {215, 157, 219}, {228, 128, 114}, {164, 206, 136}};    // Panel colour (soft)
+    const std :: vector<sf :: Color> presetColor3 = {{240, 213, 144}, {145, 195, 250}, {240, 167, 235}, {245, 148, 150}, {178, 229, 162}};    // Object colour (light)
+    const std :: vector<sf :: Color> presetColor4 = {{42, 34, 19},    {22, 40, 61},    {69, 41, 73},    {102, 62, 56},   {38, 57, 26}};       // Outline colour (dark)
 
     // Variables
     bool playWithBot;

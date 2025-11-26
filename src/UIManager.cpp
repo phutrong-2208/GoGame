@@ -89,7 +89,14 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 break;
             case 17:    
                 (button.currentSelection += 1) %= button.Text.size();
-                metaControls.themeChoice = button.attr[button.currentSelection];
+                {
+                    int &i = metaControls.themeChoice;
+                    i = button.attr[button.currentSelection];
+                    metaControls.Color1 = metaControls.presetColor1[i];
+                    metaControls.Color2 = metaControls.presetColor2[i];
+                    metaControls.Color3 = metaControls.presetColor3[i];
+                    metaControls.Color4 = metaControls.presetColor4[i];
+                }
                 break;
             case 18:
                 op.File(goBoard, button.attr[i]);
@@ -161,8 +168,8 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
 //================================================================================================================================
 
 void Manager :: initBackgrounds(){
-    presetBackgrounds.resize(4);
-    for (int i = 0; i < 4; i++) {
+    presetBackgrounds.resize(5);
+    for (int i = 0; i < 5; i++) {
         auto &bg = presetBackgrounds[i];
         if (!bg.loadFromFile(("assets\\MenuGameBackground" + std :: to_string(i) + ".png").c_str())){
             std :: cerr << "Cannot find MenuGameBackground" << i << ".png!\n";
@@ -184,6 +191,9 @@ void Manager :: initBackgrounds(){
 
     // MenuGameBackground3.png:
     // https://www.goodfon.com/painting/wallpaper-the-three-wishes-dominik-mayer-by-dominik-mayer-30-min-speed.html
+
+    // MenuGameBackground4.png:
+    // https://www.pickpik.com/nature-background-mountian-riverside-river-natural-4903
 }
 
 void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink){
