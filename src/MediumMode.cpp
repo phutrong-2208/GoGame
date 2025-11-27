@@ -3,12 +3,16 @@
 //========================================================
 //MEDIUM MODE --- MINIMAX, HEURISTIC, ALPHA-BETA PRUNING
 //========================================================
+Piece MediumMode :: Opponent(Piece color){
+    return (color == Black ? White : Black);
+}
 
 int MediumMode :: evaluateScore(GoBoard& currentBoard){
     auto[whiteScore, blackScore] = currentBoard.getScore();
-    Piece botColor = (metaControls.goFirst == 0 ? White : Black);
-    
     int totalScore = whiteScore - blackScore;
+    
+    Piece botColor = (metaControls.goFirst == 0 ? White : Black);
+
     if(botColor == Black){
         return -totalScore;
     }
@@ -16,8 +20,6 @@ int MediumMode :: evaluateScore(GoBoard& currentBoard){
         return totalScore;
     }
 }
-Piece botColor = (metaControls.goFirst == 0 ? White : Black);
-Piece playerColor = (botColor == White ? Black : White);
 int MediumMode :: scoreGain(GoBoard goBoard, std :: pair<int, int> &move){
     std :: pair<int, int> nowScore = goBoard.getScore();
     if(move.first == -1 and move.second == -1){ //pass the turn
@@ -28,7 +30,6 @@ int MediumMode :: scoreGain(GoBoard goBoard, std :: pair<int, int> &move){
     
     nowScore = goBoard.getScore();
     int after = (botColor == White ? nowScore.first - nowScore.second : nowScore.second - nowScore.first);
-
     return after - before;
 }
 void MediumMode :: optimizeMove(GoBoard& goBoard, std :: vector<std :: pair<int, int>> &move){
@@ -38,8 +39,9 @@ void MediumMode :: optimizeMove(GoBoard& goBoard, std :: vector<std :: pair<int,
 }
 
 int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int beta, bool maxi){
-    if(treeDepth == 0 || currentBoard.ended())
+    if(treeDepth == 0 || currentBoard.ended()){
         return evaluateScore(currentBoard);
+    }
     if(maxi){
         int best = -oo;
         for (std :: pair<int, int>&move : currentBoard.validMove){
@@ -49,7 +51,7 @@ int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int be
                 newBoard.turn = (newBoard.turn == Black ? White : Black);
             }
             else
-                newBoard.playMove(move.first, move.second, botColor, 0);
+            newBoard.playMove(move.first, move.second, botColor, 0);
             
             int value = minimax(newBoard, treeDepth - 1, alpha, beta, 0);
             alpha = std :: max(alpha, value);
@@ -67,8 +69,8 @@ int MediumMode :: minimax(GoBoard currentBoard, int treeDepth, int alpha, int be
                 newBoard.turn = (newBoard.turn == Black ? White : Black);
             }
             else    
-                newBoard.playMove(move.first, move.second, botColor, 0);
-
+            newBoard.playMove(move.first, move.second, botColor, 0);
+            
             int value = minimax(newBoard, treeDepth - 1, alpha, beta, 1);
             beta = std :: min(beta, value);
             best = std :: min(best, value);
@@ -85,20 +87,24 @@ void MediumMode :: Medium_Mode(GoBoard& goBoard){
     std :: pair<int, int> bestMove = {-1, -1};
     int bestPoint = -oo;
     std :: vector<std :: pair<int, int>> validMove = goBoard.validMove;
-
-    int treeDepth = (goBoard.boardSize < 13 ? 2 : 1);
+    
+    int treeDepth = 1;
+    if(goBoard.boardSize == 9) treeDepth = 3;
+    else if(goBoard.boardSize == 13) treeDepth = 2;
+    else treeDepth = 1;
     optimizeMove(goBoard, validMove);
-
+    
     for (std :: pair<int, int> move : validMove){
         GoBoard currentBoard = goBoard;
         currentBoard.playMove(move.first, move.second, botColor, 0);
-
+        
         int point = minimax(currentBoard, treeDepth - 1, -oo, oo, 0);
         if(point > bestPoint){
             bestPoint = point;
             bestMove = move;
         }
     }
+    std :: cout << (botColor == Black ? "Black" : "White") << '\n';
     if(bestMove != std :: make_pair(-1, -1))
         goBoard.playMove(bestMove.first, bestMove.second, botColor, 1);
     else{

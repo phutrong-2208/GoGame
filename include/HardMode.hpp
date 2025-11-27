@@ -12,7 +12,8 @@
 
 class HardMode{
     public: 
-        void Hard_Mode(GoBoard& goBoard);  
+        Piece botTurn;
+        void Hard_Mode(GoBoard& goBoard); 
 };
 
 extern HardMode hard;

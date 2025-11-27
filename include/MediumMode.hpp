@@ -8,8 +8,13 @@ const int oo = 1e9; // infinity for alpha and beta pruning
 
 class MediumMode{
     public:
+        Piece botColor;
         void Medium_Mode(GoBoard& goBoard);
+        MediumMode(){
+            botColor = White;
+        }
     private:
+        Piece Opponent(Piece color);
         int evaluateScore(GoBoard& currentBoard);
         int scoreGain(GoBoard goBoard, std :: pair<int, int> &move);        
         void optimizeMove(GoBoard& goBoard, std :: vector<std :: pair<int, int>> &move);

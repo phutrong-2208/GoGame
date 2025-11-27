@@ -11,9 +11,6 @@ Piece Opponent(Piece Color){ //getting the opponent's color
 }
 
 
-Piece botTurn = (metaControls.goFirst == 0 ? White : Black);
-Piece playerTurn = Opponent(botTurn);
-
 
 unsigned seedHard = std :: chrono :: steady_clock :: now().time_since_epoch().count();
 std :: mt19937 rngHard(seedHard);
@@ -49,7 +46,7 @@ struct MCTS{
 
 double ubc_1(double w, double n, int N, double C = sqrtl(2.0)){ // the ubc1 problem
     if(n == 0) return 1e9;
-    return 1.0 * (w / n) + C * sqrt(log((double)(N)) / n);
+    return 1.0 * (w / n) + C * sqrt(2.0 * log((double)(N)) / n);
 }
 
 
@@ -223,10 +220,11 @@ void HardMode :: Hard_Mode(GoBoard& goBoard){
     Piece rootPlayer = botTurn;
     int maxIter;
     if(goBoard.boardSize == 9) maxIter = 3000;
-    else if(goBoard.boardSize == 13) maxIter = 2000;
-    else maxIter = 1000;
+    else if(goBoard.boardSize == 13) maxIter = 1000;
+    else maxIter = 500;
+    std :: cout << (botTurn == Black ? "Black" : "White") << '\n';
     std :: pair<int, int> optimize = bestMove(goBoard, rootPlayer, maxIter);
-    if(optimize.first != -1 or optimize.second != -1)
+    if(optimize.first != -1 and optimize.second != -1)
         goBoard.playMove(optimize.first, optimize.second, botTurn, 1);
     else{
         goBoard.pass++;
