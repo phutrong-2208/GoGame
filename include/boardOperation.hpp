@@ -6,6 +6,7 @@
 #include "LogBoxManager.hpp"
 #include "Board.hpp"
 #include "MetaControls.hpp"
+#include "modelEngine.hpp"
 
 class Operation{
     public:

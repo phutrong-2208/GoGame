@@ -7,15 +7,9 @@ const double terminal_size = 40.0f;
 
 int constant = 10;
 //the position of the log box
-float posX = metaControls.ZONE_SIZE + metaControls.CONTROL_SHIFT;
-float posY = metaControls.SHIFT_CONST + metaControls.CONTROL_SHIFT + 6.0f * (metaControls.CONTROL_SHIFT + 
-    1.0f * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST - (constant + 1) * metaControls.CONTROL_SHIFT) / constant);
-
-//the length of the log box
-float width = metaControls.ZONE_SIZE * (metaControls.ASPECT_RATIO - 1) - metaControls.SHIFT_CONST - 2 * metaControls.CONTROL_SHIFT; 
-float height = metaControls.ZONE_SIZE - metaControls.CONTROL_SHIFT - metaControls.SHIFT_CONST - posY;
 
 void LogBox :: drawLogBox(sf :: RenderWindow& window){
+    updatePosition();
     customPanelRender(window, {posX, posY}, {posX + width, posY + height}, metaControls.Color3);
 }
 
@@ -67,6 +61,7 @@ void LogBox :: insertText(std :: string notif){
 }
 
 void LogBox :: drawText(sf :: RenderWindow &window){
+    updatePosition();
     int l = index;
     int r = std :: min((int)notification.size() - 1, index + MAX_LINES - 1);
 
@@ -88,11 +83,13 @@ void LogBox :: scrollDown(void){
 }
 
 void LogBox :: reset(void){
+    updatePosition();
     notification.clear();
     index = 0;
     insertText("Have fun!");
 }
 bool LogBox :: inBound(int x, int y){
+    updatePosition();
     if (x < posX || x > posX + width || y < posY || y > posY + height) return false;
     return true;
 }

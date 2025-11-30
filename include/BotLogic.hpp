@@ -13,13 +13,9 @@
 
 class GoBot{    
     public: 
-        Piece botTurn;
         bool botisThinking;
-        
         GoBot(){
-            botTurn = (metaControls.goFirst == 1 ? White : Black);
             botisThinking = false;
-            
         };
         void botMove(GoBoard& goBoard);
 };

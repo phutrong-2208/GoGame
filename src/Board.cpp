@@ -165,9 +165,15 @@ bool GoBoard :: playMove(int x, int y, Piece turn, bool mainMove){
     }
     if(mainMove) clickSound.piece.play();
     previousState.emplace_back(scratchGrid.grid);
+    lastMove = std :: make_pair(x, y);
     applyMove(x, y);
     return true;
 }       
+void GoBoard :: passMove(void){
+    turn = (turn == Black ? White : Black);
+    pass++;
+    lastMove = std :: make_pair(-1, -1);
+}
 
 //===============================================================
 //END GAME CHECK

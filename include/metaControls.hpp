@@ -37,6 +37,9 @@ class MetaControls{ // contains anything related to the game but not part of the
         difficulty = 0;
         goFirst = 0; // 0 if you, 1 if bot
     }
+
+    std :: pair<int, int> decode(const std :: string &s);
+    std :: string encode(int x, int y);
 };
 
 extern MetaControls metaControls;
