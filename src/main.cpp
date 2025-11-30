@@ -22,6 +22,7 @@
 #include "EasyMode.hpp"
 #include "MediumMode.hpp"
 #include "HardMode.hpp"
+#include "modelEngine.hpp"
 
 SoundEffect backGround;
 Operation op; 

@@ -1,0 +1,125 @@
+2025-11-30 14:07:27+0700: Running with following config:
+allowResignation = true
+lagBuffer = 0.0
+logAllGTPCommunication = true
+logDir = gtp_logs
+logSearchInfo = true
+logSearchInfoForChosenMove = false
+logToStderr = false
+maxPlayouts = 500
+maxPlayoutsPondering = 3000
+maxTime = 0.5
+maxTimePondering = 60.0
+maxVisits = 300
+maxVisitsPondering = 5000
+numSearchThreads = 16
+ponderingEnabled = false
+resignConsecTurns = 3
+resignThreshold = -0.90
+rules = tromp-taylor
+searchFactorAfterOnePass = 0.50
+searchFactorAfterTwoPass = 0.25
+searchFactorWhenWinning = 0.40
+searchFactorWhenWinningThreshold = 0.95
+
+2025-11-30 14:07:27+0700: GTP Engine starting...
+2025-11-30 14:07:27+0700: KataGo v1.14.0
+2025-11-30 14:07:27+0700: Using TrompTaylor rules initially, unless GTP/GUI overrides this
+2025-11-30 14:07:27+0700: Using 16 CPU thread(s) for search
+2025-11-30 14:07:27+0700: nnRandSeed0 = 2216191910089703133
+2025-11-30 14:07:27+0700: After dedups: nnModelFile0 = C:\Users\ADMIN\OneDrive - KonTum01\Desktop\GoGame\KataGo\model.gz useFP16 auto useNHWC auto
+2025-11-30 14:07:27+0700: Initializing neural net buffer to be size 19 * 19 exactly
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 0: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 0: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 9: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 9: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 8: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 8: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 2: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 4: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 4: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 11: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 2: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 5: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 5: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 1: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 3: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 3: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 7: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 7: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 6: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 6: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 11: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 10: Model version 8
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 10: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Eigen (CPU) backend thread 1: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: Loaded neural net with nnXLen 19 nnYLen 19
+2025-11-30 14:07:27+0700: Initializing board with boardXSize 19 boardYSize 19
+2025-11-30 14:07:27+0700: Loaded config C:\Users\ADMIN\OneDrive - KonTum01\Desktop\GoGame\KataGo/default_gtp.cfg
+2025-11-30 14:07:27+0700: Loaded model C:\Users\ADMIN\OneDrive - KonTum01\Desktop\GoGame\KataGo\model.gz
+2025-11-30 14:07:27+0700: Model name: b6c96-s1995008-d1329786
+2025-11-30 14:07:27+0700: GTP ready, beginning main protocol loop
+2025-11-30 14:07:27+0700: Controller: name
+2025-11-30 14:07:27+0700: = KataGo
+2025-11-30 14:07:27+0700: Controller: genmove black
+2025-11-30 14:07:28+0700: MoveNum: 0 HASH: CDCBC1F514D7E680FACD226074256633
+   A B C D E F G H J K L M N O P Q R S T
+19 . . . . . . . . . . . . . . . . . . .
+18 . . . . . . . . . . . . . . . . . . .
+17 . . . . . . . . . . . . . . . . . . .
+16 . . . . . . . . . . . . . . . @ . . .
+15 . . . . . . . . . . . . . . . . . . .
+14 . . . . . . . . . . . . . . . . . . .
+13 . . . . . . . . . . . . . . . . . . .
+12 . . . . . . . . . . . . . . . . . . .
+11 . . . . . . . . . . . . . . . . . . .
+10 . . . . . . . . . . . . . . . . . . .
+ 9 . . . . . . . . . . . . . . . . . . .
+ 8 . . . . . . . . . . . . . . . . . . .
+ 7 . . . . . . . . . . . . . . . . . . .
+ 6 . . . . . . . . . . . . . . . . . . .
+ 5 . . . . . . . . . . . . . . . . . . .
+ 4 . . . . . . . . . . . . . . . . . . .
+ 3 . . . . . . . . . . . . . . . . . . .
+ 2 . . . . . . . . . . . . . . . . . . .
+ 1 . . . . . . . . . . . . . . . . . . .
+
+koPOSITIONALscoreAREAtaxNONEsui1komi7.5
+Time taken: 0.516
+Root visits: 170
+New playouts: 170
+NN rows: 170
+NN batches: 151
+NN avg batch size: 1.12583
+PV: T18 B1 T16
+Tree:
+: T  -2.72c W   3.51c S   1.52c ( +6.5 L  -2.7) N     170  --  T18 B1 T16
+---Black(^)---
+T18 : T   5.29c W   5.19c S   2.01c ( +7.9 L  -1.1) LCB  -77.16c P  0.29% WF   7.2 PSV       7 N       7  --  T18 B1 T16
+Q16 : T  28.49c W  24.11c S   4.60c (+15.8 L  -1.7) LCB -127.28c P  0.27% WF   2.1 PSV       2 N       2  --  Q16 A18
+R14 : T  28.30c W  23.99c S   4.56c (+15.7 L  -1.8) LCB -127.83c P  0.27% WF   2.1 PSV       2 N       2  --  R14 T18
+S18 : T  26.03c W  22.06c S   4.20c (+14.7 L  -1.7) LCB -131.22c P  0.27% WF   2.1 PSV       2 N       2  --  S18 T17
+R16 : T  28.37c W  24.00c S   4.59c (+15.8 L  -1.7) LCB -127.32c P  0.27% WF   2.1 PSV       2 N       2  --  R16 A18
+R17 : T  42.17c W  34.76c S   7.41c (+25.7 L  +1.6) LCB -307.83c P  0.27% WF   1.1 PSV       1 N       1  --  R17
+T13 : T  -5.55c W  -1.44c S   0.65c ( +4.1 L  -3.3) LCB  -92.92c P  0.29% WF   4.0 PSV       0 N       4  --  T13 T12 S12
+P12 : T  -2.12c W   1.52c S   1.23c ( +5.7 L  -3.0) LCB  -88.30c P  0.27% WF   4.0 PSV       0 N       4  --  P12 A18 T19
+Q11 : T  -3.02c W   0.90c S   1.15c ( +5.5 L  -2.8) LCB  -89.39c P  0.27% WF   4.0 PSV       0 N       4  --  Q11 A18 T1
+Q14 : T  -2.29c W   1.33c S   1.17c ( +5.5 L  -2.8) LCB  -87.29c P  0.27% WF   4.0 PSV       0 N       4  --  Q14 B1 B2
+
+2025-11-30 14:07:28+0700: = Q16
+2025-11-30 14:07:28+0700: Controller: quit
+2025-11-30 14:07:28+0700: Quit requested by controller
+2025-11-30 14:07:28+0700: = 
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 14 rows 14 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 14 rows 12 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 14 rows 12 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 14 rows 13 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 13 rows 10 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 15 rows 14 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 15 rows 13 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 14 rows 12 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 13 rows 13 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 15 rows 13 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 15 rows 12 batches
+2025-11-30 14:07:28+0700: GPU -1 finishing, processed 14 rows 13 batches
+2025-11-30 14:07:28+0700: All cleaned up, quitting
