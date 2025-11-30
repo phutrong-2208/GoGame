@@ -4,15 +4,12 @@
 #include "Board.hpp"
 #include "metaControls.hpp"
 #include "LogBoxManager.hpp"
+#include "HardMode.hpp"
+#include "modelEngine.hpp"
 
-#include "random"
-#include "memory"
-#include "chrono"
-#include "cassert"
 
 class HardMode{
     public: 
-        Piece botTurn;
         void Hard_Mode(GoBoard& goBoard); 
 };
 

@@ -17,7 +17,6 @@ class GoBot{
         GoBot(){
             botisThinking = false;
         };
-        Piece Opponent(Piece color);
         void botMove(GoBoard& goBoard);
 };
 

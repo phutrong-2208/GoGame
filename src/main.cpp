@@ -31,7 +31,6 @@ MouseInput mouse;
 Button setup;
 GoBoard goBoard;
 RenderZone render;
-GoBot botMode;
 Score score;
 
 
@@ -43,10 +42,15 @@ Menu MenuUI;
 ScoreReveal ScoreUI;
 std :: vector<Button> button_list[5];   // save board button
 
+
 //Game Modes
+GoBot botMode;
 EasyMode easy;
 MediumMode medium;
 HardMode hard;
+
+//Models
+KataGo katago;
 
 
 int main(){
@@ -62,7 +66,16 @@ int main(){
     backGround.Background.play();
 
     logbox.reset();
-    
+    std :: string exe = "C:\\Users\\ADMIN\\OneDrive - KonTum01\\Desktop\\GoGame\\KataGo\\katago.exe"; 
+    std :: string model = "C:\\Users\\ADMIN\\OneDrive - KonTum01\\Desktop\\GoGame\\KataGo\\model.gz"; 
+    std :: string config = "C:\\Users\\ADMIN\\OneDrive - KonTum01\\Desktop\\GoGame\\KataGo\\default_gtp.cfg"; 
+    if (!katago.startProcess(exe, model, config)) {
+        std :: cerr << "Can't start katago process!\n";
+        return 0;
+    }
+    katago.sendCommand("boardsize 9"); //set the default size of the game
+
+
     while(window.isOpen()){
         sf :: Event event; 
         while(window.pollEvent(event)){  //get the value and pop it from the queue
@@ -84,6 +97,10 @@ int main(){
             op.history.clear();
             op.snap.clear();
             logbox.reset();
+
+            katago.sendCommand("clear_board");
+            katago.readCommand();
+
             if(ui.State != SCORE){
                 goBoard.newGame();
                 op.history.emplace_back(goBoard);

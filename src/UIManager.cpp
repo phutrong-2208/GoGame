@@ -57,6 +57,8 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
             case 10:
                 (button.currentSelection += 1) %= button.Text.size();
                 goBoard.setSize(button.attr[button.currentSelection]);
+                katago.sendCommand("boardsize " + std :: to_string(button.attr[button.currentSelection]));
+                std :: cout << "Resize to " << std :: to_string(button.attr[button.currentSelection]) << '\n';
                 break;
             case 11:
                 (button.currentSelection += 1) %= button.Text.size();
@@ -69,7 +71,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
             case 13: 
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.goFirst = button.attr[button.currentSelection];
-                hard.botTurn = medium.botColor = easy.botColor = (metaControls.goFirst == 0 ? White : Black);
+                medium.botColor = easy.botColor = (metaControls.goFirst == 0 ? White : Black);
                 break;
             case 14:
                 (button.currentSelection += 1) %= button.Text.size();
@@ -142,7 +144,13 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
         }
     }
     if(event.type == sf :: Event :: MouseButtonPressed){
+        std :: string color = (goBoard.turn == Black ? "black" : "white");
         if(goBoard.playMove(snatchX, snatchY, goBoard.turn, 1)){
+            if(metaControls.difficulty == 2){ //update for katago model
+                katago.sendCommand("play " + color + " " + metaControls.encode(snatchX, snatchY));
+                katago.readCommand();
+            }
+
             op.history.emplace_back(goBoard);
             op.snap.clear();
             return;
