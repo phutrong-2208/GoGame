@@ -45,10 +45,13 @@ void Game :: run(){
 
     logbox.reset();
 
-    std::string currentPath = std::filesystem::current_path().string();
-    std::string exe     = currentPath + "\\KataGo\\katago.exe"; 
-    std::string model  = currentPath + "\\KataGo\\model.gz"; 
-    std::string config = currentPath + "\\KataGo\\default_gtp.cfg";
+    char buffer[260];
+    
+    GetModuleFileNameA(NULL, buffer, 260);
+    auto currentPath = std :: filesystem :: path(buffer).parent_path();
+    std :: string exe     = (currentPath / "KataGo\\katago.exe").string(); 
+    std :: string model   = (currentPath / "KataGo\\model.gz").string(); 
+    std :: string config  = (currentPath / "KataGo\\default_gtp.cfg").string();
 
     if (!katago.startProcess(exe, model, config)) {
         std::cerr << "Can't start katago process!\n";
