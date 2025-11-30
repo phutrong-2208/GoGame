@@ -43,8 +43,7 @@ void Game :: run(){
     backGround.Background.setLoop(true);
     backGround.Background.play();
 
-    logbox.reset();
-
+    
     char buffer[260];
     
     GetModuleFileNameA(NULL, buffer, 260);
@@ -57,9 +56,10 @@ void Game :: run(){
         std::cerr << "Can't start katago process!\n";
         return;
     }
-
+    
     katago.sendCommand("boardsize 9"); // default board size
-
+    
+    logbox.reset();
 
     // ===================== MAIN LOOP =====================
     while(window.isOpen()){
