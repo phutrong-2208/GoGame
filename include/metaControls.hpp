@@ -13,9 +13,9 @@ class MetaControls{ // contains anything related to the game but not part of the
     const double ASPECT_RATIO = 1.0L * (ZONE_SIZE + CONTROL_SIZE) / ZONE_SIZE;
     const double SHIFT_CONST = 50;
     const unsigned CONTROL_SHIFT = 15;
-    const std :: vector<sf :: Color> presetColor1 = {{217, 186, 132}, {82, 138, 160},  {193, 101, 220}, {178, 64, 54},   {106, 151, 63}};     // Background colour (damp)
-    const std :: vector<sf :: Color> presetColor2 = {{229, 194, 117}, {97, 176, 241},  {215, 157, 219}, {228, 128, 114}, {164, 206, 136}};    // Panel colour (soft)
-    const std :: vector<sf :: Color> presetColor3 = {{240, 213, 144}, {145, 195, 250}, {240, 167, 235}, {245, 148, 150}, {178, 229, 162}};    // Object colour (light)
+    const std :: vector<sf :: Color> presetColor1 = {{173, 146, 102}, {82, 138, 160},  {193, 101, 220}, {178, 64, 54},   {106, 151, 63}};     // Background colour (damp)
+    const std :: vector<sf :: Color> presetColor2 = {{229, 194, 117}, {152, 203, 246}, {220, 175, 227}, {234, 156, 146}, {183, 216, 160}};    // Panel colour (soft)
+    const std :: vector<sf :: Color> presetColor3 = {{240, 213, 144}, {198, 226, 250}, {233, 202, 236}, {241, 188, 181}, {205, 228, 190}};    // Object colour (light)
     const std :: vector<sf :: Color> presetColor4 = {{42, 34, 19},    {22, 40, 61},    {69, 41, 73},    {102, 62, 56},   {38, 57, 26}};       // Outline colour (dark)
 
     // Variables
