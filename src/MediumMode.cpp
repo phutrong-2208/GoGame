@@ -102,7 +102,6 @@ void MediumMode :: Medium_Mode(GoBoard& goBoard){
             bestMove = move;
         }
     }
-    std :: cout << (botColor == Black ? "Black" : "White") << '\n';
     if(bestMove != std :: make_pair(-1, -1))
         goBoard.playMove(bestMove.first, bestMove.second, botColor, 1);
     else{

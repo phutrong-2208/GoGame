@@ -29,7 +29,7 @@ void HardMode :: Hard_Mode(GoBoard& goBoard){
     
     if(answer.empty() || answer == "pass"){
         std :: string color = (goBoard.turn == Black ? "Black" : "White");
-        logbox.insertText(color);
+        logbox.insertText(color + "Passed!");
         goBoard.passMove();
         return;
     }
