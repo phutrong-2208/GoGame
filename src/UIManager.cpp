@@ -58,7 +58,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 (button.currentSelection += 1) %= button.Text.size();
                 goBoard.setSize(button.attr[button.currentSelection]);
                 katago.sendCommand("boardsize " + std :: to_string(button.attr[button.currentSelection]));
-                std :: cout << "Resize to " << std :: to_string(button.attr[button.currentSelection]) << '\n';
+                //std :: cout << "Resize to " << std :: to_string(button.attr[button.currentSelection]) << '\n';
                 break;
             case 11:
                 (button.currentSelection += 1) %= button.Text.size();

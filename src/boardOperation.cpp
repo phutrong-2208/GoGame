@@ -23,8 +23,11 @@ void Operation :: Rollback(GoBoard &goBoard, int t){
             history.emplace_back(snap.back());
             std :: string turn = (i == 0 ? "black" : "white");
             auto move = snap.back().lastMove;
-            katago.sendCommand("play " + turn + " " + metaControls.encode(move.first, move.second));
-            katago.readCommand();
+            
+            if(metaControls.difficulty == 2){
+                katago.sendCommand("play " + turn + " " + metaControls.encode(move.first, move.second));
+                katago.readCommand();
+            }
 
             goBoard = snap.back();
             snap.pop_back();
@@ -44,10 +47,9 @@ void Operation :: Resign(GoBoard &goBoard){
     goBoard.endGame = 2;
 }
 void Operation :: Pass(GoBoard &goBoard){
-    goBoard.pass++;
     std :: string color = (goBoard.turn == Black ? "Black" : "White");
     logbox.insertText(color + " Passed!");
-    goBoard.turn = (goBoard.turn == Black ? White : Black);
+    goBoard.passMove();
 }
 void Operation :: SetSize(GoBoard &goBoard, int boardSize){
     goBoard.boardSize = boardSize;

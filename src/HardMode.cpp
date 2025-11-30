@@ -4,7 +4,7 @@
 //========================================================
 //HARD MODE --- KATAGO MODEL, API CONNECTION
 //========================================================
-std::string trimAnswer(std::string s){
+std::string trimAnswer(std::string s){ //remove space and endline characters
     if(!s.empty() && s[0] == '=') s = s.substr(1);
 
     s.erase(0, s.find_first_not_of(" \t\n\r"));
@@ -18,16 +18,19 @@ void HardMode :: Hard_Mode(GoBoard& goBoard){
     std :: string answer = katago.readCommand();
     answer = trimAnswer(answer);
 
-    std :: cout << answer << '\n';
-
+    
     katago.sendCommand("showboard");
+
+    //DEBUG
+    std :: cerr << answer << '\n';
     std :: string boardVisual = katago.readCommand();
-    std :: cout << "BOT VISIBLE\n";
-    std :: cout << boardVisual << '\n';
+    std :: cerr << "BOT VISIBLE\n";
+    std :: cerr << boardVisual << '\n';
     
     if(answer.empty() || answer == "pass"){
-        goBoard.pass++;
-        goBoard.turn = (goBoard.turn == Black ? White : Black);
+        std :: string color = (goBoard.turn == Black ? "Black" : "White");
+        logbox.insertText(color);
+        goBoard.passMove();
         return;
     }
     auto move = metaControls.decode(answer);

@@ -19,9 +19,8 @@ void EasyMode :: Easy_Mode(GoBoard& goBoard){
     if(Random_Move.first != -1 and Random_Move.second != -1)
         goBoard.playMove(Random_Move.first, Random_Move.second, botColor, 1);
     else{
-        goBoard.pass++;
         std :: string color = (goBoard.turn == Black ? "Black" : "White");
-        logbox.insertText(color + "Passed!");
-        goBoard.turn = (goBoard.turn == Black ? White : Black);
+        logbox.insertText(color + " Passed!");
+        goBoard.passMove();
     }
 }

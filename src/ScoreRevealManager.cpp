@@ -50,7 +50,7 @@ void ScoreReveal :: drawScoreReveal(sf :: RenderWindow &window, GoBoard& goBoard
         else{
             winner = "Black Won";
         }
-        reason = " by Score";
+        reason = "";
     }
     if(goBoard.endGame == 2){
         winner = goBoard.turn == White ? "Black Won" : "White Won";

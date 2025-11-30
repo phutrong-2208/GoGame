@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
-
-
+#include <filesystem>
 //including header file
 
 #include "soundEffect.hpp"
@@ -66,13 +65,16 @@ int main(){
     backGround.Background.play();
 
     logbox.reset();
-    std :: string exe = "C:\\Users\\ADMIN\\OneDrive - KonTum01\\Desktop\\GoGame\\KataGo\\katago.exe"; 
-    std :: string model = "C:\\Users\\ADMIN\\OneDrive - KonTum01\\Desktop\\GoGame\\KataGo\\model.gz"; 
-    std :: string config = "C:\\Users\\ADMIN\\OneDrive - KonTum01\\Desktop\\GoGame\\KataGo\\default_gtp.cfg"; 
+    std :: string currentPath = std :: filesystem :: current_path().string();
+    std :: string exe = currentPath + "\\KataGo\\katago.exe"; 
+    std :: string model = currentPath +  "\\KataGo\\model.gz"; 
+    std :: string config = currentPath + "\\KataGo\\default_gtp.cfg";
+
     if (!katago.startProcess(exe, model, config)) {
         std :: cerr << "Can't start katago process!\n";
         return 0;
     }
+
     katago.sendCommand("boardsize 9"); //set the default size of the game
 
 
