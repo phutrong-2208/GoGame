@@ -90,7 +90,7 @@ bool GoBoard :: canCapture(int x, int y){
 }  
 
 //===============================================================
-//LEGAL MOVE CHECKING (SUICIDE + CAPTURE + KO RULE)
+// LEGAL MOVE CHECKING (SUICIDE + CAPTURE + KO RULE)
 //===============================================================
 bool GoBoard :: isLegalMove(int x, int y){
     visited.assign(boardSize, std :: vector<int>(boardSize, 0));
