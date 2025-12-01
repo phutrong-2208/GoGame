@@ -1,9 +1,5 @@
 #include "LogBoxManager.hpp"
 
-const int MAX_LINES = 8;
-const double coeff_shift = 10.0f;
-const double fudge = 0.8f;
-const double terminal_size = 40.0f;
 
 int constant = 10;
 //the position of the log box
@@ -13,19 +9,16 @@ void LogBox :: drawLogBox(sf :: RenderWindow& window){
     customPanelRender(window, {posX, posY}, {posX + width, posY + height}, metaControls.Color3);
 }
 
-// void LogBox :: drawConfigDialog(sf :: RenderWindow& window, GoBoard &goBoard){
+// void LogBox :: drawConfigDialog(sf :: RenderWindow& window){
 //     float coordX = posX + width / 2.0f;
 //     float coordY = posY + coeff_shift + (5 + (height / MAX_LINES) * fudge * fudge) * MAX_LINES;
 //     Button config({coordX, coordY}, {width - 2 * coeff_shift, (height / MAX_LINES) * fudge}, 
 //         20, 2, {"Yes", "No"}, 
-//         {metaControls.Button_Color, metaControls.Button_Color}, {0, 1}, {}
+//         {metaControls.Color2, metaControls.Color2}, {0, 1}, {}
 //     );
 //     std :: string fontLink = "font\\Bungee_Regular.ttf";
 //     std :: string imageLink = "";
 //     config.drawButton(window, fontLink, imageLink);
-
-//     ui.doActionHover(config, window);
-//     ui.doActionClick(goBoard, config, window);
 // }
 
 std :: string getCurrentTime(){

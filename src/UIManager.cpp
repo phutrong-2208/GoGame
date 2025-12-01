@@ -71,7 +71,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
             case 13: 
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.goFirst = button.attr[button.currentSelection];
-                medium.botColor = easy.botColor = (metaControls.goFirst == 0 ? White : Black);
+                medium.botColor = (metaControls.goFirst == 0 ? White : Black);
                 break;
             case 14:
                 (button.currentSelection += 1) %= button.Text.size();

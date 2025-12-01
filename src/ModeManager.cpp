@@ -40,6 +40,6 @@ void Mode :: setupModeButton(std :: vector<Button> &button_list){
     button_list.emplace_back(Button(
         {tmp_posX, tmp_posY}, {width, height}, 
         5, 1, 
-        {"Save and return"}, {sf :: Color(222, 184, 135)}, {0}, ModeImage)
+        {"Save & Quit"}, {sf :: Color(222, 184, 135)}, {0}, ModeImage)
     );
 }
