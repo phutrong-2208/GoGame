@@ -21,8 +21,7 @@
 #include "ScoreRevealManager.hpp"
 #include "BotLogic.hpp"
 #include "EasyMode.hpp"
-#include "MediumMode.hpp"
-#include "HardMode.hpp"
+#include "Medium_HardMode.hpp"
 #include "modelEngine.hpp"
 
 class Game {

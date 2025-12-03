@@ -60,7 +60,7 @@ void ScoreReveal :: drawScoreReveal(sf :: RenderWindow &window, GoBoard& goBoard
     std :: string winner, reason;
     auto[whiteScore, blackScore] = goBoard.getScore();
     if (goBoard.endGame == 1) {
-        if (whiteScore > blackScore) {
+        if (whiteScore >= blackScore) {
             winner = "White Won";
         } else {
             winner = "Black Won";

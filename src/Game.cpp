@@ -24,13 +24,12 @@ std::vector<Button> button_list[5];
 // Bot
 GoBot botMode;
 EasyMode easy;
-MediumMode medium;
-HardMode hard;
+HardMode medium_and_hard;
 
 // Engine
 KataGo katago;
 
-void Game :: run(){
+void Game :: run() {
     sf::RenderWindow window(sf::VideoMode({1200, 800}), "GoGame");
     render.initSize(window);
 
@@ -53,7 +52,7 @@ void Game :: run(){
     std :: string config  = (currentPath / "KataGo\\default_gtp.cfg").string();
 
     if (!katago.startProcess(exe, model, config)) {
-        std::cerr << "Can't start katago process!\n";
+        std :: cerr << "Can't start katago process!\n";
         return;
     }
     
@@ -62,26 +61,26 @@ void Game :: run(){
     logbox.reset();
 
     // ===================== MAIN LOOP =====================
-    while(window.isOpen()){
+    while(window.isOpen()) {
 
         sf::Event event; 
-        while(window.pollEvent(event)){
+        while(window.pollEvent(event)) {
 
-            if(event.type == sf::Event::Closed){
+            if (event.type == sf::Event::Closed) {
                 window.close();
                 continue;
             }
 
-            if(event.type == sf::Event::Resized){
+            if (event.type == sf::Event::Resized) {
                 render.normalizeSize(window);
                 continue;
             }
 
-            if(ui.State == BOARD){
+            if (ui.State == BOARD) {
 
                 ui.boardManager(window, goBoard, button_list[0], event);
 
-                if(goBoard.ended()){
+                if (goBoard.ended()) {
                     ui.State = SCORE;
                 }
 
@@ -95,7 +94,7 @@ void Game :: run(){
             katago.sendCommand("clear_board");
             katago.readCommand();
 
-            if(ui.State != SCORE){
+            if (ui.State != SCORE) {
                 goBoard.newGame();
                 op.history.emplace_back(goBoard);
             }
@@ -108,10 +107,10 @@ void Game :: run(){
 
         window.clear();
 
-        if(ui.State == BOARD){
+        if (ui.State == BOARD) {
             ui.drawBoard(window, goBoard, button_list[BOARD]);
         }
-        else if(ui.State == SCORE){
+        else if (ui.State == SCORE) {
             ui.drawBoard(window, goBoard, button_list[BOARD]);
             ScoreUI.drawScoreReveal(window, goBoard);
             ui.drawScore(window, button_list[SCORE], "font\\Bungee_Regular.ttf");

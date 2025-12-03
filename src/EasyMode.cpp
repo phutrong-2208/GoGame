@@ -8,7 +8,7 @@ std :: mt19937 rngEasy(seed);
 int easyRand(int l, int h){
     return std :: uniform_int_distribution<int>(l, h)(rngEasy);
 }
-void EasyMode :: Easy_Mode(GoBoard& goBoard){
+void EasyMode :: Move(GoBoard& goBoard){
     int numPossible = goBoard.validMove.size();
 
     std :: pair<int, int> Random_Move = goBoard.validMove[easyRand(0, numPossible - 1)];

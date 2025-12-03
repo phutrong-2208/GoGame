@@ -1,8 +1,8 @@
-#include "HardMode.hpp"
+#include "Medium_HardMode.hpp"
 
 
 //========================================================
-//HARD MODE --- KATAGO MODEL, API CONNECTION
+//HARD + MEDIUM MODE --- KATAGO MODEL, API CONNECTION
 //========================================================
 std::string trimAnswer(std::string s){ //remove space and endline characters
     if(!s.empty() && s[0] == '=') s = s.substr(1);
@@ -12,7 +12,7 @@ std::string trimAnswer(std::string s){ //remove space and endline characters
 
     return s;
 }
-void HardMode :: Hard_Mode(GoBoard& goBoard){
+void HardMode :: Move(GoBoard& goBoard){
     std :: string color = (goBoard.turn == Black ? "black" : "white");
     katago.sendCommand("genmove " + color);
     std :: string answer = katago.readCommand();
