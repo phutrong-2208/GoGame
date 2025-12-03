@@ -128,6 +128,9 @@ void Game :: run() {
             ui.doActionHover(button, window);
         }
 
-        window.display();
+       window.display();
+    }
+    for (int i = 0; i < 3; ++i){
+        katago[i].stopProcess();
     }
 }

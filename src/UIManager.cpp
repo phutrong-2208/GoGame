@@ -71,7 +71,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.difficulty = button.attr[button.currentSelection];
                 if(metaControls.difficulty > 0){
-                    std :: string maxTime = (metaControls.difficulty == 1 ? "1.5" : "3.5");
+                    std :: string maxTime = (metaControls.difficulty == 1 ? "1" : "3");
                     katago[metaControls.boardType].sendCommand("kata-set-param maxTime " + maxTime);
                     katago[metaControls.boardType].readCommand();
                 }
@@ -150,7 +150,7 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
 
         if(botMode.botMutex.try_lock()){ // check if there's exist a thread is running 
             if(goBoard.playMove(snatchX, snatchY, goBoard.turn, 1)){
-                if(metaControls.difficulty == 2){ //update for katago model
+                if(metaControls.difficulty > 0){ //update for katago model
                     katago[metaControls.boardType].sendCommand("play " + color + " " + metaControls.encode(snatchX, snatchY));
                     katago[metaControls.boardType].readCommand();
                 }
