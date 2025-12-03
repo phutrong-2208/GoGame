@@ -27,7 +27,7 @@ EasyMode easy;
 HardMode medium_and_hard;
 
 // Engine
-KataGo katago;
+KataGo katago[3];
 
 void Game :: run() {
     sf::RenderWindow window(sf::VideoMode({1200, 800}), "GoGame");
@@ -48,16 +48,20 @@ void Game :: run() {
     GetModuleFileNameA(NULL, buffer, 260);
     auto currentPath = std :: filesystem :: path(buffer).parent_path();
     std :: string exe     = (currentPath / "KataGo\\katago.exe").string(); 
-    std :: string model   = (currentPath / "KataGo\\model.gz").string(); 
+    std :: string model   = (currentPath / "KataGo\\final.gz").string(); 
     std :: string config  = (currentPath / "KataGo\\default_gtp.cfg").string();
 
-    if (!katago.startProcess(exe, model, config)) {
-        std :: cerr << "Can't start katago process!\n";
-        return;
+    for (int i = 0; i < 3; ++i){
+        if (!katago[i].startProcess(exe, model, config)) {
+            std :: cerr << "Can't start katago process!\n";
+            return;
+        }
     }
-    
-    katago.sendCommand("boardsize 9"); // default board size
-    
+
+    katago[0].sendCommand("boardsize 9"); // default board size
+    katago[1].sendCommand("boardsize 13");
+    katago[2].sendCommand("boardsize 19");
+
     logbox.reset();
 
     // ===================== MAIN LOOP =====================
@@ -91,8 +95,8 @@ void Game :: run() {
             op.snap.clear();
             logbox.reset();
 
-            katago.sendCommand("clear_board");
-            katago.readCommand();
+            katago[metaControls.boardType].sendCommand("clear_board");
+            katago[metaControls.boardType].readCommand();
 
             if (ui.State != SCORE) {
                 goBoard.newGame();

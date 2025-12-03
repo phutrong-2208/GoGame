@@ -45,21 +45,24 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
             case 6:
                 State = BOARD;
                 break;
-            case 7: 
+            case 7:{
                 State = MODE_MENU;
+                botMode.inGame = false;
                 break;
+            }
             case 8:
                 State = SETTING_MENU;
                 break;
             case 9:
                 window.close();
                 break;
-            case 10:
+            case 10: {
                 (button.currentSelection += 1) %= button.Text.size();
                 goBoard.setSize(button.attr[button.currentSelection]);
-                katago.sendCommand("boardsize " + std :: to_string(button.attr[button.currentSelection]));
-                //std :: cout << "Resize to " << std :: to_string(button.attr[button.currentSelection]) << '\n';
+                (metaControls.boardType += 1) %= 3;
+                katago[metaControls.boardType].sendCommand("boardsize " + std :: to_string(button.attr[button.currentSelection]));
                 break;
+            }
             case 11:
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.playWithBot = button.attr[button.currentSelection];
@@ -69,8 +72,8 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 metaControls.difficulty = button.attr[button.currentSelection];
                 if(metaControls.difficulty > 0){
                     std :: string maxTime = (metaControls.difficulty == 1 ? "1.5" : "3.5");
-                    katago.sendCommand("kata-set-param maxTime " + maxTime);
-                    katago.readCommand();
+                    katago[metaControls.boardType].sendCommand("kata-set-param maxTime " + maxTime);
+                    katago[metaControls.boardType].readCommand();
                 }
                 break;
             case 13: 
@@ -135,30 +138,35 @@ void Manager :: drawBoard(sf :: RenderWindow&window, GoBoard& goBoard, std :: ve
 }
 void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :: vector<Button> &button_list, sf :: Event event){
     auto [snatchX, snatchY] = mouse.checkBoard(window, goBoard);
-    if(metaControls.playWithBot){
+
+    if(metaControls.playWithBot){ 
         Piece botColor = (metaControls.goFirst == 0 ? White : Black);
-        if(goBoard.turn == botColor){
-            botMode.botisThinking = true;            
-            botMode.botMove(goBoard);
-            op.history.emplace_back(goBoard);
-            op.snap.clear();
-            botMode.botisThinking = false;
+        if(!botMode.botisThinking and goBoard.turn == botColor){         
+            botMode.botMoveAsync(goBoard);
         }
     }
     if(event.type == sf :: Event :: MouseButtonPressed){
         std :: string color = (goBoard.turn == Black ? "black" : "white");
-        if(!botMode.botisThinking and goBoard.playMove(snatchX, snatchY, goBoard.turn, 1)){
-            if(metaControls.difficulty == 2){ //update for katago model
-                katago.sendCommand("play " + color + " " + metaControls.encode(snatchX, snatchY));
-                katago.readCommand();
-            }
 
-            op.history.emplace_back(goBoard);
-            op.snap.clear();
+        if(botMode.botMutex.try_lock()){ // check if there's exist a thread is running 
+            if(goBoard.playMove(snatchX, snatchY, goBoard.turn, 1)){
+                if(metaControls.difficulty == 2){ //update for katago model
+                    katago[metaControls.boardType].sendCommand("play " + color + " " + metaControls.encode(snatchX, snatchY));
+                    katago[metaControls.boardType].readCommand();
+                }
+                op.history.emplace_back(goBoard);
+                op.snap.clear();
+            }
+            botMode.botMutex.unlock();
         }
         
         for (Button &button : button_list) {
-            doActionClick(goBoard, button, window);
+            if(botMode.botisThinking){
+                if(button.Text[0] == "Menu" || button.Text[0] == "Reset") doActionClick(goBoard, button, window);
+            }
+            else{
+                doActionClick(goBoard, button, window);
+            }
         }
     }
     if(event.type == sf :: Event :: MouseWheelScrolled){

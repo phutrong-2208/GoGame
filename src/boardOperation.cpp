@@ -9,8 +9,8 @@ void Operation :: Rollback(GoBoard &goBoard, int t){
     for (int i = 0; i < (metaControls.playWithBot ? 2 : 1); ++i){
         if(t == 0) { //undo case
             if(metaControls.difficulty == 2){  //for model undo operation
-                katago.sendCommand("undo");
-                katago.readCommand();
+                katago[metaControls.boardType].sendCommand("undo");
+                katago[metaControls.boardType].readCommand();
             }
 
             if(history.size() <= 1) return;
@@ -25,8 +25,8 @@ void Operation :: Rollback(GoBoard &goBoard, int t){
             auto move = snap.back().lastMove;
             
             if(metaControls.difficulty == 2){
-                katago.sendCommand("play " + turn + " " + metaControls.encode(move.first, move.second));
-                katago.readCommand();
+                katago[metaControls.boardType].sendCommand("play " + turn + " " + metaControls.encode(move.first, move.second));
+                katago[metaControls.boardType].readCommand();
             }
 
             goBoard = snap.back();

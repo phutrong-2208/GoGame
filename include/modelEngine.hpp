@@ -18,6 +18,6 @@ class KataGo {
         void stopProcess(void);
 };
 
-extern KataGo katago;
+extern KataGo katago[3];
 
     

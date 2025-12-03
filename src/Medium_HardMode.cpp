@@ -14,16 +14,15 @@ std::string trimAnswer(std::string s){ //remove space and endline characters
 }
 void HardMode :: Move(GoBoard& goBoard){
     std :: string color = (goBoard.turn == Black ? "black" : "white");
-    katago.sendCommand("genmove " + color);
-    std :: string answer = katago.readCommand();
+    katago[metaControls.boardType].sendCommand("genmove " + color);
+    std :: string answer = katago[metaControls.boardType].readCommand();
     answer = trimAnswer(answer);
 
-    
-    katago.sendCommand("showboard");
+    katago[metaControls.boardType].sendCommand("showboard");
 
     //DEBUG
     std :: cerr << answer << '\n';
-    std :: string boardVisual = katago.readCommand();
+    std :: string boardVisual = katago[metaControls.boardType].readCommand();
     std :: cerr << "BOT VISIBLE\n";
     std :: cerr << boardVisual << '\n';
     
