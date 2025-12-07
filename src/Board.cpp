@@ -153,7 +153,7 @@ void GoBoard :: applyMove(int x, int y){ //update the new state of the board aft
 //===============================================================
 //PLAY MOVE
 //===============================================================
-SoundEffect clickSound;
+
 bool GoBoard :: playMove(int x, int y, Piece turn, bool mainMove){
     if(!inBounds(x, y) || grid[x][y] != Empty){
         return false;
@@ -163,7 +163,7 @@ bool GoBoard :: playMove(int x, int y, Piece turn, bool mainMove){
     if(!isLegalMove(x, y)){
         return false; // the valid move and Ko violation
     }
-    if(mainMove) clickSound.piece.play();
+    if(mainMove) Audio.piece.play();
     previousState.emplace_back(scratchGrid.grid);
     lastMove = std :: make_pair(x, y);
     applyMove(x, y);

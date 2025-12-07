@@ -1,8 +1,6 @@
 #include "UIManager.hpp"
 #include "metaControls.hpp"
 
-
-SoundEffect soundButton;
 void Manager :: doActionHover(Button &button, sf :: RenderWindow &window) {
     auto [mouseX, mouseY] = mouse.getPosition(window);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
@@ -28,7 +26,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
         if (button.position.x + tmpSpace * i >= mouseX) continue;
         if (button.position.x + tmpSpace * (i + 1) <= mouseX) continue;
         if (button.position.y >= mouseY || mouseY >= button.position.y + button.siz.y) continue;
-        soundButton.click.play();
+        Audio.click.play();
         
         switch (button.type){
             case 1: // Undo / Redo
@@ -89,10 +87,14 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
             case 14:
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.musicActive = button.attr[button.currentSelection];
+                Audio.Background.setVolume(metaControls.audioVolume * metaControls.musicActive * 0.5);
+                Audio.Background.play();
                 break;
             case 15:
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.soundActive = button.attr[button.currentSelection];
+                Audio.click.setVolume(metaControls.audioVolume * metaControls.soundActive);
+                Audio.piece.setVolume(metaControls.audioVolume * metaControls.soundActive);
                 break;
             case 16:
                 {
@@ -100,6 +102,9 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                     tVolume += button.attr[i];
                     if (tVolume > 100) tVolume = 100;
                     if (tVolume < 0) tVolume = 0;
+                    Audio.click.setVolume(tVolume * metaControls.soundActive);
+                    Audio.piece.setVolume(tVolume * metaControls.soundActive);
+                    Audio.Background.setVolume(tVolume * metaControls.musicActive * 0.5);
                 }
                 button.updateDisplayVolume();
                 break;
@@ -112,6 +117,9 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                     metaControls.Color2 = metaControls.presetColor2[i];
                     metaControls.Color3 = metaControls.presetColor3[i];
                     metaControls.Color4 = metaControls.presetColor4[i];
+                    Audio.Background.stop();
+                    Audio.Background.openFromFile("assets\\background" + std :: to_string(i) + ".wav");
+                    Audio.Background.play();
                 }
                 break;
             case 18:
@@ -191,7 +199,7 @@ void Manager :: initBackgrounds(){
     presetBackgrounds.resize(5);
     for (int i = 0; i < 5; i++) {
         auto &bg = presetBackgrounds[i];
-        if (!bg.loadFromFile(("assets\\MenuGameBackground" + std :: to_string(i) + ".png").c_str())){
+        if (!bg.loadFromFile(("assets\\MenuGameBackground" + std :: to_string(i) + ".png"))){
             std :: cerr << "Cannot find MenuGameBackground" << i << ".png!\n";
             return;
         }

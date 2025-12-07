@@ -33,7 +33,7 @@ class MetaControls{ // contains anything related to the game but not part of the
 
     MetaControls(){
         playWithBot = 0;
-        musicActive = 0, soundActive = 0, audioVolume = 100;
+        musicActive = 1, soundActive = 1, audioVolume = 100;
         themeChoice = 0;
         boardType = 0;
         difficulty = 0;

@@ -4,7 +4,7 @@
 sf :: RenderWindow window;
 
 // Core systems
-SoundEffect backGround;
+SoundEffect Audio;
 Operation op;
 MetaControls metaControls;
 MouseInput mouse;
@@ -39,8 +39,8 @@ void Game :: run() {
     ModeUI.setupModeButton(button_list[3]);
     ScoreUI.setupScoreButton(button_list[4]);
 
-    backGround.Background.setLoop(true);
-    backGround.Background.play();
+    Audio.Background.setLoop(true);
+    Audio.Background.play();
 
     
     char buffer[260];

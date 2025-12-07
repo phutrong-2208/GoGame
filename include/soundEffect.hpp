@@ -2,6 +2,7 @@
 #define SOUND_EFFECT_HPP
 
 #include "SFML/Audio.hpp"
+#include <string>
 
 class SoundEffect{
     public:
@@ -11,14 +12,16 @@ class SoundEffect{
     SoundEffect(){
         clickSound.loadFromFile("assets\\click_button_effect.wav");
         click.setBuffer(clickSound);
-        click.setVolume(500.f);
+        click.setVolume(100.f);
         
         pieceSound.loadFromFile("assets\\chess_placing.wav");
         piece.setBuffer(pieceSound);
-        piece.setVolume(500.f);
-        Background.openFromFile("assets\\background.wav");
+        piece.setVolume(100.f);
+        Background.openFromFile("assets\\background0.wav");
         Background.setVolume(50.f);
     }
 };
+
+extern SoundEffect Audio;
 
 #endif
