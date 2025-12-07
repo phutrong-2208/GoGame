@@ -124,6 +124,20 @@ void Button :: setupButtonOperation(std :: vector<Button> &button_list){
         18, 2, 
         {"Import","Export"}, {metaControls.Color2, metaControls.Color2}, {0, 1})
     );
+
+    // float posX = metaControls.ZONE_SIZE + metaControls.CONTROL_SHIFT;
+    // float posY = metaControls.SHIFT_CONST + metaControls.CONTROL_SHIFT + 
+    //     6.0f * (metaControls.CONTROL_SHIFT + 
+    //     1.0f * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST - 10 * metaControls.CONTROL_SHIFT) / 10);
+    // width = metaControls.ZONE_SIZE * (metaControls.ASPECT_RATIO - 1) - metaControls.SHIFT_CONST - 2 * metaControls.CONTROL_SHIFT; 
+    // height = metaControls.ZONE_SIZE - metaControls.CONTROL_SHIFT - metaControls.SHIFT_CONST - posY;
+
+    // tmp_posX = posX + width / 2.0f;
+    // tmp_posY = posY + coeff_shift + (5 + (height / MAX_LINES) * fudge * fudge) * MAX_LINES;
+    // button_list.emplace_back(Button({tmp_posX, tmp_posY}, {width - 2 * coeff_shift, (height / MAX_LINES) * fudge}, 
+    //     20, 2, {"Yes", "No"}, 
+    //     {metaControls.Color2, metaControls.Color2}, {0, 1}, {})
+    // );
 }
 
 // Ad-hoc functions

@@ -10,8 +10,6 @@
 
 class EasyMode{
     public:
-        Piece botColor;
-        Piece Opponent(Piece color);
         void Easy_Mode(GoBoard& goBoard);
 };
 

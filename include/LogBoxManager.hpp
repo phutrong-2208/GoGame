@@ -16,11 +16,19 @@
 
 
 class LogBox{
-    int index;
-    sf :: Font font;
-    sf :: Text terminal;
-    std :: vector<std :: pair<sf :: Text, sf :: Text>> notification;
-    float posX, posY, width, height;
+    private:
+        int index;
+        sf :: Font font;
+        sf :: Text terminal;
+        std :: vector<std :: pair<sf :: Text, sf :: Text>> notification;
+        float posX, posY, width, height;
+    
+    public:
+        const int MAX_LINES = 8;
+        const double coeff_shift = 10.0f;
+        const double fudge = 0.8f;
+        const double terminal_size = 40.0f;
+
 
     void updatePosition(void){
         posX = metaControls.ZONE_SIZE + metaControls.CONTROL_SHIFT;

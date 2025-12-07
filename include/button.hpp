@@ -13,6 +13,11 @@
 
 class Button{
     private:
+    public: //for config dialog
+        const int MAX_LINES = 8;
+        const double coeff_shift = 10.0f;
+        const double fudge = 0.8f;
+        const double terminal_size = 40.0f;
     public:
         int currentSelection; // for changing state of the button
         sf :: RectangleShape box;
