@@ -1,5 +1,12 @@
 #include "renderZone.hpp"
 
+void RenderZone :: initColor(){
+    sf :: Color half(128, 128, 128);
+    blackColor = sf :: Color(55, 55, 65) * half + metaControls.Color4 * half;
+    whiteColor = sf :: Color(235, 235, 225) * half + metaControls.Color3 * half;
+    borderColor = sf :: Color(20, 20, 20, 0);
+}
+
 void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
     window.clear(metaControls.Color1);
 
@@ -72,8 +79,6 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
         window.draw(hoshi);
     }
 }
-
-sf :: Color blackColor(55, 55, 65), whiteColor(235, 235, 225), borderColor(20, 20, 20, 0);
 
 void RenderZone :: drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i, int j, int ghost = 0){
     if (ghost && botMode.botisThinking) return;

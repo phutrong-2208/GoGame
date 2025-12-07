@@ -120,6 +120,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                     Audio.Background.stop();
                     Audio.Background.openFromFile("assets\\background" + std :: to_string(i) + ".wav");
                     Audio.Background.play();
+                    render.initColor();
                 }
                 break;
             case 18:

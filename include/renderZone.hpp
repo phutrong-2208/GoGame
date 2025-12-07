@@ -10,6 +10,7 @@
 
 class RenderZone{
     private:
+        sf :: Color blackColor, whiteColor, borderColor;
     public:
         unsigned int WINDOW_SIZE = sf :: VideoMode :: getDesktopMode().height / 2;
         void drawBoard(sf :: RenderWindow &window, GoBoard &goBoard);
@@ -19,6 +20,10 @@ class RenderZone{
         void initSize(sf :: RenderWindow &window);
         void normalizeSize(sf :: RenderWindow &window);
         void drawControlPanel(sf :: RenderWindow &window);
+        void initColor();
+    RenderZone() {
+        initColor();
+    }
 };
 
 extern RenderZone render;
