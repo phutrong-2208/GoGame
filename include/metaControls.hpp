@@ -25,6 +25,7 @@ class MetaControls{ // contains anything related to the game but not part of the
     int themeChoice;
     int difficulty;
     int goFirst; // 0 if you, 1 if bot
+    int boardType;
     sf :: Color Color1 = presetColor1[0];
     sf :: Color Color2 = presetColor2[0];
     sf :: Color Color3 = presetColor3[0];
@@ -34,6 +35,7 @@ class MetaControls{ // contains anything related to the game but not part of the
         playWithBot = 0;
         musicActive = 0, soundActive = 0, audioVolume = 100;
         themeChoice = 0;
+        boardType = 0;
         difficulty = 0;
         goFirst = 0; // 0 if you, 1 if bot
     }

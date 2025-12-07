@@ -10,7 +10,7 @@
 
 class EasyMode{
     public:
-        void Easy_Mode(GoBoard& goBoard);
+        void Move(GoBoard& goBoard);
 };
 
 extern EasyMode easy;
