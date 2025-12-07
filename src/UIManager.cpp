@@ -7,12 +7,14 @@ void Manager :: doActionHover(Button &button, sf :: RenderWindow &window) {
     auto [mouseX, mouseY] = mouse.getPosition(window);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
     for (int i = 0; i < button.cnt; ++i) {
+        if (!metaControls.playWithBot && (button.type == 12 || button.type == 13)) { // adhoc fix
+            button.color[i] = metaControls.Color4 + metaControls.Color4 + sf :: Color(50, 50, 50); continue;
+        }
         button.color[i] = metaControls.Color3;
         button.hover[i] = 0;
         if (button.position.x + tmpSpace * i >= mouseX) continue;
         if (button.position.x + tmpSpace * (i + 1) <= mouseX) continue;
         if (button.position.y >= mouseY || mouseY >= button.position.y + button.siz.y) continue;
-        if (button.type == 0) continue;
         button.color[i] *= sf :: Color(200, 200, 200);
         button.hover[i] = 1;
     }
@@ -22,6 +24,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
     auto [mouseX, mouseY] = mouse.getPosition(window);
     float tmpSpace = 1.0f * button.siz.x / button.cnt;
     for (int i = 0; i < button.cnt; ++i) {
+        if (!metaControls.playWithBot && (button.type == 12 || button.type == 13)) continue; // adhoc fix
         if (button.position.x + tmpSpace * i >= mouseX) continue;
         if (button.position.x + tmpSpace * (i + 1) <= mouseX) continue;
         if (button.position.y >= mouseY || mouseY >= button.position.y + button.siz.y) continue;
@@ -69,6 +72,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 metaControls.playWithBot = button.attr[button.currentSelection];
                 break;
             case 12:
+            if (!metaControls.playWithBot) continue;
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.difficulty = button.attr[button.currentSelection];
                 if(metaControls.difficulty > 0){
@@ -78,6 +82,7 @@ void Manager :: doActionClick(GoBoard &goBoard, Button &button, sf :: RenderWind
                 }
                 break;
             case 13: 
+                if (!metaControls.playWithBot) continue;
                 (button.currentSelection += 1) %= button.Text.size();
                 metaControls.goFirst = button.attr[button.currentSelection];
                 break;
@@ -192,23 +197,6 @@ void Manager :: initBackgrounds(){
         }
         bg.setSmooth(true);
     }
-
-    // MenuGameBackground0.png: 
-    // https://www.flickr.com/photos/vintage_illustration/51916036912
-    // https://commons.wikimedia.org/wiki/File:%E6%98%8E-%E6%96%87%E5%BE%B5%E6%98%8E_%E6%8B%99%E6%94%BF%E5%9C%92%E5%9C%96%E8%A9%A9_%E5%86%8A-Garden_of_the_Inept_Administrator_MET_DP235625.jpg
-
-    // MenuGameBackground1.png:
-    // https://pxhere.com/en/photo/912000
-    // https://commons.wikimedia.org/wiki/File:Artist%27s_impression_of_Saturn%27s_rings.jpg
-
-    // MenuGameBackground2.png:
-    // https://www.goodfon.com/fantasy/wallpaper-castle-towers-snow-river-boats-trees-winter-lanterns-sky-clo.html
-
-    // MenuGameBackground3.png:
-    // https://www.goodfon.com/painting/wallpaper-the-three-wishes-dominik-mayer-by-dominik-mayer-30-min-speed.html
-
-    // MenuGameBackground4.png:
-    // https://www.pickpik.com/nature-background-mountian-riverside-river-natural-4903
 }
 
 void Manager :: drawMenu(sf :: RenderWindow &window, std :: vector<Button> &button_list, std :: string FontLink){

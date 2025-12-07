@@ -76,10 +76,10 @@ void RenderZone :: drawBoard(sf :: RenderWindow &window, GoBoard &goBoard){
 sf :: Color blackColor(55, 55, 65), whiteColor(235, 235, 225), borderColor(20, 20, 20, 0);
 
 void RenderZone :: drawPiece(sf :: RenderWindow &window, GoBoard &goBoard, int i, int j, int ghost = 0){
+    if (ghost && botMode.botisThinking) return;
     if ((!!ghost) != (goBoard.grid[i][j] == Empty)) return;
     int vertexX = metaControls.SHIFT_CONST + i * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
     int vertexY = metaControls.SHIFT_CONST + j * (1.0 * (metaControls.ZONE_SIZE - 2 * metaControls.SHIFT_CONST) / (goBoard.boardSize - 1));
-
     sf :: CircleShape piece;
     sf :: Color pieceColor(ghost == 1 || goBoard.grid[i][j] == Black ? blackColor : whiteColor);
     pieceColor.a = (1 << (8 - !!ghost)) - 1;

@@ -6,6 +6,7 @@
 #include "metaControls.hpp"
 #include "roundedRectangle.hpp"
 #include "LogBoxManager.hpp"
+#include "BotLogic.hpp"
 
 class RenderZone{
     private:
