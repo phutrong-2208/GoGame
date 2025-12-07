@@ -161,12 +161,8 @@ void Manager :: boardManager(sf :: RenderWindow &window, GoBoard& goBoard, std :
         }
         
         for (Button &button : button_list) {
-            if(botMode.botisThinking){
-                if(button.Text[0] == "Menu" || button.Text[0] == "Reset") doActionClick(goBoard, button, window);
-            }
-            else{
-                doActionClick(goBoard, button, window);
-            }
+            if(botMode.botisThinking) continue;
+            doActionClick(goBoard, button, window);
         }
     }
     if(event.type == sf :: Event :: MouseWheelScrolled){
