@@ -8,12 +8,12 @@ void Operation :: Rollback(GoBoard &goBoard, int t){
     
     for (int i = 0; i < (metaControls.playWithBot ? 2 : 1); ++i){
         if(t == 0) { //undo case
+            if(history.size() <= 1) return;
             if(metaControls.difficulty > 0){  //for model undo operation
                 katago[metaControls.boardType].sendCommand("undo");
                 katago[metaControls.boardType].readCommand();
             }
 
-            if(history.size() <= 1) return;
             snap.emplace_back(history.back());
             history.pop_back();
             goBoard = history.back();
@@ -24,7 +24,7 @@ void Operation :: Rollback(GoBoard &goBoard, int t){
             std :: string turn = (i == 0 ? "black" : "white");
             auto move = snap.back().lastMove;
             
-            if(metaControls.difficulty > 2){
+            if(metaControls.difficulty > 0){
                 katago[metaControls.boardType].sendCommand("play " + turn + " " + metaControls.encode(move.first, move.second));
                 katago[metaControls.boardType].readCommand();
             }
@@ -62,5 +62,6 @@ void Operation :: File(GoBoard &goBoard, int attr){
     } else {
         fop.importBoard(goBoard);
         reset();
+        history.emplace_back(goBoard);
     }
 }
