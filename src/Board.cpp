@@ -1,4 +1,5 @@
 #include "Board.hpp"
+#include "LogBoxManager.hpp"
 //===============================================================
 //DECLARE
 //===============================================================
@@ -164,6 +165,8 @@ bool GoBoard :: playMove(int x, int y, Piece turn, bool mainMove){
         return false; // the valid move and Ko violation
     }
     if(mainMove) Audio.piece.play();
+
+    logbox.insertText(std :: string(turn == Black ? "Black " : "White ") + "moved " + metaControls.encode(x, y));
     previousState.emplace_back(scratchGrid.grid);
     lastMove = std :: make_pair(x, y);
     applyMove(x, y);

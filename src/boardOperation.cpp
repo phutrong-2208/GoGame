@@ -59,8 +59,10 @@ void Operation :: SetSize(GoBoard &goBoard, int boardSize){
 void Operation :: File(GoBoard &goBoard, int attr){
     if (attr) {
         fop.exportBoard(goBoard); 
+        logbox.insertText("Game saved!");
     } else {
         fop.importBoard(goBoard);
+        logbox.insertText("Game loaded!");
         reset();
         history.emplace_back(goBoard);
     }
