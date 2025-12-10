@@ -15,15 +15,10 @@ GoGame is an application that allows users to play the classic board game **Go**
 ## Features
 
 - Play Go offline with another player on the same device.
-
 - Interactive and userfriendly-interface.
-
 - Select visual themes for the board.
-
 - Allow user to export and import the board to save or load the games.
-
 - Enable or disable sound effects and background music.
-
 - Implement standard Go rules with three different board size:
     - 9x9
     - 13x13
@@ -37,6 +32,7 @@ GoGame is an application that allows users to play the classic board game **Go**
 
 
 ## Installation
+
 **MinGW** version 10.0 or later
 [Download MinGW-w64](https://www.mingw-w64.org/downloads/)
 
@@ -56,24 +52,29 @@ GoGame is an application that allows users to play the classic board game **Go**
     - Extract the ZIP into a folder
 2. **Build the project** 
     - Open Command Prompt in the project folder
-    ```bash
+    ```
     make
     ```
 3. **Run the project** 
-    ```bash
+    ```
     .\main.exe
     ```
 4. **Clean build files (optional)**
-    ```bash
+    ```
     make clean
     ```
 ## Usage
 This game is controlled entirely with the mouse.
 
-To start the game it take about 5-6 seconds for setting up.
+Upon booting, the game, takes about 5-6 seconds to set up.
 
 **ORIGINAL STATE**
-![GameDisplay](assets/READMEassets/originalbackground.png)
+
+<p align="center">
+  <img src="assets/READMEassets/originalbackground.png" alt="The Main Menu" width="600">
+  <br>
+  <em>The Main Menu</em>
+</p>
 
 There are four options: 
 - **Play**: Launch a new match with current settings
@@ -83,30 +84,57 @@ There are four options:
 
 To choose the options you can click directly to the button. It also has a hover effects to indicate which option is being selected.
 
-![Hover](assets/READMEassets/hover.png)
+<p align="center">
+  <img src="assets/READMEassets/hover.png" alt="The mouse is currently hovering over the “Modes” button." width="600">
+  <br>
+  <em>The mouse is currently hovering over the “Modes” button</em>
+</p>
 
-**GAME STATE**
+**GAME SCREEN**
+
 ![GameState](assets/READMEassets/gamestate.png)
-The board visual has many button support for:
+
+The players make moves by clicking on intersections on the board displayed on the
+left side of the screen. There is a transparent stone indicating the colour and position
+of the next placed stone.
+
+On the right is a panel with many features:
+
 - **UNDO/REDO**: Revert the last move or re-apply a move (useful for correcting mistakes).
 - **RESIGN**: Concede the match. The resigning player loses immediately.
 - **PASS**: Skip your current turn.
 - **RESET**: Clear the board and restart the current match from the beginning without score reaveling.
 - **MENU**: Return to the main menu.
-- **IMPORT/EXPORT**: Save the current game progress to a file or load a saved file.
-- **GAME LOG**: Located [at the bottom/on the side] of the screen, the Game Log displays a chronological history of all match, including:
-![GameLog](assets/READMEassets/gamelog.png)
-    - "Pass" actions
-    - Game notifications(e.g, "Game loaded", "Game saved", "Moves played", etc)
+- **IMPORT/EXPORT**: Save the current game progress to a file or load a saved file (from saves\gogame.sav).
+- **GAME LOG**: Located at the bottom-right corner of the screen, the Game
+Log displays a chronological history of all game events, including:
+    + Passed turns,
+    + Loaded games,
+    + Saved games,
+    + Played moves, etc
 
+<p align="center">
+  <img src="assets/READMEassets/gamelog.png" alt="The mouse is currently hovering over the “Modes” button." width="600">
+  <br>
+  <em>Various game events can be seen at the bottom-right corner in the Game log</em>
+</p>
 
 **END GAME SCORING**
-- Display Black and White points.
-- Notifies who won and the reason.
-- Scoring is calculated according to the rules specifies below.
 
-![ScoreReveal](assets/READMEassets/scorereveal.png)
+Upon the match ending, either by two consecutive passes, or by a resignation, a
+scoring panel appears and display the follow information about the match:
+- Points of Black and White.
+- The ruling – the winner and the account.
+Scoring is calculated according to the rules specified below.
 
+Then, the player can choose to return to the main menu or start a new match with the
+current settings.
+
+<p align="center">
+  <img src="assets/READMEassets/scorereveal.png" alt="The game ended and black won by having more points." width="600">
+  <br>
+  <em>The mouse is currently hovering over the “Modes” button</em>
+</p>
 ## Rules
 
 Since there are many sets of rules available for the board game Go, we have decided to use these two references for the rules:
