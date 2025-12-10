@@ -135,6 +135,7 @@ current settings.
   <br>
   <em>The mouse is currently hovering over the “Modes” button</em>
 </p>
+
 ## Rules
 
 Since there are many sets of rules available for the board game Go, we have decided to use these two references for the rules:
