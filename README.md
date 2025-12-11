@@ -44,7 +44,7 @@ GoGame is an application that allows users to play the classic board game **Go**
 1. Download the project
     -Clone the repository
     ```bash
-    git clone https://github.com/yourusername/go-game.git
+    git clone https://github.com/phutrong-2208/GoGame.git
     ```
     Or download the ZIP from Github
     - Go to the repository page on Github    
