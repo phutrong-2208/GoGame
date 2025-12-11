@@ -41,26 +41,47 @@ GoGame is an application that allows users to play the classic board game **Go**
 
 
 ## Setup and Run
-1. Download the project
-    -Clone the repository
-    ```bash
-    git clone https://github.com/phutrong-2208/GoGame.git
-    ```
+1. **Download the project**
+
+    Clone the repository
+      ```bash
+      git clone https://github.com/phutrong-2208/GoGame.git
+      ```
     Or download the ZIP from Github
+
     - Go to the repository page on Github    
     - Click **Code** **→** **Download ZIP**
     - Extract the ZIP into a folder
-2. **Build the project** 
+
+2. **Open the project in Visual Studio Code**
+    - Launch Visual Studio Code.
+    - Go to **File** → **Open Folder**.
+    - Select the **Game** folder you downloaded.
     - Open Command Prompt in the project folder
-    ```
-    make
-    ```
-3. **Run the project** 
-    ```
+3. **Install required extensions**
+
+    - To build and run C++ in VS Code, make sure you have:
+      - C/C++ (Microsoft)
+
+4. **Build the project**
+
+    1. Open a terminal inside VS Code:
+      **Terminal** → **New Terminal**
+    2. Run the command:
+      ```bash
+        make
+      ```
+
+5. **Run the project**
+
+  - After building successfully, run the executable:
+
+    ```bash
     .\main.exe
     ```
-4. **Clean build files (optional)**
-    ```
+
+6. **Clean build files (optional)**
+    ```bash
     make clean
     ```
 ## Usage
